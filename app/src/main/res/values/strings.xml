@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Clasificacion Cutter</string>
+    <string name="msg_error">Tienes que llenar los dos espacios</string>
+    <string name="bt_search">BUSCAR</string>
+    <string name="empty_text">Cutter App</string>
+    <string name="etx_name">Nombre</string>
+    <string name="etx_last_name">Apellido</string>
+    <string name="empty_text_2">Aquí aparecerá el cutter utilizado</string>
+    <string name="char_allowed">qwertzuiopasdfghjklyxcvbnmñQWERTYUIOPASDFGHJKLZXCVBNMÑáéíóúüÁÉÍÓÚÜ</string>
+    <string name="db_version_select">Seleccione la versión de cutter</string>
+</resources>
