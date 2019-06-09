@@ -5,23 +5,26 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LicensesActivity">
+        tools:context=".LicensesActivity"
+        >
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
-    >
+                  >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="@string/agradecimiento"
-            android:padding="16dp"/>
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:autoLink="email"/>
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:id="@+id/kotlin_link"
                 android:text="@string/kotlin"
-                android:autoLink="web"
-                android:clickable="true"
+                android:textIsSelectable="true"
                 android:textStyle="bold"
                 android:padding="16dp"/>
         <TextView android:layout_width="match_parent"
@@ -34,13 +37,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/opencsv"
-                android:autoLink="web"
-                android:clickable="true"
+                android:id="@+id/opencsv_link"
+                android:textIsSelectable="true"
                 android:textStyle="bold"
                 android:padding="16dp"/>
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_gravity="end"
+                  android:textIsSelectable="true"
                   android:text="@string/opencsv_license"
                   android:padding="16dp"
         />

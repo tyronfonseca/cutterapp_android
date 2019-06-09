@@ -10,13 +10,15 @@
     <string name="db_version_select">Seleccione la versión de cutter</string>
 
     <!---Creditos y licencias-->
-    <string name="credit">Tyron Fonseca - 2019</string>
-    <string name="title_activity_licenses">LicensesActivity</string>
-    <string name="agradecimiento">Esta aplicación utiliza las siguientes librerias de terceros.</string>
+    <string name="credit"><u>Acerca de</u></string>
+    <string name="title_activity_licenses">Acerca de</string>
+    <string name="agradecimiento">"Tyron Fonseca – 2019\n<a href="mailto:tyron.alva1496@gmail.com">tyron.alva1496@gmail.com</a>\n\nEsta aplicación utiliza las siguientes librerías de terceros:"</string>
+
     <!--Kotlin-->
-    <string name="kotlin"><u><a href="https://github.com/JetBrains/kotlin">Kotlin (Lenguaje de Programación)</a></u></string>
+    <string name="kotlin"><a href="https://github.com/JetBrains/kotlin">Kotlin (Lenguaje de Programación)</a></string>
     <string name="kotlin_license">"Copyright 2000–2018 JetBrains s.r.o.\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at \n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License."</string>
+
     <!--OpenCSV-->
-    <string name="opencsv"><u><a href="http://opencsv.sourceforge.net/">OpenCSV 4.0 (Librería)</a></u></string>
+    <string name="opencsv"><a href="http://opencsv.sourceforge.net/">OpenCSV 4.0 (Librería)</a></string>
     <string name="opencsv_license">"Copyright 2017 Glen Smith and Scott Conway\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at \n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License."</string>
 </resources>
