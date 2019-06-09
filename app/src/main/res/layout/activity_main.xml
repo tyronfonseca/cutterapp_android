@@ -83,6 +83,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:elevation="5dp"
             style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-            />
+    />
+    <TextView
+            android:text="@string/credit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txv_credit"
+            android:textSize="10dp"
+            android:textColor="@color/colorTextSecondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.605"
+            app:layout_constraintEnd_toStartOf="@+id/bt_db" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="37dp"
+            android:clickable="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

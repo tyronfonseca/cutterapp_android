@@ -1,5 +1,6 @@
 package com.tf.clasificacioncutter
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.tf.clasificacioncutter.Utils.CutterGetter
 import com.tf.clasificacioncutter.Utils.CutterHelper
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         val txvResult = findViewById<TextView>(R.id.txv_cutter_result)
         val txvCutter = findViewById<TextView>(R.id.txv_cutter_used)
+        val txvCredit = findViewById<TextView>(R.id.txv_credit)
 
         val etxLastName = findViewById<EditText>(R.id.etx_last_name)
         val etxName = findViewById<EditText>(R.id.etx_name)
@@ -91,6 +94,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
         btVersion.setOnClickListener{
             selectVersion()
+        }
+
+        txvCredit.setOnClickListener {
+            startActivity(Intent(this@MainActivity,LicensesActivity::class.java))
         }
 
     }
