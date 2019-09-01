@@ -153,9 +153,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 if (selection=="UCR"){
                     //Si selecciono UCR se cambia la version de cutter
                     editor.putInt(dbString,1)
+                    Toast.makeText(this,"Version UCR seleccionada.",Toast.LENGTH_SHORT).show()
                 }else{
                     //Si selecciono NORMAl se cambia la version de cutter
                     editor.putInt(dbString,0)
+                    Toast.makeText(this,"Version Normal seleccionada.",Toast.LENGTH_SHORT).show()
                 }
                 //Guardamos los cambios
                 editor.apply()
