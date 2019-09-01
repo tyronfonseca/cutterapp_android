@@ -12,7 +12,7 @@ class CutterHelper{
     // Note: que no se asignan los valores 4 ni 14. Refierase a la funcion 'ucrFix' para saber mas.
     var oldAlph = mapOf("A" to 1,"B" to 2,"C" to 3,"D" to 5,"E" to 6,"F" to 7,"G" to 8,"H" to 9,"I" to 10,"J" to 11,
         "K" to 12,"L" to 13,"M" to 15,"N" to 16,"Ñ" to 17,"O" to 18,"P" to 19,"Q" to 20,"R" to 21,"S" to 22,"T" to 23,
-        "U" to 24,"V" to 25,"W" to 26,"X" to 27,"Y" to 28,"Z" to 29,"," to 0)
+        "U" to 24,"V" to 25,"W" to 26,"X" to 27,"Y" to 28,"Z" to 29,"," to 0, " " to 0, "-" to 0)
 
     /**
      * Funcion encargada de eliminar acentuaciones y convertir letras a valores enteros
