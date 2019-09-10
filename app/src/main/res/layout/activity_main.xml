@@ -1,100 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:orientation="vertical"
         android:background="@color/colorPrimary"
-        android:id="@+id/container">
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-    <TextView
+    <com.tf.clasificacioncutter.Utils.KollektifTextView
+            android:id="@+id/txv_cutter_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txv_cutter_result"
+            android:layout_marginBottom="11dp"
             android:text="@string/empty_text"
             android:textColor="@color/colorText"
             android:textSize="40sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="11dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/txv_cutter_used"/>
-    <TextView
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/txv_cutter_used"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <com.tf.clasificacioncutter.Utils.KollektifTextView
+            android:id="@+id/txv_cutter_used"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txv_cutter_used"
+            android:layout_marginTop="214dp"
             android:text="@string/empty_text_2"
             android:textColor="@color/colorTextSecondary"
             android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="214dp" app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/etx_last_name"
-            android:digits="@string/char_allowed"
-            android:textColorHint="@color/colorTextSecondary"
-            android:backgroundTint="@color/colorText"
-            android:textColor="@color/colorText"
-            android:ems="10"
             android:id="@+id/etx_last_name"
-            android:inputType="text"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="66dp"
-            app:layout_constraintTop_toBottomOf="@+id/txv_cutter_used" app:layout_constraintEnd_toEndOf="parent"/>
-    <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/etx_name"
-            android:digits="@string/char_allowed"
-            android:textColorHint="@color/colorTextSecondary"
+            android:layout_marginTop="66dp"
             android:backgroundTint="@color/colorText"
-            android:textColor="@color/colorText"
+            android:digits="@string/char_allowed"
             android:ems="10"
-            android:id="@+id/etx_name"
-            app:layout_constraintStart_toStartOf="@+id/etx_last_name" android:layout_marginTop="22dp"
-            app:layout_constraintTop_toBottomOf="@+id/etx_last_name"/>
-    <Button android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bt_search"
-            android:background="@drawable/round_button_shape"
-            android:text="@string/bt_search"
+            android:hint="@string/etx_last_name"
+            android:inputType="text"
             android:textColor="@color/colorText"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:paddingLeft="60dp"
-            android:paddingRight="60dp"
+            android:textColorHint="@color/colorTextSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txv_cutter_used" />
+
+    <EditText
+            android:id="@+id/etx_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:backgroundTint="@color/colorText"
+            android:digits="@string/char_allowed"
+            android:ems="10"
+            android:hint="@string/etx_name"
+            android:inputType="text"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorTextSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etx_last_name" />
+
+    <Button
+            android:id="@+id/bt_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="37dp"
+            android:background="@drawable/round_button_shape"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintStart_toStartOf="@+id/etx_name" android:layout_marginTop="37dp"
-            android:layout_marginStart="6dp"
-            app:layout_constraintTop_toBottomOf="@+id/etx_name"/>
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:text="@string/bt_search"
+            android:textColor="@color/colorText"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etx_name" />
+
     <ImageButton
-            android:src="@drawable/ic_settings"
-            android:background="@android:color/transparent"
             android:id="@+id/bt_db"
-            android:contentDescription="@string/empty_text"
+            style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="21dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/empty_text"
             android:elevation="5dp"
-            style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-    />
-    <TextView
-            android:text="@string/credit"
+            android:src="@drawable/ic_settings"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.tf.clasificacioncutter.Utils.KollektifTextView
+            android:id="@+id/txv_credit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txv_credit"
-            android:textSize="15dp"
-            android:textColor="@color/colorTextSecondary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.605"
-            app:layout_constraintEnd_toStartOf="@+id/bt_db" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="37dp"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:text="@string/credit"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bt_db"
+            app:layout_constraintHorizontal_bias="0.605"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+            android:id="@+id/logo_app"
+            android:layout_width="229dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="52dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/txv_cutter_used"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/long_logo_white"
+            android:contentDescription="Logo de la aplicación"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

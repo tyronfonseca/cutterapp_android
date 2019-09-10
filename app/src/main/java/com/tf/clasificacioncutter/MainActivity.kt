@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
@@ -13,7 +12,8 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.tf.clasificacioncutter.Utils.CutterGetter
 import com.tf.clasificacioncutter.Utils.CutterHelper
-import kotlinx.android.synthetic.main.activity_main.*
+import android.graphics.Typeface
+import androidx.core.content.res.ResourcesCompat
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -22,28 +22,16 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private var PRIVATE_MODE = 0
     private val PREF_NAME = "sharedPref"
     lateinit var sharedPref:SharedPreferences
-    private val dbString = "DB"
+    private val TYPE_DB = "DB"
+    private val NUM_CUTTER = "numeroCutter"
+    private val CUTTER_USED = "cutterUsado"
+
     var dbType:Int = 0
     lateinit var listaArray:ArrayList<Array<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        sharedPref = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-        sharedPref.registerOnSharedPreferenceChangeListener(this)
-
-        //Verificar si exite un SharedPreferences con el valor de la version de Cutter
-        if(!sharedPref.contains(dbString)){
-            val editor = sharedPref.edit()
-            editor.putInt(dbString,1)
-            editor.apply()
-            dbType = 1
-        }else{
-            //Conseguir la version de Cutter
-            dbType = sharedPref.getInt(dbString,0)
-        }
-
 
         val txvResult = findViewById<TextView>(R.id.txv_cutter_result)
         val txvCutter = findViewById<TextView>(R.id.txv_cutter_used)
@@ -54,6 +42,34 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         val btSearch = findViewById<Button>(R.id.bt_search)
         val btVersion = findViewById<ImageButton>(R.id.bt_db)
+
+        sharedPref = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        sharedPref.registerOnSharedPreferenceChangeListener(this)
+
+        //Verificar si exite un SharedPreferences con el valor de la version de Cutter
+        if(!sharedPref.contains(TYPE_DB)){
+            val editor = sharedPref.edit()
+            editor.putInt(TYPE_DB,1)
+            editor.putString(NUM_CUTTER,getString(R.string.empty_text))
+            editor.putString(CUTTER_USED,getString(R.string.empty_text_2))
+            editor.apply()
+            dbType = 1
+        }else{
+            //Conseguir la version de Cutter
+            dbType = sharedPref.getInt(TYPE_DB,0)
+            txvResult.text = sharedPref.getString(NUM_CUTTER,null)
+            txvCutter.text = sharedPref.getString(CUTTER_USED,null)
+        }
+
+        //Cambiar tipo de letra
+        val typeFaceBold: Typeface? = ResourcesCompat.getFont(this.applicationContext,R.font.kollektif_bold)
+        val typeFaceNormal: Typeface? = ResourcesCompat.getFont(this.applicationContext,R.font.kollektif)
+
+        txvResult.setTypeface(typeFaceBold)
+        etxLastName.setTypeface(typeFaceNormal)
+        etxName.setTypeface(typeFaceNormal)
+        btSearch.setTypeface(typeFaceBold)
+
 
         //Lista de nombres y numeros de Cutter
         listaArray = cutterGetter.getCutterList(this,dbType)
@@ -86,9 +102,16 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 //Cutter que se utilizo para dar la respuesta
                 val cutterUsed = result[0]+": "+result[1]
 
+                //Guardar valores
+                val editor = sharedPref.edit()
+                editor.putString(NUM_CUTTER,cutter)
+                editor.putString(CUTTER_USED,cutterUsed)
+                editor.apply()
+
                 //Iniciamos las animaciones de salida
                 txvResult.startAnimation(fadeOut)
                 txvCutter.startAnimation(fadeOut)
+
 
                 fadeOut.setAnimationListener(object: Animation.AnimationListener{
                     override fun onAnimationStart(p0: Animation?) {}
@@ -124,7 +147,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     //Cuando haya un cambio en los SharedPreferences se llamara a esta funcion
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
         //Version de cutter
-        val get = sharedPref.getInt(dbString,0)
+        val get = sharedPref.getInt(TYPE_DB,0)
         //Actualizar lista con la version correcta
         listaArray = cutterGetter.getCutterList(this,get)
         //Modificar la version
@@ -144,7 +167,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         builder.setTitle(R.string.db_version_select)
 
         //Creamos una lista de seleccion unica
-        builder.setSingleChoiceItems(versiones,sharedPref.getInt(dbString,0)) { _, which->
+        builder.setSingleChoiceItems(versiones,sharedPref.getInt(TYPE_DB,0)) { _, which->
             //Que version escogio el usuario
             val selection = versiones[which]
             try{
@@ -152,11 +175,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 val editor = sharedPref.edit()
                 if (selection=="UCR"){
                     //Si selecciono UCR se cambia la version de cutter
-                    editor.putInt(dbString,1)
+                    editor.putInt(TYPE_DB,1)
                     Toast.makeText(this,"Version UCR seleccionada.",Toast.LENGTH_SHORT).show()
                 }else{
                     //Si selecciono NORMAl se cambia la version de cutter
-                    editor.putInt(dbString,0)
+                    editor.putInt(TYPE_DB,0)
                     Toast.makeText(this,"Version Normal seleccionada.",Toast.LENGTH_SHORT).show()
                 }
                 //Guardamos los cambios
