@@ -1375,7 +1375,7 @@ Bruni;896
 Brunn;897
 Bruno;898
 Bruns;899
-Bru�o;911
+Bruño;911
 Brus;912
 Brut;913
 Bruy;914
@@ -5233,7 +5233,7 @@ Ins;59
 Int;61
 Inv;62
 Inw;63
-I�;63
+Iñ;63
 Io;64
 Ir;65
 Iren;66
@@ -6860,7 +6860,7 @@ Muno;967
 Munr;968
 Muns;969
 Munt;971
-Mu�oz;971
+Muñoz;971
 Mur;972
 Murc;973
 Murd;974
@@ -7621,6 +7621,7 @@ Ob;12
 Obr;13
 Obs;14
 Oc;15
+OCEE;682
 Oco;16
 Oconn;17
 Ocor;18
@@ -7643,6 +7644,7 @@ Oh;36
 Ohe;37
 Ohm;38
 Oi;39
+OIDD;684
 Ok;41
 Ol;42
 Olb;43
@@ -7658,11 +7660,14 @@ Oly;53
 Om;54
 Ome;55
 Omo;56
+OMS;685
 Omu;57
 On;58
 Ons;59
+ONU;68
 Op;61
 Opp;62
+OPS;686
 Or;63
 Orb;64
 Ord;65
@@ -7670,6 +7675,7 @@ Ore;66
 Orf;67
 Org;68
 Ori;69
+ORIT;687
 Orl;71
 Orlo;72
 Orm;73
@@ -7949,7 +7955,7 @@ Penny;416
 Penr;417
 Pens;418
 Pent;419
-Pe�a;4191
+Peña;4191
 Pep;421
 Pepi;422
 Pepo;423
@@ -8149,7 +8155,7 @@ Pino;657
 Pins;658
 Pint;659
 Pinz;661
-Pi�a;661
+Piña;661
 Pio;662
 Pioz;663
 Pip;664
@@ -12332,3 +12338,4 @@ Zur;96
 Zw;97
 Zwi;98
 Zy;99
+@@@;0

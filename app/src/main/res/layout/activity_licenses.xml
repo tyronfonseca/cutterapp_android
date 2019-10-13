@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LicensesActivity"
+        >
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  >
+        <com.tf.clasificacioncutter.Utils.KollektifTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/agradecimiento"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:autoLink="email|web"/>
+        <com.tf.clasificacioncutter.Utils.KollektifTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/kotlin_link"
+                android:text="@string/kotlin"
+                android:textIsSelectable="true"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+        <com.tf.clasificacioncutter.Utils.KollektifTextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="end"
+                  android:text="@string/kotlin_license"
+                  android:padding="16dp"
+        />
+        <com.tf.clasificacioncutter.Utils.KollektifTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/opencsv"
+                android:id="@+id/opencsv_link"
+                android:textIsSelectable="true"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+        <com.tf.clasificacioncutter.Utils.KollektifTextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="end"
+                  android:textIsSelectable="true"
+                  android:text="@string/opencsv_license"
+                  android:padding="16dp"
+        />
+    </LinearLayout>
+
+</ScrollView>
