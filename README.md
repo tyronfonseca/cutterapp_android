@@ -1,20 +1,17 @@
-                    Tyron Fonseca - Fonseca Software
-                        Cutter App 1.0.0
+<b>PROJECT TITLE:</b> Cutter App
 
-PROJECT TITLE: Cutter App
-
-PURPOSE OF PROJECT: Aplicación desarrollada especificamente para Bibliotecologos 
+<b>PURPOSE OF PROJECT:</b> Aplicación desarrollada especificamente para Bibliotecologos 
 y/o estudiantes de bibliotecologia. Se utiliza un algoritmo de orden 
 lexicografico para poder realizar la tarea encomendada.
 
-VERSION: 1.0.0
+<b>VERSION: 1.0.0</b>
 
-AUTHORS: Tyron Fonseca Alvarado - tyron.alva1496@gmail.com
+<b>AUTHORS: </b>Tyron Fonseca Alvarado - tyron.alva1496@gmail.com
 
 
 Este proyecto utiliza las siguientes librerias:
 
-Kotlin (Lenguaje de Programación) 
+<b>Kotlin (Lenguaje de Programación)</b>
 Copyright 2000–2018 JetBrains s.r.o.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
@@ -27,7 +24,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
     
 
-OpenCSV 4.0 (Librería) 
+<b>OpenCSV 4.0 (Librería)</b>
 Copyright 2017 Glen Smith and Scott Conway
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
