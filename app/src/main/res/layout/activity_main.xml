@@ -54,7 +54,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txv_cutter_used" />
+            app:layout_constraintTop_toBottomOf="@+id/txv_cutter_used"
+            android:importantForAutofill="no" />
 
     <EditText
             android:id="@+id/etx_name"
@@ -74,7 +75,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etx_last_name" />
+            app:layout_constraintTop_toBottomOf="@+id/etx_last_name"
+            android:importantForAutofill="no" />
 
     <Button
             android:id="@+id/bt_search"
@@ -116,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:clickable="true"
-            android:focusable="auto"
+            android:focusable="true"
             android:text="@string/credit"
             android:textColor="@color/colorTextSecondary"
             android:textSize="15sp"
