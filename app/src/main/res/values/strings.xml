@@ -8,7 +8,7 @@
 
     <!-- Inferfaz gráfica -->
     <string name="empty_text">Hola,</string>
-    <string name="empty_text_2">aquí aparecerá el cutter utilizado</string>
+    <string name="empty_text_2">aquí aparecerá el cutter utilizado.</string>
     <string name="etx_name">Nombre</string>
     <string name="etx_last_name">Apellido</string>
     <string name="bt_search">BUSCAR</string>
@@ -19,7 +19,7 @@
     <!---Creditos y licencias-->
     <string name="credit"><u>Acerca de</u></string>
     <string name="title_activity_licenses">Acerca de</string>
-    <string name="agradecimiento">"Tyron Fonseca A. – 2019\n<a href="mailto:">contactfonsecasoftware@gmail.com</a>\n\nDiseño del ícono y otros aspectos de la UI:\nOmar Zamora G.\n<a href="https://instagram.com/creativ.ex/">https://instagram.com/creativ.ex/</a>\n\n<b>ATENCIÓN:</b> Esta aplicación se encuentra en fase de pruebas, por lo que se espera que pueda haber errores con los resultados. Cualquier error o sugerencia puedes hacerlo al correo que aparece arriba.\n\nEsta aplicación utiliza las siguientes librerías de terceros:"</string>
+    <string name="agradecimiento">"Tyron Fonseca A. – 2019\n<a href="mailto:">contactfonsecasoftware@gmail.com</a>\n\nDiseño del ícono y otros aspectos de la UI:\nOmar Zamora G.\n<a href="https://instagram.com/creativ.ex/">https://instagram.com/creativ.ex/</a>\n\n<b>ATENCIÓN:</b> Esta aplicación se encuentra en fase de pruebas, por lo que se espera que pueda haber errores con los resultados. Cualquier error o sugerencia puedes enviarlo al correo que aparece arriba.\n\nEsta aplicación utiliza las siguientes librerías de terceros:"</string>
 
     <!--Kotlin-->
     <string name="kotlin"><a href="https://github.com/JetBrains/kotlin">Kotlin (Lenguaje de Programación)</a></string>

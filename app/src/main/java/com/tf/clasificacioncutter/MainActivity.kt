@@ -14,12 +14,14 @@ import com.tf.clasificacioncutter.Utils.CutterGetter
 import com.tf.clasificacioncutter.Utils.CutterHelper
 import android.graphics.Typeface
 import androidx.core.content.res.ResourcesCompat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val cutterGetter = CutterGetter()
     private val cutterHelper = CutterHelper()
-    private var PRIVATE_MODE = 0
+    private val PRIVATE_MODE = 0
     private val PREF_NAME = "sharedPref"
     lateinit var sharedPref:SharedPreferences
     private val TYPE_DB = "DB"
@@ -65,10 +67,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val typeFaceBold: Typeface? = ResourcesCompat.getFont(this.applicationContext,R.font.kollektif_bold)
         val typeFaceNormal: Typeface? = ResourcesCompat.getFont(this.applicationContext,R.font.kollektif)
 
-        txvResult.setTypeface(typeFaceBold)
-        etxLastName.setTypeface(typeFaceNormal)
-        etxName.setTypeface(typeFaceNormal)
-        btSearch.setTypeface(typeFaceBold)
+        txvResult.typeface = typeFaceBold
+        etxLastName.typeface = typeFaceNormal
+        etxName.typeface = typeFaceNormal
+        btSearch.typeface = typeFaceBold
 
 
         //Lista de nombres y numeros de Cutter
@@ -82,8 +84,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         //Agrega funcionalidad al boton de busqueda
         btSearch.setOnClickListener{
             //Conseguimos los valores de los EditTexts
-            val lastName = etxLastName.text.toString().toUpperCase()
-            val name  = etxName.text.toString().toUpperCase()
+            val lastName = etxLastName.text.toString().toUpperCase(Locale.ROOT)
+            val name  = etxName.text.toString().toUpperCase(Locale.ROOT)
 
             //Verificamos que no esten vacios
             if(name.isNotEmpty() && lastName.isNotEmpty()){

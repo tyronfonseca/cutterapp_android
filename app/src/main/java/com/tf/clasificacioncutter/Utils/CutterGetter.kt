@@ -1,15 +1,12 @@
 package com.tf.clasificacioncutter.Utils
 
 import android.content.Context
-import android.util.Log
 import com.opencsv.CSVParserBuilder
-import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
 import com.tf.clasificacioncutter.R
-import java.io.FileReader
-import java.io.InputStream
 import java.io.InputStreamReader
-import java.io.Reader
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Clase encargada de procesar los datos de los archivos .csv
@@ -17,7 +14,7 @@ import java.io.Reader
 class CutterGetter {
 
     //Creamos un objeto para tener acceso a las funciones de CutterHelper
-    val cHelper = CutterHelper()
+    private var cHelper = CutterHelper()
 
     /**
      *  Funcion para leer y convertir un archivo .csv y devolver un ArrayList de Array<String>
@@ -69,11 +66,11 @@ class CutterGetter {
      * @return Array de strings que contiene el nombre en el indice 0 y el apellido en el indice 1
      */
     fun search(name:String,lstName:String,dbType:Int,csvList:ArrayList<Array<String>>): Array<String> {
-        // Del nombre solo necesitamos la primera letra
-        val initialName = name[0]
+        //Normalizar nombre completo
+        val nombreCompleto = "$lstName, $name"
 
         // Convertimos el apellido e inicial concatenados, a valores enteros
-        var scnStr:ArrayList<Int> = cHelper.strToList("$lstName, $initialName")
+        var scnStr:ArrayList<Int> = cHelper.strToList(nombreCompleto)
 
         // Resultado que se retornara
         var result:Array<String> = arrayOf(String())
@@ -81,15 +78,27 @@ class CutterGetter {
         // Variable que almacenara uno de los posibles resultados
         var old:ArrayList<Int> = ArrayList()
 
-        // Tamaño de la lista -2, ya que se utilizara en un for
-        val size:Int = csvList.size-2
+        // Tamaño de la lista -1, ya que se utilizara en un for
+        val size:Int = csvList.size-1
+
+        //Indice para navegar en la lista
+        var index = 0
+
+        //Ver si se rompe el ciclo o no
+        var continuar = true
 
         // Analizar cada item de la lista (csvList)
-        for (i:Int in 0..size){
+        do {
+
+            if(nombreCompleto.equals(csvList[index][0].toUpperCase(Locale.ROOT))){
+                result = csvList[index]
+                continuar = false
+            }
+
             // Primera fila, convertida a valores enteros
-            var row: ArrayList<Int> = cHelper.strToList(csvList[i][0].toUpperCase())
+            var row: ArrayList<Int> = cHelper.strToList(csvList[index][0].toUpperCase(Locale.ROOT))
             //Fila siguiente, convertida a valores enteros
-            var sRow: ArrayList<Int> = cHelper.strToList(csvList[i+1][0].toUpperCase())
+            var sRow: ArrayList<Int> = cHelper.strToList(csvList[index+1][0].toUpperCase(Locale.ROOT))
 
             // Si la version es UCR, se realiza una modificacion a los valores enteros,
             // la UCR utiliza una version de Cutter que tiene las letras 'Ch' y 'Ll', por lo que
@@ -119,7 +128,7 @@ class CutterGetter {
                 // Verificar si la inicial esta entre la inicial de row y sRow, o es row
                 if(pInicial>=0 && sInicial<0){
                     //El resultado es igual a la fila que se analiza actualmente
-                    result = csvList[i]
+                    result = csvList[index]
                 }
                 // Verificamos el orden lexicografico de row es negativo,
                 // esto significa que el nuevo item (old) no esta despues del viejo (old)
@@ -127,10 +136,13 @@ class CutterGetter {
                     // Ahora old se le asgina los valores de row
                     old = row
                     // Resultado es igual a la fila que se anaalizo
-                    result = csvList[i]
+                    result = csvList[index]
                 }
             }
-        }
+
+            index++
+
+        }while(continuar && size>index)
 
         //Retornar resultado
         return result
