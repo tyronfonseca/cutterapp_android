@@ -32,9 +32,9 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.424" />
 
     <EditText
             android:id="@+id/etx_last_name"
@@ -130,7 +130,7 @@
             android:id="@+id/logo_app"
             android:layout_width="229dp"
             android:layout_height="64dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:contentDescription="@string/descripcion_imagen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

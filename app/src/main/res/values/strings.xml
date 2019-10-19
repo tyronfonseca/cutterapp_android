@@ -12,6 +12,7 @@
     <string name="etx_name">Nombre</string>
     <string name="etx_last_name">Apellido</string>
     <string name="bt_search">BUSCAR</string>
+    <string name="descripcion_imagen">Logo de la aplicación</string>
 
     <!-- Restricciones -->
     <string name="char_allowed">qwertzuiopasdfghjklyxcvbnmñQWERTYUIOPASDFGHJKLZXCVBNMÑáéíóúüÁÉÍÓÚÜ-</string>
