@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private val NUM_CUTTER = "numeroCutter"
     private val CUTTER_USED = "cutterUsado"
 
-    var dbType:Int = 0
+    var dbType:Int = 0 //Tipo de cutter por defecto
     lateinit var listaArray:ArrayList<Array<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,11 +51,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         //Verificar si exite un SharedPreferences con el valor de la version de Cutter
         if(!sharedPref.contains(TYPE_DB)){
             val editor = sharedPref.edit()
-            editor.putInt(TYPE_DB,1)
+            editor.putInt(TYPE_DB,dbType)
             editor.putString(NUM_CUTTER,getString(R.string.empty_text))
             editor.putString(CUTTER_USED,getString(R.string.empty_text_2))
             editor.apply()
-            dbType = 1
         }else{
             //Conseguir la version de Cutter
             dbType = sharedPref.getInt(TYPE_DB,0)
