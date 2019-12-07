@@ -2,7 +2,7 @@
 
 <b>PURPOSE OF PROJECT:</b> Aplicación desarrollada especificamente para Bibliotecologos 
 y/o estudiantes de bibliotecologia. Se utiliza un algoritmo de orden 
-lexicografico para poder realizar la tarea encomendada.
+lexicografico para poder realizar la tarea.
 
 <b>VERSION: 1.0.1</b>
 
