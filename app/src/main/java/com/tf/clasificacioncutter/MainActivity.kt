@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         //Verificar si exite un SharedPreferences con el valor de la version de Cutter
         if(!sharedPref.contains(TYPE_DB)){
             val editor = sharedPref.edit()
-            editor.putInt(TYPE_DB,dbType)
+            this.selectVersion()
             editor.putString(NUM_CUTTER,getString(R.string.empty_text))
             editor.putString(CUTTER_USED,getString(R.string.empty_text_2))
             editor.apply()
@@ -88,45 +88,51 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
             //Verificamos que no esten vacios
             if(name.isNotEmpty() && lastName.isNotEmpty()){
-                //Array con el resultado de la notacion de Cutter
-                val result = cutterGetter.search(name,lastName,dbType,listaArray)
+                //Verificar que el apellido sea más de una letra
+                if(lastName.length>1){
+                    //Array con el resultado de la notacion de Cutter
+                    val result = cutterGetter.search(name,lastName,dbType,listaArray)
 
-                //Primera letra del apellido
-                var letter = result[0][0].toString()
-                //Si es UCR se verifica si la primera letra es "CH" o "LL"
-                if (dbType==1){
-                    letter = cutterHelper.firstLetter(result[0])
-                }
-                //Resultado de Notacion de Cutter. Ej. F676
-                val cutter = letter+result[1]
-
-                //Cutter que se utilizo para dar la respuesta
-                val cutterUsed = result[0]+": "+result[1]
-
-                //Guardar valores
-                val editor = sharedPref.edit()
-                editor.putString(NUM_CUTTER,cutter)
-                editor.putString(CUTTER_USED,cutterUsed)
-                editor.apply()
-
-                //Iniciamos las animaciones de salida
-                txvResult.startAnimation(fadeOut)
-                txvCutter.startAnimation(fadeOut)
-
-
-                fadeOut.setAnimationListener(object: Animation.AnimationListener{
-                    override fun onAnimationStart(p0: Animation?) {}
-                    override fun onAnimationRepeat(p0: Animation?) {}
-
-                    override fun onAnimationEnd(p0: Animation?) {
-                        //Cuando las animaciones terminen, iniciamos las animaciones de entrada
-                        txvCutter.startAnimation(fadeIn)
-                        txvResult.startAnimation(fadeIn)
-                        //Cambiamos los valores por la respuesta (Cotacion de Cutter)
-                        txvCutter.text = cutterUsed
-                        txvResult.text = cutter
+                    //Primera letra del apellido
+                    var letter = result[0][0].toString()
+                    //Si es UCR se verifica si la primera letra es "CH" o "LL"
+                    if (dbType==1){
+                        letter = cutterHelper.firstLetter(result[0])
                     }
-                })
+                    //Resultado de Notacion de Cutter. Ej. F676
+                    val cutter = letter+result[1]
+
+                    //Cutter que se utilizo para dar la respuesta
+                    val cutterUsed = result[0]+": "+result[1]
+
+                    //Guardar valores
+                    val editor = sharedPref.edit()
+                    editor.putString(NUM_CUTTER,cutter)
+                    editor.putString(CUTTER_USED,cutterUsed)
+                    editor.apply()
+
+                    //Iniciamos las animaciones de salida
+                    txvResult.startAnimation(fadeOut)
+                    txvCutter.startAnimation(fadeOut)
+
+
+                    fadeOut.setAnimationListener(object: Animation.AnimationListener{
+                        override fun onAnimationStart(p0: Animation?) {}
+                        override fun onAnimationRepeat(p0: Animation?) {}
+                        override fun onAnimationEnd(p0: Animation?) {
+                            //Cuando las animaciones terminen, iniciamos las animaciones de entrada
+                            txvCutter.startAnimation(fadeIn)
+                            txvResult.startAnimation(fadeIn)
+                            //Cambiamos los valores por la respuesta (Notacion de Cutter)
+                            txvCutter.text = cutterUsed
+                            txvResult.text = cutter
+                        }
+                    })
+                }
+                else{
+                    //El apellido es de solo una letra
+                    Snackbar.make(findViewById(R.id.container),R.string.msg_error_last_name, Snackbar.LENGTH_LONG).show()
+                }
             }else{
                 //Si alguno o ambos de los EditTexts estan vacios se lo hacemos saber al usuario
                 Snackbar.make(findViewById(R.id.container),R.string.msg_error, Snackbar.LENGTH_LONG).show()
@@ -160,7 +166,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
      */
     private fun selectVersion(){
         //Versiones disponibles
-        val versiones = arrayOf("Normal","UCR")
+        val versiones = arrayOf("Alfabeto Normal","UCR (Alfabeto con la letras Ch y Ll)")
 
         //Inicializamos el contructor de AlertDialogs
         val builder = AlertDialog.Builder(this)
@@ -174,7 +180,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             try{
                 //Editor del SharedPreferences
                 val editor = sharedPref.edit()
-                if (selection=="UCR"){
+                //Verificar que se seleccionó la version UCR
+                if (selection.equals(versiones[1])){
                     //Si selecciono UCR se cambia la version de cutter
                     editor.putInt(TYPE_DB,1)
                     Toast.makeText(this,"Version UCR seleccionada.",Toast.LENGTH_SHORT).show()

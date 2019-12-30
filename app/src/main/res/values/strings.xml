@@ -4,7 +4,8 @@
 
     <!-- Alertas o mensajes -->
     <string name="msg_error">Tienes que llenar los dos espacios</string>
-    <string name="db_version_select">Seleccione la versión de cutter</string>
+    <string name="msg_error_last_name">El apellido debe de ser de al menos dos letras</string>
+    <string name="db_version_select">Seleccione el alfabeto a utilizar</string>
 
     <!-- Inferfaz gráfica -->
     <string name="empty_text">Hola,</string>
@@ -19,8 +20,10 @@
 
     <!---Creditos y licencias-->
     <string name="credit"><u>Acerca de</u></string>
+    <string name="titulo_faq"><b>Preguntas frecuentes (F.A.Q)</b></string>
+    <string name="faqs"><b>&#x25FC; ¿Qué significa UCR?</b>\n\nUCR son las siglas de la Universidad de Costa Rica. Esta aplicación tiene la opción de utilizar dos alfabetos, el actual que todos utilizan y el antiguo el cual tiene las letras CH y LL. Este último alfabeto es el que se utiliza en el sistema de bibliotecas de la UCR.\n\n<b>&#x25FC; ¿Qué letras acentuadas o carácteres acepta la aplicación?</b>\n\nActualmente la aplicación solo acepta caracteres del alfabeto español/inglés y los siguientes acentos: Á É Í Ó Ú Ü. En futuras actualizaciones se irá expandiendo la capacidad.\n\n<b>&#x25FC; ¿Cómo envío una sugerencia o reporto un problema con la aplicación?</b>\n\nPuedes enviar sugerencias o reportar algún problema al siguiente correo: <a href="mailto:">contactfonsecasoftware@gmail.com</a>\n\n\nEsta aplicación utiliza las siguientes librerías de terceros:</string>
     <string name="title_activity_licenses">Acerca de</string>
-    <string name="agradecimiento">"Tyron Fonseca A. – 2019\n<a href="mailto:">contactfonsecasoftware@gmail.com</a>\n\nDiseño del ícono y otros aspectos de la UI:\nOmar Zamora G.\n<a href="https://instagram.com/creativ.ex/">https://instagram.com/creativ.ex/</a>\n\n<b>ATENCIÓN:</b> Esta aplicación no recolecta ningún tipo de dato. Cualquier error o sugerencia puedes enviarlo al correo que aparece arriba.\n\nEsta aplicación utiliza las siguientes librerías de terceros:"</string>
+    <string name="agradecimiento">"Diseño y desarrollo:\nTyron Fonseca A. – 2020\n<a href="https://gitlab.com/tfonseca_14">https://gitlab.com/tfonseca_14</a>\n\nÍcono y otros aspectos de la UI:\nOmar Zamora G.\n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a>"</string>
 
     <!--Kotlin-->
     <string name="kotlin"><a href="https://github.com/JetBrains/kotlin">Kotlin (Lenguaje de Programación)</a></string>
