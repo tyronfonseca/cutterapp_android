@@ -4,7 +4,7 @@
 y/o estudiantes de bibliotecologia. Se utiliza un algoritmo de orden 
 lexicografico para poder realizar la tarea.
 
-<b>VERSION: 1.0.1</b>
+<b>VERSION: 1.0.2</b>
 
 <b>AUTHORS: </b>Tyron Fonseca Alvarado - tyron.alva1496@gmail.com
 
