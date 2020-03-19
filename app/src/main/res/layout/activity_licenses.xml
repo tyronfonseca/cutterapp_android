@@ -27,29 +27,15 @@
                 android:textIsSelectable="true"
                 android:textStyle="bold"
                 android:padding="16dp"/>
-        <com.tf.clasificacioncutter.Utils.KollektifTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="@string/faqs"
-                android:padding="16dp"
-                android:autoLink="email|web"/>
 
         <com.tf.clasificacioncutter.Utils.KollektifTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/kotlin_link"
-                android:text="@string/kotlin"
-                android:textIsSelectable="true"
-                android:textStyle="bold"
-                android:padding="16dp"/>
-        <com.tf.clasificacioncutter.Utils.KollektifTextView
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="end"
-                  android:text="@string/kotlin_license"
-                  android:padding="16dp"
-        />
+                android:layout_gravity="end"
+                android:autoLink="email|web"
+                android:padding="16dp"
+                android:text="@string/faqs" />
+
         <com.tf.clasificacioncutter.Utils.KollektifTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,6 +52,21 @@
                   android:text="@string/opencsv_license"
                   android:padding="16dp"
         />
+        <com.tf.clasificacioncutter.Utils.KollektifTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/kotlin_link"
+                android:text="@string/kotlin"
+                android:textIsSelectable="true"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+        <com.tf.clasificacioncutter.Utils.KollektifTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/kotlin_license"
+                android:padding="16dp"
+                />
     </LinearLayout>
 
 </ScrollView>

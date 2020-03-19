@@ -11,7 +11,7 @@ class LicensesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_licenses)
 
-        //Mostrar boton para retroceder
+        //Mostrar botón para retroceder
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
         val kotlinLink = findViewById<TextView>(R.id.kotlin_link)

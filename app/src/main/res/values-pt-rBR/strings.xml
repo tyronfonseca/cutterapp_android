@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="agradecimiento">Design e desenvolvimento:\nTyron Fonseca A. – 2020\n<a href="https://gitlab.com/tfonseca_14">https://gitlab.com/tfonseca_14</a>\n\nÍcone e outros aspectos da interface do usuário:\nOmar Zamora G.\n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
+    <string name="bt_search">BUSCAR</string>
+    <string name="credit"><u>Sobre</u></string>
+    <string name="db_version_select">Selecione o alfabeto para usar</string>
+    <string name="empty_text">Olá,</string>
+    <string name="empty_text_2">o Cutter usado aparecerá aqui.</string>
+    <string name="etx_last_name">Sobrenome</string>
+    <string name="etx_name">Nome</string>
+    <string name="faqs"><b>&#x25FC; O que significa UCR? </b>\n\nUCR significa Universidade da Costa Rica. Esta aplicação tem a opção de usar dois alfabetos, o atual que todos usam e o antigo, com as letras CH e LL. Este último alfabeto é o usado no sistema de bibliotecas da UCR.
+
+\n\n<b>&#x25FC; Quais letras ou caracteres acentuados o aplicativo aceita? </b>
+
+\n\nAtualmente, o aplicativo aceita apenas caracteres do alfabeto espanhol / inglês e os seguintes acentos: Á É Í Ó Ó Ü. Em futuras atualizações, a capacidade será expandida.
+
+\n\n<b>&#x25FC; Como submeto uma sugestão ou relatar um problema com o aplicativo?</b>
+
+\n\nVocê pode enviar sugestões ou relatar um problema para o seguinte email: <a href="mailto:"> contactfonsecasoftware@gmail.com </a>
+
+\n\n\nEsta aplicação não tem afiliação com o UCR. Este aplicativo usa as seguintes bibliotecas de terceiros:
+</string>
+    <string name="title_activity_licenses">Sobre</string>
+    <string name="titulo_faq"><b>Perguntas frequentes (F.A.Q)</b></string>
+    <string name="abc_ucr">UCR (Alfabeto com as letras CH e LL)</string>
+    <string name="abc_normal">Alfabeto Normal</string>
+    <string name="select_normal">Versão Normal selecionada.</string>
+    <string name="select_ucr">Versão UCR selecionada.</string>
+    <string name="msg_error">Preencha os dois espaços em branco.</string>
+    <string name="msg_error_last_name">O sobrenome deve ter pelo menos duas letras.</string>
+</resources>
