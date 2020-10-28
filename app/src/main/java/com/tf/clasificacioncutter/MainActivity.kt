@@ -1,5 +1,6 @@
 package com.tf.clasificacioncutter
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -101,10 +102,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                     }
                     //Resultado de Notacion de Cutter. Ej. F676
                     val cutter = letter+result[1]
-
                     //Cutter que se utilizo para dar la respuesta
                     val cutterUsed = result[0]+": "+result[1]
-
                     //Guardar valores
                     val editor = sharedPref.edit()
                     editor.putString(NUM_CUTTER,cutter)
@@ -134,7 +133,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                     Snackbar.make(findViewById(R.id.container),R.string.msg_error_last_name, Snackbar.LENGTH_LONG).show()
                 }
             }else{
-                //Si alguno o ambos de los EditTexts estan vacios se lo hacemos saber al usuario
+                //Si alguno o ambos de los EditTexts estan vacíos se lo hacemos saber al usuario
                 Snackbar.make(findViewById(R.id.container),R.string.msg_error, Snackbar.LENGTH_LONG).show()
             }
         }
@@ -166,41 +165,39 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
      */
     private fun selectVersion(){
         //Versiones disponibles
-        val versiones = arrayOf("Alfabeto Normal","UCR (Alfabeto con la letras Ch y Ll)")
-
+        val normalString = getString(R.string.abc_normal)
+        val ucrString = getString(R.string.abc_ucr)
+        val versiones = arrayOf(normalString, ucrString)
         //Inicializamos el contructor de AlertDialogs
         val builder = AlertDialog.Builder(this)
         //Titulo del AlertDialog
         builder.setTitle(R.string.db_version_select)
-
         //Creamos una lista de seleccion unica
         builder.setSingleChoiceItems(versiones,sharedPref.getInt(TYPE_DB,0)) { _, which->
             //Que version escogio el usuario
             val selection = versiones[which]
+            //Editor del SharedPreferences
+            val editor = sharedPref.edit()
             try{
-                //Editor del SharedPreferences
-                val editor = sharedPref.edit()
                 //Verificar que se seleccionó la version UCR
                 if (selection.equals(versiones[1])){
-                    //Si selecciono UCR se cambia la version de cutter
                     editor.putInt(TYPE_DB,1)
-                    Toast.makeText(this,"Version UCR seleccionada.",Toast.LENGTH_SHORT).show()
+                    //Si selecciono UCR
+                    Toast.makeText(this,R.string.select_ucr,Toast.LENGTH_SHORT).show()
                 }else{
-                    //Si selecciono NORMAl se cambia la version de cutter
                     editor.putInt(TYPE_DB,0)
-                    Toast.makeText(this,"Version Normal seleccionada.",Toast.LENGTH_SHORT).show()
+                    //Si selecciono NORMAL
+                    Toast.makeText(this,R.string.select_normal,Toast.LENGTH_SHORT).show()
                 }
                 //Guardamos los cambios
                 editor.apply()
-
             }catch(e:IllegalArgumentException){
                 Log.e("TF",e.toString())
             }
         }
         //Creamos el AlertDialog con las caracteristicas de 'builder'
-        val alertDialog = builder.create()
+        val dialog = builder.create()
         //Mostramos el AlertDialog
-        alertDialog.show()
+        dialog.show()
     }
-
 }
