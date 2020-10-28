@@ -88,60 +88,59 @@ class CutterGetter {
         var continuar = true
 
         // Analizar cada item de la lista (csvList)
-        do {
-
-            if(nombreCompleto.equals(csvList[index][0].toUpperCase(Locale.ROOT))){
+        do{
+            if(nombreCompleto == csvList[index][0].toUpperCase(Locale.ROOT)){
                 result = csvList[index]
                 continuar = false
-            }
+            }else {
+                // Primera fila, convertida a valores enteros
+                var row: ArrayList<Int> =
+                    cHelper.strToList(csvList[index][0].toUpperCase(Locale.ROOT))
+                //Fila siguiente, convertida a valores enteros
+                var sRow: ArrayList<Int> =
+                    cHelper.strToList(csvList[index + 1][0].toUpperCase(Locale.ROOT))
 
-            // Primera fila, convertida a valores enteros
-            var row: ArrayList<Int> = cHelper.strToList(csvList[index][0].toUpperCase(Locale.ROOT))
-            //Fila siguiente, convertida a valores enteros
-            var sRow: ArrayList<Int> = cHelper.strToList(csvList[index+1][0].toUpperCase(Locale.ROOT))
-
-            // Si la version es UCR, se realiza una modificacion a los valores enteros,
-            // la UCR utiliza una version de Cutter que tiene las letras 'Ch' y 'Ll', por lo que
-            // hay que cambiarlo
-            if (dbType==1){
-                row = cHelper.ucrFix(row)
-                sRow = cHelper.ucrFix(sRow)
-                scnStr = cHelper.ucrFix(scnStr)
-            }
-
-            // Valor entero que dependera del orden lexicografico de scnStr con respecto a row
-            val prevRow:Int = cHelper.compareStrTo(scnStr,row)
-            //valor entero que dependera del orden lexicografico de scnStr con respecto a sRow
-            val nextRow:Int = cHelper.compareStrTo(scnStr,sRow)
-
-            // Valor entero que servira para determinar el orden lexicografico de las iniciales de scnStr y row
-            val pInicial:Int = scnStr.last()-row.last()
-            // Lo mismo que la anterior solo que con sRow en lugar de row
-            val sInicial:Int = scnStr.last()-sRow.last()
-
-            // Si el valor de prevRow es positivo o 0 y nextRow es negativo,
-            // significa que scnStr se encuentra entre row y sRow, o es igual a row
-            if(prevRow>=0 && nextRow<0){
-                // Verificamos el orden lexicografico de old con respecto a row
-                val com:Int = cHelper.compareStrTo(old,row)
-
-                // Verificar si la inicial esta entre la inicial de row y sRow, o es row
-                if(pInicial>=0 && sInicial<0){
-                    //El resultado es igual a la fila que se analiza actualmente
-                    result = csvList[index]
+                // Si la version es UCR, se realiza una modificacion a los valores enteros,
+                // la UCR utiliza una version de Cutter que tiene las letras 'Ch' y 'Ll', por lo que
+                // hay que cambiarlo
+                if (dbType == 1) {
+                    row = cHelper.ucrFix(row)
+                    sRow = cHelper.ucrFix(sRow)
+                    scnStr = cHelper.ucrFix(scnStr)
                 }
-                // Verificamos el orden lexicografico de row es negativo,
-                // esto significa que el nuevo item (old) no esta despues del viejo (old)
-                else if(com<0){
-                    // Ahora old se le asgina los valores de row
-                    old = row
-                    // Resultado es igual a la fila que se anaalizo
-                    result = csvList[index]
+
+                // Valor entero que dependera del orden lexicografico de scnStr con respecto a row
+                val prevRow: Int = cHelper.compareStrTo(scnStr, row)
+                //valor entero que dependera del orden lexicografico de scnStr con respecto a sRow
+                val nextRow: Int = cHelper.compareStrTo(scnStr, sRow)
+
+                // Valor entero que servira para determinar el orden lexicografico de las iniciales de scnStr y row
+                val pInicial: Int = scnStr.last() - row.last()
+                // Lo mismo que la anterior solo que con sRow en lugar de row
+                val sInicial: Int = scnStr.last() - sRow.last()
+
+                // Si el valor de prevRow es positivo o 0 y nextRow es negativo,
+                // significa que scnStr se encuentra entre row y sRow, o es igual a row
+                if (prevRow >= 0 && nextRow < 0) {
+                    // Verificamos el orden lexicografico de old con respecto a row
+                    val com: Int = cHelper.compareStrTo(old, row)
+
+                    // Verificar si la inicial esta entre la inicial de row y sRow, o es row
+                    if (pInicial >= 0 && sInicial < 0) {
+                        //El resultado es igual a la fila que se analiza actualmente
+                        result = csvList[index]
+                    }
+                    // Verificamos el orden lexicografico de row es negativo,
+                    // esto significa que el nuevo item (old) no esta despues del viejo (old)
+                    else if (com < 0) {
+                        // Ahora old se le asgina los valores de row
+                        old = row
+                        // Resultado es igual a la fila que se analizo
+                        result = csvList[index]
+                    }
                 }
+                index++
             }
-
-            index++
-
         }while(continuar && size>index)
 
         //Retornar resultado
