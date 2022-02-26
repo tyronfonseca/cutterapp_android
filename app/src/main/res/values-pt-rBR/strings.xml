@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="agradecimiento">Design e desenvolvimento:\nTyron Fonseca A. – 2020\n<a href="https://gitlab.com/tfonseca_14">https://gitlab.com/tfonseca_14</a>\n\nÍcone e outros aspectos da interface do usuário:\nOmar Zamora G.\n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
+    <string name="agradecimiento">Design e desenvolvimento:\nTyron Fonseca A. – 2022\n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a>  Ícone e outros aspectos da interface do usuário:\nOmar Zamora G.\n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
     <string name="bt_search">BUSCAR</string>
     <string name="credit"><u>Sobre</u></string>
     <string name="db_version_select">Selecione o alfabeto para usar</string>
@@ -28,4 +28,6 @@
     <string name="select_ucr">Versão UCR selecionada.</string>
     <string name="msg_error">Preencha os dois espaços em branco.</string>
     <string name="msg_error_last_name">O sobrenome deve ter pelo menos duas letras.</string>
+    <string name="change_version">Alterar</string>
+    <string name="close">Fechar</string>
 </resources>

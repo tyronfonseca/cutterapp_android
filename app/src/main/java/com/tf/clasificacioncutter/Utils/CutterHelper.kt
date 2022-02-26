@@ -10,8 +10,8 @@ class CutterHelper{
 
     // Diccionario utilizado para convertir caracteres/simbolos en valores enteros
     // Note: que no se asignan los valores 4 ni 14. Refierase a la funcion 'ucrFix' para saber mas.
-    private var oldAlph = mapOf("A" to 1,"B" to 2,"C" to 3,"D" to 5,"E" to 6,"F" to 7,"G" to 8,"H" to 9,"I" to 10,"J" to 11,
-        "K" to 12,"L" to 13,"M" to 15,"N" to 16,"Ñ" to 17,"O" to 18,"P" to 19,"Q" to 20,"R" to 21,"S" to 22,"T" to 23,
+    private var oldAlph = mapOf("A" to 1,"B" to 2,"C" to 3, "CH" to 4, "D" to 5,"E" to 6,"F" to 7,"G" to 8,"H" to 9,"I" to 10,"J" to 11,
+        "K" to 12,"L" to 13, "LL" to 14,"M" to 15,"N" to 16,"Ñ" to 17,"O" to 18,"P" to 19,"Q" to 20,"R" to 21,"S" to 22,"T" to 23,
         "U" to 24,"V" to 25,"W" to 26,"X" to 27,"Y" to 28,"Z" to 29,"@" to 30,"," to 0, " " to 0, "-" to 0)
 
     /**
@@ -21,21 +21,16 @@ class CutterHelper{
      * @return Array de enteros que representan los valores numericos de las letras
      */
     fun strToList(str: String): ArrayList<Int>{
-        //Array de enteros que se retornara
         val res : ArrayList<Int> = ArrayList()
 
-        //Variable temporal donde se guarda el valor de spaDict
         var tmp:String?
-        //Variable temporal donde se guarda el valor de oldAlph
         var intVal:Int?
 
         //Analizamos cada caracter del string
-        for(lt in str){
+        for(letra in str){
 
-            //Convertimos de Char a String
-            var letter = lt.toString()
+            var letter = letra.toString()
 
-            //Buscamos la letra en el dicionario de acentos
             tmp = spaDict[letter]
 
             //Si existe se lo asignamos a 'letter'
@@ -52,7 +47,6 @@ class CutterHelper{
             }
 
         }
-        //Retornamos la respuesta
         return res
     }
 
@@ -70,9 +64,7 @@ class CutterHelper{
         //Determinar tamaño de los arrays
         val len1:Int = scnStr.size
         val len2:Int = strComp.size
-        //Determinar el menor
         val lim:Int = Math.min(len1, len2)
-        //Contador
         var k = 0
 
         //Mientras el contador sea menor al limite 'lim'
@@ -98,19 +90,13 @@ class CutterHelper{
      * @return Primera letra deacuerdo al caso
      */
     fun firstLetter(word:String):String{
-        //Letra que se retornara al usuario
         val letter:String
-        //Verificar si las primeras letras son C y H
         if(word[0].equals('C') && word[1].equals('h')){
-            //La letra que se retornara sera "Ch"
             letter = "Ch"
         }
-        //Verificar si las primeras letras son L y L
         else if(word[0].equals('L') && word[1].equals('l')){
-            //La letra que se retornara sera "Ll"
             letter = "Ll"
         }else{
-            //Se retorna el primer caracter de 'word'
             letter = word[0].toString()
         }
         return letter
@@ -123,11 +109,8 @@ class CutterHelper{
      * @return Array de enteros procesado con los valores de 'Ch' y/o 'Ll' asignados
      */
     fun ucrFix(lista:ArrayList<Int>):ArrayList<Int>{
-        //Contador
         var count = 0
-        //Array que se retornara al usuario, copia del array 'lista'
         val arr = lista
-        //Tamaño de la lista, como se analizaran dos items a la vez se resta una unidad
         val lastIndex = lista.size-1
 
         //Verificamos cada item del array 'lista'
@@ -136,11 +119,9 @@ class CutterHelper{
             val prim = lista[i-1]
             //Item que le sigue a 'prim'
             val segu = lista[i]
-
-            //Verificar si prim y segu son C y H, es decir en el string aparecen como CH
-            if(prim==3 && segu==9){
+            if(prim==oldAlph["C"] && segu==oldAlph["H"]){
                 //Modificamos el valor del indice i-1 con 4. 4 representa 'CH'
-                arr.set(i-1,4)
+                arr[i-1] = 4
                 //Eliminamos el item que le sigue
                 arr.removeAt(i)
                 //Agregamos un item temporal al final de la lista, para mantener el mismo tamaño
@@ -148,15 +129,11 @@ class CutterHelper{
                 //Sumamos una unidad al contador
                 count+=1
             }
-            //Verificar si prim y segu son L y L, es decir en el string aparecen como LL
-            else if(prim==13 && segu==13){
+            else if(prim==oldAlph["L"] && segu==oldAlph["L"]){
                 //Modificamos el valor del indice i-1 con 14. 14 representa 'LL'
-                arr.set(i-1,14)
-                //Eliminamos el item que le sigue
+                arr[i-1] = 14
                 arr.removeAt(i)
-                //Agregamos un item temporal al final de la lista, para mantener el mismo tamaño
                 arr.add(0)
-                //Sumamos una unidad al contador
                 count+=1
             }
         }
@@ -165,10 +142,8 @@ class CutterHelper{
         while(count>0){
             //Eliminamos el ultimo item de la lista
             arr.removeAt(arr.size-1)
-            //Reducimos el contador una unidad
             count-=1
         }
-        //Array con los valores modificados
         return arr
     }
 }

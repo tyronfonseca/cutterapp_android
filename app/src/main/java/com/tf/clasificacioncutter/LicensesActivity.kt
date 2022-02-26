@@ -3,19 +3,20 @@ package com.tf.clasificacioncutter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.widget.TextView
+import com.tf.clasificacioncutter.databinding.ActivityLicensesBinding
 
 class LicensesActivity : AppCompatActivity() {
-
+    private lateinit var binding : ActivityLicensesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_licenses)
+        binding = ActivityLicensesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //Mostrar botón para retroceder
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val kotlinLink = findViewById<TextView>(R.id.kotlin_link)
-        val opencsvLink = findViewById<TextView>(R.id.opencsv_link)
+        val kotlinLink = binding.kotlinLink
+        val opencsvLink = binding.opencsvLink
 
         //Estos TextViews tienen links que hay que habilitar
         kotlinLink.movementMethod = LinkMovementMethod.getInstance()

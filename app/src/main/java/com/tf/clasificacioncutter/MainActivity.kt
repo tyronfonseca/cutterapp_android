@@ -1,6 +1,5 @@
 package com.tf.clasificacioncutter
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +14,7 @@ import com.tf.clasificacioncutter.Utils.CutterGetter
 import com.tf.clasificacioncutter.Utils.CutterHelper
 import android.graphics.Typeface
 import androidx.core.content.res.ResourcesCompat
+import com.tf.clasificacioncutter.databinding.ActivityMainBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -24,27 +24,28 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private val cutterHelper = CutterHelper()
     private val PRIVATE_MODE = 0
     private val PREF_NAME = "sharedPref"
-    lateinit var sharedPref:SharedPreferences
+    private lateinit var sharedPref:SharedPreferences
     private val TYPE_DB = "DB"
     private val NUM_CUTTER = "numeroCutter"
     private val CUTTER_USED = "cutterUsado"
 
-    var dbType:Int = 0 //Tipo de cutter por defecto
-    lateinit var listaArray:ArrayList<Array<String>>
+    private var dbType:Int = 0 //Tipo de cutter por defecto
+    private lateinit var listaArray:ArrayList<Array<String>>
+
+    private lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val txvResult = findViewById<TextView>(R.id.txv_cutter_result)
-        val txvCutter = findViewById<TextView>(R.id.txv_cutter_used)
-        val txvCredit = findViewById<TextView>(R.id.txv_credit)
+        val txvResult = binding.txvCutterResult
+        val txvCutter = binding.txvCutterUsed
 
-        val etxLastName = findViewById<EditText>(R.id.etx_last_name)
-        val etxName = findViewById<EditText>(R.id.etx_name)
+        val etxLastName = binding.etxLastName
+        val etxName = binding.etxName
 
-        val btSearch = findViewById<Button>(R.id.bt_search)
-        val btVersion = findViewById<ImageButton>(R.id.bt_db)
+        val btSearch = binding.btSearch
 
         sharedPref = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         sharedPref.registerOnSharedPreferenceChangeListener(this)
@@ -76,24 +77,18 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         //Lista de nombres y numeros de Cutter
         listaArray = cutterGetter.getCutterList(this,dbType)
 
-        //Animacion de salida
+        //Animaciones
         val fadeOut = AnimationUtils.loadAnimation(this,R.anim.fade_out)
-        //Animacion de entrada
         val fadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in)
 
         //Agrega funcionalidad al boton de busqueda
         btSearch.setOnClickListener{
-            //Conseguimos los valores de los EditTexts
             val lastName = etxLastName.text.toString().toUpperCase(Locale.ROOT)
             val name  = etxName.text.toString().toUpperCase(Locale.ROOT)
 
-            //Verificamos que no esten vacios
             if(name.isNotEmpty() && lastName.isNotEmpty()){
-                //Verificar que el apellido sea más de una letra
                 if(lastName.length>1){
-                    //Array con el resultado de la notacion de Cutter
                     val result = cutterGetter.search(name,lastName,dbType,listaArray)
-
                     //Primera letra del apellido
                     var letter = result[0][0].toString()
                     //Si es UCR se verifica si la primera letra es "CH" o "LL"
@@ -102,8 +97,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                     }
                     //Resultado de Notacion de Cutter. Ej. F676
                     val cutter = letter+result[1]
-                    //Cutter que se utilizo para dar la respuesta
                     val cutterUsed = result[0]+": "+result[1]
+
                     //Guardar valores
                     val editor = sharedPref.edit()
                     editor.putString(NUM_CUTTER,cutter)
@@ -119,32 +114,29 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                         override fun onAnimationStart(p0: Animation?) {}
                         override fun onAnimationRepeat(p0: Animation?) {}
                         override fun onAnimationEnd(p0: Animation?) {
-                            //Cuando las animaciones terminen, iniciamos las animaciones de entrada
                             txvCutter.startAnimation(fadeIn)
                             txvResult.startAnimation(fadeIn)
-                            //Cambiamos los valores por la respuesta (Notacion de Cutter)
+
                             txvCutter.text = cutterUsed
                             txvResult.text = cutter
                         }
                     })
                 }
                 else{
-                    //El apellido es de solo una letra
                     Snackbar.make(findViewById(R.id.container),R.string.msg_error_last_name, Snackbar.LENGTH_LONG).show()
                 }
             }else{
-                //Si alguno o ambos de los EditTexts estan vacíos se lo hacemos saber al usuario
                 Snackbar.make(findViewById(R.id.container),R.string.msg_error, Snackbar.LENGTH_LONG).show()
             }
         }
 
         //Cambiar de version de Cutter
-        btVersion.setOnClickListener{
+        binding.btDb.setOnClickListener{
             selectVersion()
         }
 
         //Abrir Activity de Acerca de
-        txvCredit.setOnClickListener {
+        binding.txvCredit.setOnClickListener {
             startActivity(Intent(this@MainActivity,LicensesActivity::class.java))
         }
 
@@ -154,9 +146,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
         //Version de cutter
         val get = sharedPref.getInt(TYPE_DB,0)
-        //Actualizar lista con la version correcta
         listaArray = cutterGetter.getCutterList(this,get)
-        //Modificar la version
         dbType = get
     }
 
@@ -168,36 +158,34 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val normalString = getString(R.string.abc_normal)
         val ucrString = getString(R.string.abc_ucr)
         val versiones = arrayOf(normalString, ucrString)
+        var selected = 0
         //Inicializamos el contructor de AlertDialogs
         val builder = AlertDialog.Builder(this)
-        //Titulo del AlertDialog
         builder.setTitle(R.string.db_version_select)
-        //Creamos una lista de seleccion unica
         builder.setSingleChoiceItems(versiones,sharedPref.getInt(TYPE_DB,0)) { _, which->
-            //Que version escogio el usuario
-            val selection = versiones[which]
-            //Editor del SharedPreferences
-            val editor = sharedPref.edit()
-            try{
-                //Verificar que se seleccionó la version UCR
-                if (selection.equals(versiones[1])){
-                    editor.putInt(TYPE_DB,1)
-                    //Si selecciono UCR
-                    Toast.makeText(this,R.string.select_ucr,Toast.LENGTH_SHORT).show()
-                }else{
-                    editor.putInt(TYPE_DB,0)
-                    //Si selecciono NORMAL
-                    Toast.makeText(this,R.string.select_normal,Toast.LENGTH_SHORT).show()
-                }
-                //Guardamos los cambios
-                editor.apply()
-            }catch(e:IllegalArgumentException){
-                Log.e("TF",e.toString())
-            }
+            selected = which
+            changeSharedPreferences(versiones[selected])
         }
-        //Creamos el AlertDialog con las caracteristicas de 'builder'
+        builder.setNegativeButton(R.string.close){ _, which->
+            changeSharedPreferences(versiones[selected])
+        }
         val dialog = builder.create()
-        //Mostramos el AlertDialog
         dialog.show()
+    }
+    private fun changeSharedPreferences(selection: String){
+        val editor = sharedPref.edit()
+        try{
+            //Selecciono UCR
+            if (selection.equals(getString(R.string.abc_ucr))){
+                editor.putInt(TYPE_DB,1)
+                Toast.makeText(this,R.string.select_ucr,Toast.LENGTH_SHORT).show()
+            }else{
+                editor.putInt(TYPE_DB,0)
+                Toast.makeText(this,R.string.select_normal,Toast.LENGTH_SHORT).show()
+            }
+            editor.apply()
+        }catch(e:IllegalArgumentException){
+            Log.e("TF",e.toString())
+        }
     }
 }
