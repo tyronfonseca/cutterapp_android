@@ -158,27 +158,34 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val normalString = getString(R.string.abc_normal)
         val ucrString = getString(R.string.abc_ucr)
         val versiones = arrayOf(normalString, ucrString)
+        var selected = 0
         //Inicializamos el contructor de AlertDialogs
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.db_version_select)
         builder.setSingleChoiceItems(versiones,sharedPref.getInt(TYPE_DB,0)) { _, which->
-            val selection = versiones[which]
-            val editor = sharedPref.edit()
-            try{
-                //Selecciono UCR
-                if (selection.equals(versiones[1])){
-                    editor.putInt(TYPE_DB,1)
-                    Toast.makeText(this,R.string.select_ucr,Toast.LENGTH_SHORT).show()
-                }else{
-                    editor.putInt(TYPE_DB,0)
-                    Toast.makeText(this,R.string.select_normal,Toast.LENGTH_SHORT).show()
-                }
-                editor.apply()
-            }catch(e:IllegalArgumentException){
-                Log.e("TF",e.toString())
-            }
+            selected = which
+            changeSharedPreferences(versiones[selected])
+        }
+        builder.setNegativeButton(R.string.close){ _, which->
+            changeSharedPreferences(versiones[selected])
         }
         val dialog = builder.create()
         dialog.show()
+    }
+    private fun changeSharedPreferences(selection: String){
+        val editor = sharedPref.edit()
+        try{
+            //Selecciono UCR
+            if (selection.equals(getString(R.string.abc_ucr))){
+                editor.putInt(TYPE_DB,1)
+                Toast.makeText(this,R.string.select_ucr,Toast.LENGTH_SHORT).show()
+            }else{
+                editor.putInt(TYPE_DB,0)
+                Toast.makeText(this,R.string.select_normal,Toast.LENGTH_SHORT).show()
+            }
+            editor.apply()
+        }catch(e:IllegalArgumentException){
+            Log.e("TF",e.toString())
+        }
     }
 }

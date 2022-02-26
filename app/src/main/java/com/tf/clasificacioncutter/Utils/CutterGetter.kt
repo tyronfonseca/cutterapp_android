@@ -132,6 +132,9 @@ class CutterGetter {
             }
         }while(continuar && size>index)
         //Retornar resultado
+        if(result.size == 1){
+            result = csvList[index]
+        }
         return result
     }
 }
