@@ -80,13 +80,15 @@ class CutterGetter {
 
         // Analizar cada item de la lista (csvList)
         do{
-            if(nombreCompleto == csvList[index][0].toUpperCase(Locale.ROOT)){
+            if(nombreCompleto == csvList[index][0].uppercase(Locale.ROOT)){
                 result = csvList[index]
                 continuar = false
             }else {
                 // Convertir las filas a valores enteros
-                var row: ArrayList<Int> = cHelper.strToList(csvList[index][0].toUpperCase(Locale.ROOT))
-                var secondRow: ArrayList<Int> = cHelper.strToList(csvList[index + 1][0].toUpperCase(Locale.ROOT))
+                var row: ArrayList<Int> = cHelper.strToList(csvList[index][0].uppercase(Locale.ROOT))
+                var secondRow: ArrayList<Int> = cHelper.strToList(csvList[index + 1][0].uppercase(
+                    Locale.ROOT
+                ))
 
                 // Si la version es UCR, se realiza una modificacion a los valores enteros,
                 // la UCR utiliza una version de Cutter que tiene las letras 'Ch' y 'Ll', por lo que

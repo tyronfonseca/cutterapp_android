@@ -83,8 +83,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         //Agrega funcionalidad al boton de busqueda
         btSearch.setOnClickListener{
-            val lastName = etxLastName.text.toString().toUpperCase(Locale.ROOT)
-            val name  = etxName.text.toString().toUpperCase(Locale.ROOT)
+            val lastName = etxLastName.text.toString().uppercase(Locale.ROOT)
+            val name  = etxName.text.toString().uppercase(Locale.ROOT)
 
             if(name.isNotEmpty() && lastName.isNotEmpty()){
                 if(lastName.length>1){
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             selected = which
             changeSharedPreferences(versiones[selected])
         }
-        builder.setNegativeButton(R.string.close){ _, which->
+        builder.setNegativeButton(R.string.close){ _, _ ->
             changeSharedPreferences(versiones[selected])
         }
         val dialog = builder.create()
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val editor = sharedPref.edit()
         try{
             //Selecciono UCR
-            if (selection.equals(getString(R.string.abc_ucr))){
+            if (selection == getString(R.string.abc_ucr)){
                 editor.putInt(TYPE_DB,1)
                 Toast.makeText(this,R.string.select_ucr,Toast.LENGTH_SHORT).show()
             }else{
