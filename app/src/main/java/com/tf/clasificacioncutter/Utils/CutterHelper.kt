@@ -1,5 +1,7 @@
 package com.tf.clasificacioncutter.Utils
 
+import kotlin.math.min
+
 /**
  * Clase con varias funciones que ayudan a convertir y/o procesar datos de la app.
  */
@@ -64,7 +66,7 @@ class CutterHelper{
         //Determinar tamaño de los arrays
         val len1:Int = scnStr.size
         val len2:Int = strComp.size
-        val lim:Int = Math.min(len1, len2)
+        val lim:Int = min(len1, len2)
         var k = 0
 
         //Mientras el contador sea menor al limite 'lim'
@@ -90,14 +92,12 @@ class CutterHelper{
      * @return Primera letra deacuerdo al caso
      */
     fun firstLetter(word:String):String{
-        val letter:String
-        if(word[0].equals('C') && word[1].equals('h')){
-            letter = "Ch"
-        }
-        else if(word[0].equals('L') && word[1].equals('l')){
-            letter = "Ll"
+        val letter:String = if(word[0] == 'C' && word[1] == 'h'){
+            "Ch"
+        } else if(word[0] == 'L' && word[1] == 'l'){
+            "Ll"
         }else{
-            letter = word[0].toString()
+            word[0].toString()
         }
         return letter
     }
@@ -108,42 +108,40 @@ class CutterHelper{
      * @param lista Array de enteros a convertir
      * @return Array de enteros procesado con los valores de 'Ch' y/o 'Ll' asignados
      */
-    fun ucrFix(lista:ArrayList<Int>):ArrayList<Int>{
+    fun ucrFix(lista: ArrayList<Int>): ArrayList<Int> {
         var count = 0
-        val arr = lista
-        val lastIndex = lista.size-1
+        val lastIndex = lista.size - 1
 
         //Verificamos cada item del array 'lista'
-        for (i in 1..lastIndex){
+        for (i in 1..lastIndex) {
             //Primer item
-            val prim = lista[i-1]
+            val prim = lista[i - 1]
             //Item que le sigue a 'prim'
             val segu = lista[i]
-            if(prim==oldAlph["C"] && segu==oldAlph["H"]){
+            if (prim == oldAlph["C"] && segu == oldAlph["H"]) {
                 //Modificamos el valor del indice i-1 con 4. 4 representa 'CH'
-                arr[i-1] = 4
+                lista[i - 1] = 4
                 //Eliminamos el item que le sigue
-                arr.removeAt(i)
+                lista.removeAt(i)
                 //Agregamos un item temporal al final de la lista, para mantener el mismo tamaño
-                arr.add(0)
+                lista.add(0)
                 //Sumamos una unidad al contador
-                count+=1
-            }
-            else if(prim==oldAlph["L"] && segu==oldAlph["L"]){
+                count += 1
+            } else if (prim == oldAlph["L"] && segu == oldAlph["L"]) {
                 //Modificamos el valor del indice i-1 con 14. 14 representa 'LL'
-                arr[i-1] = 14
-                arr.removeAt(i)
-                arr.add(0)
-                count+=1
+                lista[i - 1] = 14
+                lista.removeAt(i)
+                lista.add(0)
+                count += 1
             }
         }
 
         //Si se agregaron ceros al final de las lista, se eliminan
-        while(count>0){
+        while (count > 0) {
             //Eliminamos el ultimo item de la lista
-            arr.removeAt(arr.size-1)
-            count-=1
+            lista.removeAt(lista.size - 1)
+            count -= 1
         }
-        return arr
+        return lista
     }
 }
