@@ -6,8 +6,6 @@ lexicografico para poder realizar la tarea.
 
 <b>VERSION: 1.0.3</b>
 
-<b>AUTHORS: </b>Tyron Fonseca Alvarado - tyron.alva1496@gmail.com
-
 
 Este proyecto utiliza las siguientes librerias:
 
