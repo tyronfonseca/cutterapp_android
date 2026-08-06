@@ -1,54 +1,67 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdk 34
+    namespace 'com.tf.clasificacioncutter'
+    compileSdk 37
+
     defaultConfig {
         applicationId "com.tf.clasificacioncutter"
-        minSdkVersion 21
-        targetSdkVersion 34
+        minSdk 23
+        targetSdk 37
         versionCode 8
-        versionName "1.1.2"
+        versionName "1.2.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
     configurations {
         configureEach {
             exclude module: 'commons-logging'
         }
     }
-    buildFeatures {
-        viewBinding true
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    testOptions {
-        unitTests.includeAndroidResources = true
-    }
-    namespace 'com.tf.clasificacioncutter'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //noinspection GradleDependency
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-/**  Agregadas al proyecto **/
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'com.opencsv:opencsv:5.9'
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    // AndroidX
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.core:core-ktx:1.19.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.2'
+
+    // Google & Material
+    implementation 'com.google.android.material:material:1.14.0'
+
+    // Third party
+    implementation 'com.opencsv:opencsv:5.12.0'
+
+    // Testing
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test:runner:1.7.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
 }
