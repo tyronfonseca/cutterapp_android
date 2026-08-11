@@ -1,27 +1,37 @@
 package com.tf.clasificacioncutter
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.tf.clasificacioncutter.databinding.ActivityLicensesBinding
 
 class LicensesActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityLicensesBinding
+    private lateinit var binding: ActivityLicensesBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLicensesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Mostrar botón para retroceder
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = true
 
-        val kotlinLink = binding.kotlinLink
-        val opencsvLink = binding.opencsvLink
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
-        //Estos TextViews tienen links que hay que habilitar
-        kotlinLink.movementMethod = LinkMovementMethod.getInstance()
-        opencsvLink.movementMethod = LinkMovementMethod.getInstance()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        binding.kotlinLink.movementMethod = LinkMovementMethod.getInstance()
+        binding.opencsvLink.movementMethod = LinkMovementMethod.getInstance()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
+    }
 }
