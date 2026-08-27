@@ -1,15 +1,13 @@
 package com.tf.clasificacioncutter
 
-import android.content.Context
-import android.util.Log
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
-import com.tf.clasificacioncutter.Utils.CutterGetter
-
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import com.tf.clasificacioncutter.utils.CutterGetter
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -18,33 +16,35 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+
     @Test
     fun useAppContext() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.tf.clasificacioncutter", appContext.packageName)
     }
 
     @Test
-    fun getFile_works(){
-        val context: Context = InstrumentationRegistry.getTargetContext()
-        val lista = CutterGetter().getCutterList(context.applicationContext,1)
-        Log.d("SIZE",lista.size.toString())
-//        for (item in lista){
-//            Log.d("ITEM", item[0]+" "+item[1])
-//        }
-
+    fun getCutterList_isNotNullAndNotEmpty() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val list = CutterGetter().getCutterList(appContext)
+        
+        assertNotNull("The cutter list should not be null", list)
+        assertFalse("The cutter list should not be empty", list.isEmpty())
     }
+
     @Test
-    fun getCutter_works(){
-        val context: Context = InstrumentationRegistry.getTargetContext()
-        val lista = CutterGetter().getCutterList(context.applicationContext, 1)
-        val name = "ROGER"
-        val lastName = "BACH"
+    fun search_withRealData_returnsValidResult() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val getter = CutterGetter()
+        val list = getter.getCutterList(appContext)
 
+        // Perform a search with names that likely exist in any Cutter table predecessor
+        val result = getter.search("Juan", "Perez", list)
 
-        val result = CutterGetter().search(name,lastName,2,lista)
-
-        Log.e("RESULADO:",result[0]+" "+result[1])
+        assertNotNull(result)
+        assertEquals(2, result.size)
+        assertFalse("The first element of the result should not be empty", result[0].isEmpty())
+        assertFalse("The second element of the result should not be empty", result[1].isEmpty())
     }
 }

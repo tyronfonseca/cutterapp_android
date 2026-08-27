@@ -6,8 +6,6 @@
             android:largeScreens="true"
             android:xlargeScreens="true"/>
     <application
-            android:allowBackup="false"
-            android:resizeableActivity="false"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:label="@string/app_name"
@@ -22,8 +20,11 @@
                     android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".HistoryActivity"
+            android:exported="false"
+            android:label="Historial" />
+        <activity
                 android:name=".MainActivity"
-                android:screenOrientation="portrait"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
