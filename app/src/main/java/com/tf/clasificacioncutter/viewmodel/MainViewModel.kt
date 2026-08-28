@@ -74,6 +74,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         uiState = uiState.copy(name = value, errorMessage = null)
     }
 
+    fun searchReset(){
+        uiState = uiState.copy(lastName = "", name = "", errorMessage = null)
+    }
+
     fun search() {
         val lastName = uiState.lastName.trim()
         val name = uiState.name.trim()

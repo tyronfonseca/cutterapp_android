@@ -36,5 +36,25 @@
     <string name="msg_error">Write the Last Name and Name.</string>
     <string name="change_version">Change</string>
     <string name="close">Close</string>
+    <string name="btn_history_desc">History</string>
+    <string name="btn_text_recognition_desc">Text Recognition</string>
+    <string name="empty_history">Your queries will be displayed here</string>
+    <string name="no_results_found">No results found</string>
+    <string name="delete_history_title">Delete history</string>
+    <string name="delete_history_text">Are you sure you want to delete ALL your cutter search history? This action cannot be undone.</string>
+    <string name="delete_history_btn_delete">Delete All</string>
+    <string name="cancel">Cancel</string>
+    <string name="search_history_title">Search history</string>
+    <string name="go_back_btn">Go Back</string>
+    <string name="menu">Menu</string>
+    <string name="menu_delete_all_search_history">Delete all search history</string>
+    <string name="search_placeholder">Search by calling number, date or name…</string>
+    <string name="text_recognition_title_alternative">Touch the squares to select the text</string>
+    <string name="text_recognition_title">Scan Text</string>
+    <string name="reset">Reset</string>
+    <string name="scan_btn">Scan text on image</string>
+    <string name="grant_camera_access">Grant camera access permission</string>
+    <string name="text_selected_title">Modify the text if needed</string>
+    <string name="use_this">Use this</string>
 
 </resources>

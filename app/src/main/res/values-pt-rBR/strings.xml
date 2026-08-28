@@ -17,4 +17,24 @@
     <string name="msg_error_last_name">O sobrenome deve ter pelo menos duas letras.</string>
     <string name="change_version">Alterar</string>
     <string name="close">Fechar</string>
+    <string name="btn_history_desc">Histórico</string>
+    <string name="btn_text_recognition_desc">" Reconhecimento de texto"</string>
+    <string name="empty_history">Suas consultas serão exibidas aqui</string>
+    <string name="no_results_found">Nenhum resultado encontrado</string>
+    <string name="delete_history_title">Excluir histórico</string>
+    <string name="delete_history_text">Tem certeza de que deseja excluir TODO o seu histórico de pesquisa? Esta ação não pode ser desfeita.</string>
+    <string name="delete_history_btn_delete">Excluir tudo</string>
+    <string name="cancel">Cancelar</string>
+    <string name="search_history_title">Histórico de pesquisa</string>
+    <string name="go_back_btn">Voltar</string>
+    <string name="menu">Menu</string>
+    <string name="menu_delete_all_search_history">Excluir todo o histórico de pesquisa</string>
+    <string name="search_placeholder">Pesquisar por número, data ou nome…</string>
+    <string name="text_recognition_title_alternative">Toque nos quadrados para selecionar o texto</string>
+    <string name="text_recognition_title">Digitalizar texto</string>
+    <string name="reset">Redefinir</string>
+    <string name="scan_btn">Digitalizar texto na imagem</string>
+    <string name="grant_camera_access">Conceder permissão de acesso à câmera</string>
+    <string name="text_selected_title">Modifique o texto se necessário</string>
+    <string name="use_this">Usar isso</string>
 </resources>

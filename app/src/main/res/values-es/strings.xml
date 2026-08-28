@@ -24,5 +24,25 @@
     <string name="agradecimiento">Diseño y desarrollo:\nTyron Fonseca – 2024  \n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a>\n\nÍcono y otros aspectos de la UI:\nOmar Zamora G.  \n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
     <string name="change_version">Cambiar</string>
     <string name="close">Cerrar</string>
+    <string name="btn_history_desc">Historial</string>
+    <string name="btn_text_recognition_desc">Reconocimiento de texto</string>
+    <string name="empty_history">Tus consultas se mostrarán aquí</string>
+    <string name="no_results_found">No se encontraron resultados</string>
+    <string name="delete_history_title">Eliminar historial</string>
+    <string name="delete_history_text">¿Estás seguro de que quieres eliminar TODO tu historial de búsqueda? Esta acción no se puede deshacer.</string>
+    <string name="delete_history_btn_delete">Eliminar todo</string>
+    <string name="cancel">Cancelar</string>
+    <string name="search_history_title">Historial de búsqueda</string>
+    <string name="go_back_btn">Volver</string>
+    <string name="menu">Menú</string>
+    <string name="menu_delete_all_search_history">Eliminar todo el historial de búsqueda</string>
+    <string name="search_placeholder">Buscar por número, fecha o nombre…</string>
+    <string name="text_recognition_title_alternative">Toca los cuadros para seleccionar el texto</string>
+    <string name="text_recognition_title">Escanear texto</string>
+    <string name="reset">Reiniciar</string>
+    <string name="scan_btn">Escanear texto en imagen</string>
+    <string name="grant_camera_access">Conceder permiso de acceso a la cámara</string>
+    <string name="text_selected_title">Modifica el texto si es necesario</string>
+    <string name="use_this">Usar esto</string>
 
 </resources>

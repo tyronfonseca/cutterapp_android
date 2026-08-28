@@ -18,13 +18,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.data.CutterSearch
-import com.tf.clasificacioncutter.ui.theme.CutterPrimary
-import com.tf.clasificacioncutter.ui.theme.CutterTextSecondary
 import com.tf.clasificacioncutter.viewmodel.HistoryViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -56,14 +55,14 @@ fun HistoryScreen(viewModel: HistoryViewModel, onBack: () -> Unit) {
                     onDeleteAll = { showMenu = true },
                     showMenu = showMenu,
                     onDismissMenu = { showMenu = false },
-                    onConfirmDeleteAll = { 
+                    onConfirmDeleteAll = {
                         showMenu = false
-                        showDeleteAllConfirm = true 
+                        showDeleteAllConfirm = true
                     }
                 )
             }
         },
-        containerColor = CutterPrimary
+        containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
         Column(
             modifier = Modifier
@@ -83,10 +82,10 @@ fun HistoryScreen(viewModel: HistoryViewModel, onBack: () -> Unit) {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = if (viewModel.searchQuery.isEmpty()) 
-                            "No hay búsquedas guardadas" 
-                        else "No hay resultados para la búsqueda",
-                        color = CutterTextSecondary,
+                        text = if (viewModel.searchQuery.isEmpty())
+                            stringResource(R.string.empty_history)
+                        else stringResource(R.string.no_results_found),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 18.sp
                     )
                 }
@@ -114,8 +113,8 @@ fun HistoryScreen(viewModel: HistoryViewModel, onBack: () -> Unit) {
     if (showDeleteAllConfirm) {
         AlertDialog(
             onDismissRequest = { showDeleteAllConfirm = false },
-            title = { Text("Eliminar todo el historial") },
-            text = { Text("¿Estás seguro de que deseas eliminar todas las búsquedas guardadas? Esta acción no se puede deshacer.") },
+            title = { Text(stringResource(R.string.delete_history_title)) },
+            text = { Text(stringResource(R.string.delete_history_text)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -123,12 +122,13 @@ fun HistoryScreen(viewModel: HistoryViewModel, onBack: () -> Unit) {
                         showDeleteAllConfirm = false
                     }
                 ) {
-                    Text("Eliminar todo", color = Color.Red)
+                    Text(stringResource(R.string.delete_history_btn_delete),
+                        color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteAllConfirm = false }) {
-                    Text("Cancelar")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
@@ -145,32 +145,36 @@ fun HistoryTopBar(
     onConfirmDeleteAll: () -> Unit
 ) {
     TopAppBar(
-        title = { Text("Historial de Búsquedas", color = Color.White) },
+        title = { Text(stringResource(R.string.search_history_title)) },
         navigationIcon = {
             IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Volver",
-                    tint = Color.White
+                    contentDescription = stringResource(R.string.go_back_btn)
                 )
             }
         },
         actions = {
             IconButton(onClick = onDeleteAll) {
-                Icon(Icons.Default.MoreVert, contentDescription = "Menú", tint = Color.White)
+                Icon(Icons.Default.MoreVert,
+                    contentDescription = stringResource(R.string.menu))
             }
             DropdownMenu(
                 expanded = showMenu,
                 onDismissRequest = onDismissMenu
             ) {
                 DropdownMenuItem(
-                    text = { Text("Eliminar todo el historial", color = Color.Red) },
+                    text = { Text(stringResource(R.string.menu_delete_all_search_history),
+                        color = MaterialTheme.colorScheme.error) },
                     onClick = onConfirmDeleteAll
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = CutterPrimary
+            containerColor = MaterialTheme.colorScheme.surface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+            actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
     )
 }
@@ -183,19 +187,22 @@ fun SelectionTopBar(
     onDelete: () -> Unit
 ) {
     TopAppBar(
-        title = { Text("$count seleccionados", color = Color.White) },
+        title = { Text("$count seleccionados") },
         navigationIcon = {
             IconButton(onClick = onClearSelection) {
-                Icon(Icons.Default.Close, contentDescription = "Cerrar", tint = Color.White)
+                Icon(Icons.Default.Close, contentDescription = "Cerrar")
             }
         },
         actions = {
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Eliminar", tint = Color.White)
+                Icon(Icons.Default.Delete, contentDescription = "Eliminar")
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.DarkGray
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            actionIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer
         )
     )
 }
@@ -211,22 +218,28 @@ fun SearchBar(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        placeholder = { Text("Buscar por fecha, resultado o cutter...", color = CutterTextSecondary) },
-        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = CutterTextSecondary) },
+        placeholder = { Text(stringResource(R.string.search_placeholder)) },
+        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
         trailingIcon = {
             if (query.isNotEmpty()) {
                 IconButton(onClick = { onQueryChange("") }) {
-                    Icon(Icons.Default.Close, contentDescription = "Limpiar", tint = CutterTextSecondary)
+                    Icon(Icons.Default.Close, contentDescription = "Limpiar")
                 }
             }
         },
         singleLine = true,
         colors = OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            focusedBorderColor = Color.White,
-            unfocusedBorderColor = CutterTextSecondary,
-            cursorColor = Color.White
+            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            focusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            focusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            cursorColor = MaterialTheme.colorScheme.primary
         )
     )
 }
@@ -244,6 +257,18 @@ fun HistoryItem(
         sdf.format(Date(item.timestamp))
     }
 
+    val containerColor = if (isSelected) {
+        MaterialTheme.colorScheme.primaryContainer
+    } else {
+        MaterialTheme.colorScheme.surfaceContainerLow
+    }
+
+    val contentColor = if (isSelected) {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    } else {
+        MaterialTheme.colorScheme.onSurface
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -252,10 +277,10 @@ fun HistoryItem(
                 onLongClick = { onSelect() }
             ),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) Color.White.copy(alpha = 0.2f) 
-                             else Color.White.copy(alpha = 0.1f)
+            containerColor = containerColor
         ),
-        border = if (isSelected) BorderStroke(1.dp, Color.White) else null
+        border = if (isSelected) BorderStroke(1.dp
+            , MaterialTheme.colorScheme.primary) else null
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -273,36 +298,36 @@ fun HistoryItem(
                             checked = isSelected,
                             onCheckedChange = { onSelect() },
                             colors = CheckboxDefaults.colors(
-                                checkedColor = Color.White,
-                                checkmarkColor = CutterPrimary
+                                checkedColor = MaterialTheme.colorScheme.primary,
+                                checkmarkColor = MaterialTheme.colorScheme.onPrimary
                             ),
                             modifier = Modifier.padding(end = 8.dp)
                         )
                     }
                     Text(
                         text = item.result,
-                        color = Color.White,
+                        color = contentColor,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = "(${item.cutterUsedText})",
                         modifier = Modifier.padding(start = 8.dp),
-                        color = Color.White,
+                        color = if (isSelected) contentColor else MaterialTheme.colorScheme.secondary,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
                 }
                 Text(
                     text = dateString,
-                    color = CutterTextSecondary,
+                    color = if (isSelected) contentColor else MaterialTheme.colorScheme.outline,
                     fontSize = 12.sp
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Búsqueda: ${item.originalSearch}",
-                color = CutterTextSecondary,
+                text = item.originalSearch,
+                color = if (isSelected) contentColor else MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 16.sp
             )
         }
