@@ -1,4 +1,4 @@
-package com.tf.clasificacioncutter.ui.screens
+package com.tf.clasificacioncutter.ui.screens.textrecognition
 
 import android.Manifest
 import android.graphics.Rect
@@ -15,8 +15,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.DocumentScanner
@@ -37,20 +35,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.tf.clasificacioncutter.R
+import com.tf.clasificacioncutter.ui.components.DialogWithTextField
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
-import com.tf.clasificacioncutter.ui.theme.CutterTextSecondary
-import com.tf.clasificacioncutter.viewmodel.DetectedTextInfo
-import com.tf.clasificacioncutter.viewmodel.TextRecognitionViewModel
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -226,74 +223,18 @@ fun LensSelectionScreen(
     }
 
     editingText?.let { text ->
-        var currentText by remember { mutableStateOf(text) }
-
-        Dialog(onDismissRequest = { editingText = null }) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
-                )
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = stringResource(R.string.text_selected_title),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
-
-                    SelectionContainer {
-                        OutlinedTextField(
-                            value = currentText,
-                            onValueChange = { currentText = it },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                focusedBorderColor = Color.White,
-                                unfocusedBorderColor = CutterTextSecondary
-                            )
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        TextButton(onClick = { editingText = null }) {
-                            Text(stringResource(R.string.cancel), color = CutterTextSecondary)
-                        }
-                        Button(
-                            onClick = {
-                                onUseText(currentText)
-                                editingText = null
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.White)
-                        ) {
-                            Text(
-                                text = stringResource(R.string.use_this),
-                                color = CutterPrimary
-                            )
-                        }
-                    }
-                }
-            }
-        }
+        DialogWithTextField(
+            initialText = text,
+            onDismissRequest = { editingText = null },
+            onUseText = onUseText
+        )
     }
 }
 
 @Composable
 fun CameraPreview(
     modifier: Modifier,
-    lifecycleOwner: androidx.lifecycle.LifecycleOwner,
+    lifecycleOwner: LifecycleOwner,
     cameraExecutor: ExecutorService,
     onPreviewViewCreated: (PreviewView) -> Unit,
     onTextDetected: (String, List<DetectedTextInfo>, Int, Int) -> Unit
@@ -351,7 +292,7 @@ fun CameraPreview(
 
 @androidx.annotation.OptIn(ExperimentalGetImage::class)
 private fun processImageProxy(
-    recognizer: com.google.mlkit.vision.text.TextRecognizer,
+    recognizer: TextRecognizer,
     imageProxy: ImageProxy,
     onTextDetected: (String, List<DetectedTextInfo>, Int, Int) -> Unit
 ) {

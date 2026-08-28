@@ -44,5 +44,8 @@
     <string name="grant_camera_access">Conceder permiso de acceso a la cámara</string>
     <string name="text_selected_title">Modifica el texto si es necesario</string>
     <string name="use_this">Usar esto</string>
+    <string name="delete">Eliminar</string>
+    <string name="selected_items">Seleccionado(s)</string>
+    <string name="clean">Limpiar</string>
 
 </resources>

@@ -22,7 +22,7 @@
     <!---Creditos y licencias-->
     <string name="credit"><u>About</u></string>
     <string name="titulo_faq"><b>Frequently asked questions (F.A.Q)</b></string>
-    <string name="faqs"><b>&#x25FC; What accented letters or characters does the application accept?</b>\n\nCurrently the application only accepts Spanish / English alphabet characters and the following accents: Á É Í Ó Ó Ü. In future updates the capacity will be expanded.\n\n<b>&#x25FC; How do I submit a suggestion or report a problem with the application?</b>\n\nYou can send suggestions or report a problem to the following email: <a href="mailto:">contactfonsecasoftware@gmail.com</a></string>
+    <string name="faqs"><b>&#x25FC; What accented letters or characters does the application accept?</b>\n\nCurrently the application only accepts Spanish / English alphabet characters and the following accents: Á É Í Ó Ú Ü. In future updates the capacity will be expanded.\n\n<b>&#x25FC; How do I submit a suggestion or report a problem with the application?</b>\n\nYou can send suggestions or report a problem to the following email: <a href="mailto:">contactfonsecasoftware@gmail.com</a></string>
     <string name="title_activity_licenses">About</string>
     <string name="agradecimiento">Design and development: Tyron Fonseca – 2024\n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a> \n\nIcon and other UI aspects: Omar Zamora G. \n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
 
@@ -56,5 +56,8 @@
     <string name="grant_camera_access">Grant camera access permission</string>
     <string name="text_selected_title">Modify the text if needed</string>
     <string name="use_this">Use this</string>
+    <string name="delete">Delete</string>
+    <string name="selected_items">Selected</string>
+    <string name="clean">Clear</string>
 
 </resources>

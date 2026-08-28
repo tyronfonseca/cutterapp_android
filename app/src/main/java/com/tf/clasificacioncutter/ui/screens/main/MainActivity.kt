@@ -1,4 +1,4 @@
-package com.tf.clasificacioncutter
+package com.tf.clasificacioncutter.ui.screens.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,12 +7,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import com.tf.clasificacioncutter.ui.screens.MainScreen
+import com.tf.clasificacioncutter.ui.screens.about.AboutActivity
+import com.tf.clasificacioncutter.ui.screens.history.HistoryActivity
+import com.tf.clasificacioncutter.ui.screens.textrecognition.TextRecognitionActivity
 import com.tf.clasificacioncutter.ui.theme.CutterTheme
-import com.tf.clasificacioncutter.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
-    
+
     private val viewModel: MainViewModel by viewModels()
 
     private val textRecognitionLauncher = registerForActivityResult(
@@ -44,17 +45,21 @@ class MainActivity : ComponentActivity() {
                 MainScreen(
                     viewModel = viewModel,
                     onNavigateToCredits = {
-                        startActivity(Intent(this, LicensesActivity::class.java))
+                        startActivity(Intent(this, AboutActivity::class.java))
                     },
                     onNavigateToHistory = {
                         startActivity(Intent(this, HistoryActivity::class.java))
                     },
                     onNavigateToTextRecognition = {
-                        textRecognitionLauncher.launch(Intent(this, TextRecognitionActivity::class.java))
+                        textRecognitionLauncher.launch(
+                            Intent(
+                                this,
+                                TextRecognitionActivity::class.java
+                            )
+                        )
                     }
                 )
             }
         }
     }
 }
-

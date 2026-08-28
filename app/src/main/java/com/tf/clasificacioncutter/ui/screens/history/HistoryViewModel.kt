@@ -1,4 +1,4 @@
-package com.tf.clasificacioncutter.viewmodel
+package com.tf.clasificacioncutter.ui.screens.history
 
 import android.app.Application
 import androidx.compose.runtime.getValue
@@ -29,7 +29,7 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     private val _history = cutterSearchDao.getAllSearches()
 
     private val _queryFlow = MutableStateFlow("")
-    
+
     val filteredHistory: Flow<List<CutterSearch>> = combine(_history, _queryFlow) { list, query ->
         filterHistory(list, query)
     }
@@ -42,7 +42,7 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     private fun filterHistory(list: List<CutterSearch>, query: String): List<CutterSearch> {
         if (query.isBlank()) return list
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        
+
         return list.filter { item ->
             val dateStr = sdf.format(Date(item.timestamp))
             item.result.contains(query, ignoreCase = true) ||
@@ -61,7 +61,7 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun clearSelection() {
-        selectedIds = emptySet()
+        selectedIds = emptySet<Long>()
     }
 
     fun deleteSelected() {

@@ -8,7 +8,7 @@
     <string name="empty_text_2">o Cutter usado aparecerá aqui.</string>
     <string name="etx_last_name">Sobrenome</string>
     <string name="etx_name">Nome</string>
-    <string name="faqs">"<b>&#x25FC; Quais letras ou caracteres acentuados o aplicativo aceita? </b>\n\nAtualmente, o aplicativo aceita apenas caracteres do alfabeto espanhol / inglês e os seguintes acentos: Á É Í Ó Ó Ü. Em futuras atualizações, a capacidade será expandida.\n\n<b>&#x25FC; Como submeto uma sugestão ou relatar um problema com o aplicativo?</b>\n\nVocê pode enviar sugestões ou relatar um problema para o seguinte email: <a href="mailto:"> contactfonsecasoftware@gmail.com </a></string>
+    <string name="faqs"><b>&#x25FC; Quais letras ou caracteres acentuados o aplicativo aceita? </b>\n\nAtualmente, o aplicativo aceita apenas caracteres do alfabeto espanhol / inglês e os seguintes acentos: Á É Í Ó Ú Ü. Em futuras atualizações, a capacidade será expandida.\n\n<b>&#x25FC; Como submeto uma sugestão ou relatar um problema com o aplicativo?</b>\n\nVocê pode enviar sugestões ou relatar um problema para o seguinte email: <a href="mailto:"> contactfonsecasoftware@gmail.com </a></string>
     <string name="title_activity_licenses">Sobre</string>
     <string name="titulo_faq"><b>Perguntas frequentes (F.A.Q)</b></string>
     <string name="abc_normal">Alfabeto Normal</string>
@@ -18,7 +18,7 @@
     <string name="change_version">Alterar</string>
     <string name="close">Fechar</string>
     <string name="btn_history_desc">Histórico</string>
-    <string name="btn_text_recognition_desc">" Reconhecimento de texto"</string>
+    <string name="btn_text_recognition_desc">Reconhecimento de texto</string>
     <string name="empty_history">Suas consultas serão exibidas aqui</string>
     <string name="no_results_found">Nenhum resultado encontrado</string>
     <string name="delete_history_title">Excluir histórico</string>
@@ -37,4 +37,7 @@
     <string name="grant_camera_access">Conceder permissão de acesso à câmera</string>
     <string name="text_selected_title">Modifique o texto se necessário</string>
     <string name="use_this">Usar isso</string>
+    <string name="delete">Excluir</string>
+    <string name="selected_items">Selecionado(s)</string>
+    <string name="clean">Limpar</string>
 </resources>

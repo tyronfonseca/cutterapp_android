@@ -1,4 +1,4 @@
-package com.tf.clasificacioncutter.viewmodel
+package com.tf.clasificacioncutter.ui.screens.main
 
 import android.app.Application
 import android.content.Context

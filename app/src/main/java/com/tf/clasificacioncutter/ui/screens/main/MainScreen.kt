@@ -1,4 +1,4 @@
-package com.tf.clasificacioncutter.ui.screens
+package com.tf.clasificacioncutter.ui.screens.main
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
@@ -14,19 +14,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.History
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -48,12 +43,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tf.clasificacioncutter.R
+import com.tf.clasificacioncutter.ui.components.CutterButton
 import com.tf.clasificacioncutter.ui.components.CutterText
-import com.tf.clasificacioncutter.ui.theme.CutterPrimary
+import com.tf.clasificacioncutter.ui.components.CutterTextField
 import com.tf.clasificacioncutter.ui.theme.CutterTextSecondary
 import com.tf.clasificacioncutter.ui.theme.CutterTheme
-import com.tf.clasificacioncutter.viewmodel.MainState
-import com.tf.clasificacioncutter.viewmodel.MainViewModel
 import kotlin.text.ifEmpty
 
 @Composable
@@ -141,18 +135,12 @@ fun MainScreenContent(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            OutlinedTextField(
+            CutterTextField(
                 value = uiState.lastName,
                 onValueChange = onLastNameChange,
                 label = { Text(stringResource(id = R.string.etx_last_name)
                     , color = CutterTextSecondary) },
                 modifier = Modifier.width(280.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = CutterTextSecondary
-                ),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Text
@@ -161,18 +149,12 @@ fun MainScreenContent(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedTextField(
+            CutterTextField(
                 value = uiState.name,
                 onValueChange = onNameChange,
                 label = { Text(stringResource(id = R.string.etx_name)
                     , color = CutterTextSecondary) },
                 modifier = Modifier.width(280.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = CutterTextSecondary
-                ),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done,
                     keyboardType = KeyboardType.Text
@@ -181,20 +163,10 @@ fun MainScreenContent(
 
             Spacer(modifier = Modifier.height(36.dp))
 
-            Button(
+            CutterButton(
                 onClick = onSearch,
-                modifier = Modifier.padding(horizontal = 40.dp),
-                shape = RoundedCornerShape(25.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.White)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.bt_search),
-                    color = CutterPrimary,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 20.dp)
-                )
-            }
+                text = stringResource(id = R.string.bt_search)
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
 

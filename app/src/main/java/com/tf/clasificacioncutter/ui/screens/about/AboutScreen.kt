@@ -1,4 +1,4 @@
-package com.tf.clasificacioncutter.ui.screens
+package com.tf.clasificacioncutter.ui.screens.about
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
