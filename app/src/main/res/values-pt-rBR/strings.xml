@@ -48,5 +48,15 @@
     <string name="export_error">Falha na exportação: %s</string>
     <string name="error_exporting_csv">Erro ao exportar CSV.</string>
     <string name="share_csv">Compartilhar CSV</string>
-    <string name="delete_specific_title">Are you sure you want to delete the selected items?</string>
+    <string name="delete_specific_title">Tem certeza de que deseja excluir os itens selecionados?</string>
+
+    <!-- Tutorial de Reconhecimento de Texto -->
+    <string name="tutorial_btn">Ajuda</string>
+    <string name="tutorial_step1_title">Digitalizar Texto</string>
+    <string name="tutorial_step1_text">Foque o texto com a câmera e pressione o botão de digitalização.</string>
+    <string name="tutorial_step2_title">Selecionar Resultado</string>
+    <string name="tutorial_step2_text">Toque nas caixas de texto realçadas para selecionar o que você precisa.</string>
+    <string name="tutorial_step3_title">Verificar</string>
+    <string name="tutorial_step3_text">Você pode modificar o texto reconhecido antes de usá-lo.</string>
+    <string name="tutorial_finish_btn">Entendi!</string>
 </resources>

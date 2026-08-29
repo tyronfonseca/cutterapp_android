@@ -11,12 +11,14 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.DocumentScanner
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
@@ -84,6 +86,12 @@ fun TextRecognitionScreen(
                     }
                 },
                 actions = {
+                    IconButton(onClick = { viewModel.onTutorialOpen() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                            contentDescription = stringResource(R.string.tutorial_btn)
+                        )
+                    }
                     if (viewModel.isCaptured) {
                         IconButton(onClick = { viewModel.reset() }) {
                             Icon(Icons.Default.Refresh,
@@ -135,6 +143,34 @@ fun TextRecognitionScreen(
                     LensSelectionScreen(
                         viewModel = viewModel,
                         onUseText = onUseText
+                    )
+                }
+
+                if (viewModel.showTutorial) {
+                    val steps = listOf(
+                        TutorialStep(
+                            imageRes = R.drawable.inicio_1,
+                            title = stringResource(R.string.tutorial_step1_title),
+                            text = stringResource(R.string.tutorial_step1_text)
+                        ),
+                        TutorialStep(
+                            imageRes = R.drawable.inicio_1,
+                            title = stringResource(R.string.tutorial_step2_title),
+                            text = stringResource(R.string.tutorial_step2_text)
+                        ),
+                        TutorialStep(
+                            imageRes = R.drawable.inicio_1,
+                            title = stringResource(R.string.tutorial_step3_title),
+                            text = stringResource(R.string.tutorial_step3_text)
+                        )
+                    )
+                    TutorialPager(
+                        steps = steps,
+                        onFinish = { viewModel.onTutorialFinished() },
+                        buttonText = stringResource(R.string.tutorial_finish_btn),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.6F))
                     )
                 }
             }

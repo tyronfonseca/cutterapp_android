@@ -70,4 +70,14 @@
     <string name="share_csv">Share CSV</string>
     <string name="delete_specific_title">Are you sure you want to delete the selected items?</string>
 
+    <!-- Tutorial Text Recognition -->
+    <string name="tutorial_btn">Help</string>
+    <string name="tutorial_step1_title">Scan Text</string>
+    <string name="tutorial_step1_text">Focus the text with the camera and press the scan button.</string>
+    <string name="tutorial_step2_title">Select Result</string>
+    <string name="tutorial_step2_text">Tap on the highlighted text boxes to select what you need.</string>
+    <string name="tutorial_step3_title">Verify</string>
+    <string name="tutorial_step3_text">You can modify the recognized text before using it.</string>
+    <string name="tutorial_finish_btn">Got it!</string>
+
 </resources>

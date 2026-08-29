@@ -55,6 +55,16 @@
     <string name="export_error">Error al exportar: %s</string>
     <string name="error_exporting_csv">Error al exportar el CSV.</string>
     <string name="share_csv">Compartir CSV</string>
-    <string name="delete_specific_title">Are you sure you want to delete the selected items?</string>
+    <string name="delete_specific_title">¿Estás seguro de que quieres eliminar los elementos seleccionados?</string>
+
+    <!-- Tutorial Reconocimiento de Texto -->
+    <string name="tutorial_btn">Ayuda</string>
+    <string name="tutorial_step1_title">Escanear Texto</string>
+    <string name="tutorial_step1_text">Enfoca el texto con la cámara y presiona el botón de escaneo.</string>
+    <string name="tutorial_step2_title">Seleccionar Resultado</string>
+    <string name="tutorial_step2_text">Toca los cuadros de texto resaltados para seleccionar lo que necesites.</string>
+    <string name="tutorial_step3_title">Verificar</string>
+    <string name="tutorial_step3_text">Puedes modificar el texto reconocido antes de utilizarlo.</string>
+    <string name="tutorial_finish_btn">¡Entendido!</string>
 
 </resources>
