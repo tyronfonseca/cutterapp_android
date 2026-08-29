@@ -1,6 +1,8 @@
 package com.tf.clasificacioncutter.ui.screens.main
 
-import androidx.compose.animation.Crossfade
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,11 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.FilterQuality
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -106,31 +104,34 @@ fun MainScreenContent(
             } else {
                 // Device/Emulador
                 Image(
-                    bitmap = ImageBitmap.imageResource(id = R.drawable.long_logo_white),
+                    painter = painterResource(id = R.drawable.long_logo_white),
                     contentDescription = stringResource(R.string.descripcion_imagen),
-                    modifier = Modifier.width(230.dp),
-                    contentScale = ContentScale.Fit,
-                    filterQuality = FilterQuality.High
+                    modifier = Modifier.width(230.dp)
                 )
             }
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            Crossfade(targetState = uiState.numCutterResult, label = "CutterResult") { result ->
-                CutterText(
-                    text = result.ifEmpty { stringResource(id = R.string.empty_text) },
-                    fontSize = 40.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            }
-
-            Crossfade(targetState = uiState.cutterUsed, label = "CutterUsed") { used ->
-                Text(
-                    text = used.ifEmpty { stringResource(id = R.string.empty_text_2) },
-                    fontSize = 20.sp,
-                    color = CutterTextSecondary
-                )
+            AnimatedVisibility(
+                visible = uiState.isVisible,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CutterText(
+                        text = uiState.numCutterResult.ifEmpty { stringResource(id = R.string.empty_text) },
+                        fontSize = 40.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                    Text(
+                        text = uiState.cutterUsed.ifEmpty { stringResource(id = R.string.empty_text_2) },
+                        fontSize = 20.sp,
+                        color = CutterTextSecondary
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -233,7 +234,8 @@ fun MainScreenPreview() {
                 numCutterResult = "Hola,",
                 cutterUsed = "aqui aparecera el cutter utilizado",
                 name = "John",
-                lastName = "Doe"
+                lastName = "Doe",
+                isVisible = true
             ),
             onLastNameChange = {},
             onNameChange = {},

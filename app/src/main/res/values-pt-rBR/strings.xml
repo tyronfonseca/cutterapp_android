@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="agradecimiento">Design e desenvolvimento:\nTyron Fonseca – 2024\n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a>  Ícone e outros aspectos da interface do usuário:\nOmar Zamora G.\n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
+    <string name="app_info_title">Informações do aplicativo</string>
+    <string name="library_title">Bibliotecas utilizadas</string>
+
     <string name="bt_search">BUSCAR</string>
     <string name="credit"><u>Sobre</u></string>
     <string name="db_version_select">Selecione o alfabeto para usar</string>
@@ -40,4 +43,10 @@
     <string name="delete">Excluir</string>
     <string name="selected_items">Selecionado(s)</string>
     <string name="clean">Limpar</string>
+    <string name="menu_export_csv">Exportar para CSV</string>
+    <string name="export_success">Exportado para: %s</string>
+    <string name="export_error">Falha na exportação: %s</string>
+    <string name="error_exporting_csv">Erro ao exportar CSV.</string>
+    <string name="share_csv">Compartilhar CSV</string>
+    <string name="delete_specific_title">Are you sure you want to delete the selected items?</string>
 </resources>

@@ -8,12 +8,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.tf.clasificacioncutter.data.AppDatabase
 import com.tf.clasificacioncutter.data.CutterSearch
+import com.tf.clasificacioncutter.utils.CsvExporter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class HistoryViewModel(application: Application) : AndroidViewModel(application) {
@@ -24,6 +24,9 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
         private set
 
     var selectedIds by mutableStateOf(setOf<Long>())
+        private set
+
+    var exportStatus by mutableStateOf<Result<String>?>(null)
         private set
 
     private val _history = cutterSearchDao.getAllSearches()
@@ -44,7 +47,7 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
         return list.filter { item ->
-            val dateStr = sdf.format(Date(item.timestamp))
+            val dateStr = sdf.format(item.timestamp)
             item.result.contains(query, ignoreCase = true) ||
                     item.cutterUsedText.contains(query, ignoreCase = true) ||
                     item.originalSearch.contains(query, ignoreCase = true) ||
@@ -76,5 +79,20 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
             cutterSearchDao.deleteAllSearches()
             clearSelection()
         }
+    }
+
+    fun exportToCsv(data: List<CutterSearch>) {
+        viewModelScope.launch {
+            val result = CsvExporter.exportSearchesToCsv(getApplication(), data)
+            exportStatus = if (result.isSuccess) {
+                Result.success(result.getOrNull()?.absolutePath ?: "")
+            } else {
+                Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
+            }
+        }
+    }
+
+    fun clearExportStatus() {
+        exportStatus = null
     }
 }

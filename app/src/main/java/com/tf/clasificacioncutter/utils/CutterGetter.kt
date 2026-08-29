@@ -4,14 +4,13 @@ import android.content.Context
 import com.opencsv.CSVParserBuilder
 import com.opencsv.CSVReaderBuilder
 import com.tf.clasificacioncutter.R
+import com.tf.clasificacioncutter.utils.TextUtils.removeAccents
 import java.io.InputStreamReader
 
 /**
  * Class responsible for processing data from .csv files and calculating the Cutter code.
  */
 class CutterGetter {
-
-    private val cutterHelper = CutterHelper()
 
     /**
      * Loads and parses the .csv file from raw resources.
@@ -81,10 +80,10 @@ class CutterGetter {
      */
     private fun formatTarget(lastName: String, name: String): String {
         val fullName = if (name.isBlank()) lastName.trim() else "${lastName.trim()}, ${name.trim()}"
-        return cutterHelper.removeAccents(fullName)
+        return removeAccents(fullName)
     }
 
     private fun formatTargetFromCsv(csvEntry: String): String {
-        return cutterHelper.removeAccents(csvEntry.trim())
+        return removeAccents(csvEntry.trim())
     }
 }

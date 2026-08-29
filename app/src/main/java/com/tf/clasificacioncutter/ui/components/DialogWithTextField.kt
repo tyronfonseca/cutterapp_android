@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
+import com.tf.clasificacioncutter.ui.theme.CutterSurfaceMenu
 import com.tf.clasificacioncutter.ui.theme.CutterTextSecondary
 import com.tf.clasificacioncutter.ui.theme.CutterTheme
 
@@ -62,7 +63,7 @@ fun DialogWithTextFieldContent(
             .padding(16.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = CutterPrimary
+            containerColor = CutterSurfaceMenu
         )
     ) {
         Column(

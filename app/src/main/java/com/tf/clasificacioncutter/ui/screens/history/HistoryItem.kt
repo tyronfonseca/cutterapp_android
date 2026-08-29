@@ -29,7 +29,6 @@ import com.tf.clasificacioncutter.ui.theme.CutterPrimary
 import com.tf.clasificacioncutter.ui.theme.CutterText
 import com.tf.clasificacioncutter.ui.theme.CutterTheme
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -42,7 +41,7 @@ fun HistoryItem(
 ) {
     val dateString = remember(item.timestamp) {
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-        sdf.format(Date(item.timestamp))
+        sdf.format(item.timestamp)
     }
 
     val containerColor = if (isSelected) {

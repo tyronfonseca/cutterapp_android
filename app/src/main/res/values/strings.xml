@@ -26,6 +26,10 @@
     <string name="title_activity_licenses">About</string>
     <string name="agradecimiento">Design and development: Tyron Fonseca – 2024\n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a> \n\nIcon and other UI aspects: Omar Zamora G. \n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
 
+    <string name="app_info_title">App Information</string>
+    <string name="library_title">Used Libraries</string>
+    <string name="opencsv_license" translatable="false">OpenCSV 5.12 Copyright 2025 Glen Smith and Scott Conway  Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+
     <!--Kotlin-->
 
 
@@ -59,5 +63,11 @@
     <string name="delete">Delete</string>
     <string name="selected_items">Selected</string>
     <string name="clean">Clear</string>
+    <string name="menu_export_csv">Export to CSV</string>
+    <string name="export_success">Exported to: %s</string>
+    <string name="export_error">Export failed: %s</string>
+    <string name="error_exporting_csv">Error exporting CSV.</string>
+    <string name="share_csv">Share CSV</string>
+    <string name="delete_specific_title">Are you sure you want to delete the selected items?</string>
 
 </resources>

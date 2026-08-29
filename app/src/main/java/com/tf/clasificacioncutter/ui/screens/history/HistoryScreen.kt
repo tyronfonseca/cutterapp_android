@@ -1,29 +1,51 @@
 package com.tf.clasificacioncutter.ui.screens.history
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
 import com.tf.clasificacioncutter.ui.theme.CutterTextSecondary
+import com.tf.clasificacioncutter.utils.CsvExporter
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryScreen(viewModel: HistoryViewModel, onBack: () -> Unit) {
+    val context = LocalContext.current
     val history by viewModel.filteredHistory.collectAsState(initial = emptyList())
     val selectedIds = viewModel.selectedIds
     val isSelectionMode = selectedIds.isNotEmpty()
     var showMenu by remember { mutableStateOf(false) }
     var showDeleteAllConfirm by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val exportStatus = viewModel.exportStatus
+    val exportErrorMessage = stringResource(R.string.error_exporting_csv)
+    val exportTitle = stringResource(R.string.share_csv)
+
+    LaunchedEffect(exportStatus) {
+        exportStatus?.let { status ->
+            if (status.isSuccess) {
+                status.getOrNull()?.let { path ->
+                    CsvExporter.shareFile(context, File(path), exportTitle)
+                }
+            } else {
+                Log.e("HistoryScreen", "Export failed", status.exceptionOrNull())
+                snackbarHostState.showSnackbar(exportErrorMessage)
+            }
+            viewModel.clearExportStatus()
+        }
+    }
 
     BackHandler(enabled = isSelectionMode) {
         viewModel.clearSelection()
@@ -35,12 +57,17 @@ fun HistoryScreen(viewModel: HistoryViewModel, onBack: () -> Unit) {
                 SelectionTopBar(
                     count = selectedIds.size,
                     onClearSelection = { viewModel.clearSelection() },
-                    onDelete = { viewModel.deleteSelected() }
+                    onDelete = { viewModel.deleteSelected() },
+                    onExport = {
+                        val selectedItems = history.filter { selectedIds.contains(it.id) }
+                        viewModel.exportToCsv(selectedItems)
+                    }
                 )
             } else {
                 HistoryTopBar(
                     onBack = onBack,
                     onDeleteAll = { showMenu = true },
+                    onExportCsv = { viewModel.exportToCsv(history) },
                     showMenu = showMenu,
                     onDismissMenu = { showMenu = false },
                     onConfirmDeleteAll = {
@@ -50,6 +77,7 @@ fun HistoryScreen(viewModel: HistoryViewModel, onBack: () -> Unit) {
                 )
             }
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = CutterPrimary
     ) { padding ->
         Column(

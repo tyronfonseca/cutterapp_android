@@ -14,8 +14,10 @@ import com.tf.clasificacioncutter.data.AppDatabase
 import com.tf.clasificacioncutter.data.CutterSearch
 import com.tf.clasificacioncutter.utils.CutterGetter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.milliseconds
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -33,7 +35,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val sharedPref: SharedPreferences =
         application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    // Local in-memory cache outside of UiState to avoid memory leaks/copies
+    // Local in-memory cache outside UiState to avoid memory leaks/copies
     private var cutterCacheList: ArrayList<Array<String>> = arrayListOf()
 
     var uiState by mutableStateOf(MainState())
@@ -52,7 +54,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             dbType = dbType,
             numCutterResult = numCutter,
             cutterUsed = cutterUsed,
-            isLoading = true
+            isLoading = true,
+            isVisible = numCutter.isNotEmpty() || cutterUsed.isNotEmpty()
         )
 
         // Asynchronous load outside the UI thread
@@ -82,16 +85,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val lastName = uiState.lastName.trim()
         val name = uiState.name.trim()
 
+        uiState = uiState.copy(isVisible = false)
+
         if (lastName.length < 2) {
             uiState = uiState.copy(
-                errorMessage = getApplication<Application>().getString(R.string.msg_error_last_name)
+                errorMessage = getApplication<Application>().getString(R.string.msg_error_last_name),
+                isVisible = true
             )
             return
         }
 
         if (cutterCacheList.isEmpty()) {
             uiState = uiState.copy(
-                errorMessage = getApplication<Application>().getString(R.string.msg_error)
+                errorMessage = getApplication<Application>().getString(R.string.msg_error),
+                isVisible = true
             )
             return
         }
@@ -104,6 +111,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
                 val cutter = letter + result[1]
                 val cutterUsedText = "${result[0]}: ${result[1]}"
+
+                // Ensure exit animation of previous result is visible
+                delay(200.milliseconds)
 
                 withContext(Dispatchers.Main) {
                     saveResult(cutter, cutterUsedText)
@@ -122,7 +132,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         uiState = uiState.copy(
             numCutterResult = cutter,
             cutterUsed = cutterUsedText,
-            errorMessage = null
+            errorMessage = null,
+            isVisible = true
         )
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -151,5 +162,6 @@ data class MainState(
     val name: String = "",
     val lastName: String = "",
     val isLoading: Boolean = false,
-    val errorMessage: String? = null
+    val isVisible: Boolean = false,
+    val errorMessage: String? = null,
 )

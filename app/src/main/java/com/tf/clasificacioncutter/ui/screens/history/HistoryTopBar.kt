@@ -4,12 +4,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -19,7 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
+import com.tf.clasificacioncutter.ui.theme.CutterSurfaceMenu
 import com.tf.clasificacioncutter.ui.theme.CutterText
+import com.tf.clasificacioncutter.ui.theme.CutterTextSecondary
 import com.tf.clasificacioncutter.ui.theme.CutterTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,6 +32,7 @@ import com.tf.clasificacioncutter.ui.theme.CutterTheme
 fun HistoryTopBar(
     onBack: () -> Unit,
     onDeleteAll: () -> Unit,
+    onExportCsv: () -> Unit,
     showMenu: Boolean,
     onDismissMenu: () -> Unit,
     onConfirmDeleteAll: () -> Unit
@@ -49,13 +55,43 @@ fun HistoryTopBar(
             DropdownMenu(
                 expanded = showMenu,
                 onDismissRequest = onDismissMenu,
-                containerColor = CutterPrimary
+                containerColor = CutterSurfaceMenu
             ) {
+                val itemColors = MenuDefaults.itemColors(
+                    textColor = CutterText,
+                    leadingIconColor = CutterTextSecondary
+                )
+
+                // Export CSV Item
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.menu_delete_all_search_history),
-                        color = CutterText
-                    ) },
-                    onClick = onConfirmDeleteAll
+                    text = { Text(text = stringResource(R.string.menu_export_csv)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Share,
+                            contentDescription = null
+                        )
+                    },
+                    onClick = {
+                        onDismissMenu()
+                        onExportCsv()
+                    },
+                    colors = itemColors
+                )
+
+                // Delete History Item
+                DropdownMenuItem(
+                    text = { Text(text = stringResource(R.string.menu_delete_all_search_history)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.DeleteForever,
+                            contentDescription = null
+                        )
+                    },
+                    onClick = {
+                        onDismissMenu()
+                        onConfirmDeleteAll()
+                    },
+                    colors = itemColors
                 )
             }
         },
@@ -78,6 +114,7 @@ fun HistoryTopBarPreview(){
             HistoryTopBar(
                 onBack = {},
                 onDeleteAll = {},
+                onExportCsv = {},
                 showMenu = false,
                 onDismissMenu = {},
                 onConfirmDeleteAll = {}
@@ -85,6 +122,7 @@ fun HistoryTopBarPreview(){
             HistoryTopBar(
                 onBack = {},
                 onDeleteAll = {},
+                onExportCsv = {},
                 showMenu = true,
                 onDismissMenu = {},
                 onConfirmDeleteAll = {}
