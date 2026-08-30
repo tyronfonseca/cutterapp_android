@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.ui.components.CutterTextField
+import com.tf.clasificacioncutter.ui.theme.CutterText
+import com.tf.clasificacioncutter.ui.theme.CutterTextSecondary
 import com.tf.clasificacioncutter.ui.theme.CutterTheme
 
 @Composable
@@ -30,13 +32,17 @@ fun SearchBar(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        placeholder = { Text(stringResource(R.string.search_placeholder)) },
-        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+        placeholder = { Text(stringResource(R.string.search_placeholder),
+            color = CutterTextSecondary) },
+        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null,
+            tint = CutterText) },
         trailingIcon = {
             if (query.isNotEmpty()) {
                 IconButton(onClick = { onQueryChange("") }) {
                     Icon(Icons.Default.Close,
-                        contentDescription = stringResource(R.string.clean))
+                        contentDescription = stringResource(R.string.clean),
+                        tint = CutterText
+                    )
                 }
             }
         }

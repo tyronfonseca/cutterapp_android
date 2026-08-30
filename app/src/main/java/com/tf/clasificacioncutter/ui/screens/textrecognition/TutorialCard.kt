@@ -1,5 +1,7 @@
 package com.tf.clasificacioncutter.ui.screens.textrecognition
 
+import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -12,8 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,16 +31,18 @@ data class TutorialStep(
     val text: String
 )
 
+@SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun TutorialCard(
     step: TutorialStep,
     modifier: Modifier = Modifier
 ) {
-    val windowInfo = LocalWindowInfo.current
-    val density = LocalDensity.current
-    val screenWidth = with(density) { windowInfo.containerSize.width.toDp() }
-    val screenHeight = with(density) { windowInfo.containerSize.height.toDp() }
-    val isTablet = screenWidth > 600.dp
+    val configuration = LocalConfiguration.current
+    val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+    val isTablet = configuration.smallestScreenWidthDp >= 600
+
+    val screenHeight = configuration.screenHeightDp.dp
+    val showImage = isTablet || isPortrait
 
     Card(
         modifier = modifier
@@ -57,17 +60,19 @@ fun TutorialCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            val imageHeight = if (isTablet) 320.dp else 220.dp
+            if (showImage) {
+                val imageHeight = if (isTablet) 320.dp else 220.dp
 
-            Image(
-                painter = painterResource(id = step.imageRes),
-                contentDescription = step.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = screenHeight * 0.35f)
-                    .height(imageHeight)
-            )
+                Image(
+                    painter = painterResource(id = step.imageRes),
+                    contentDescription = step.title,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = screenHeight * 0.35f)
+                        .height(imageHeight)
+                )
+            }
 
             Column(
                 modifier = Modifier.fillMaxWidth().padding(16.dp),

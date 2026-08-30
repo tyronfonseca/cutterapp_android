@@ -39,7 +39,7 @@
     <string name="go_back_btn">Volver</string>
     <string name="menu">Menú</string>
     <string name="menu_delete_all_search_history">Eliminar todo el historial de búsqueda</string>
-    <string name="search_placeholder">Buscar por número, fecha o nombre…</string>
+    <string name="search_placeholder">Número, fecha o nombre…</string>
     <string name="text_recognition_title_alternative">Toca los cuadros para seleccionar el texto</string>
     <string name="text_recognition_title">Escanear texto</string>
     <string name="reset">Reiniciar</string>
@@ -60,11 +60,11 @@
     <!-- Tutorial Reconocimiento de Texto -->
     <string name="tutorial_btn">Ayuda</string>
     <string name="tutorial_step1_title">Escanear Texto</string>
-    <string name="tutorial_step1_text">Enfoca el texto con la cámara y presiona el botón de escaneo.</string>
+    <string name="tutorial_step1_text">Enfoca el texto con la cámara y presiona el botón de escaneo. La iluminación, el contraste y los estilos de fuente pueden afectar la precisión.</string>
     <string name="tutorial_step2_title">Seleccionar Resultado</string>
     <string name="tutorial_step2_text">Toca los cuadros de texto resaltados para seleccionar lo que necesites.</string>
-    <string name="tutorial_step3_title">Verificar</string>
-    <string name="tutorial_step3_text">Puedes modificar el texto reconocido antes de utilizarlo.</string>
+    <string name="tutorial_step3_title">Revisa y edita el texto escaneado antes de continuar</string>
+    <string name="tutorial_step3_text">La aplicación considera la última palabra como el apellido, elimina cualquier espacio innecesario.</string>
     <string name="tutorial_finish_btn">¡Entendido!</string>
 
 </resources>

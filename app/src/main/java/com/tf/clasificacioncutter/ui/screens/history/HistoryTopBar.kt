@@ -68,7 +68,8 @@ fun HistoryTopBar(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Share,
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = CutterText
                         )
                     },
                     onClick = {
@@ -84,7 +85,8 @@ fun HistoryTopBar(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.DeleteForever,
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = CutterText
                         )
                     },
                     onClick = {

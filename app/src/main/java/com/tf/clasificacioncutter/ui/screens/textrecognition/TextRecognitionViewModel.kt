@@ -38,6 +38,9 @@ class TextRecognitionViewModel(application: Application) : AndroidViewModel(appl
     var showTutorial by mutableStateOf(false)
         private set
 
+    var shouldCapture by mutableStateOf(false)
+        private set
+
     init {
         // Show tutorial only the first time
         showTutorial = sharedPref.getBoolean(keyShowTutorial, true)
@@ -54,22 +57,28 @@ class TextRecognitionViewModel(application: Application) : AndroidViewModel(appl
         showTutorial = true
     }
 
-    fun onTextRecognized(text: String, lines: List<DetectedTextInfo>, width: Int, height: Int) {
+    fun onTextRecognized(text: String, lines: List<DetectedTextInfo>, width: Int, height: Int, bitmap: Bitmap? = null) {
         if (!isCaptured) {
             recognizedText = text
             detectedLines.clear()
             detectedLines.addAll(lines)
             imageSize = Pair(width, height)
+
+            if (shouldCapture && bitmap != null) {
+                capturedBitmap = bitmap
+                isCaptured = true
+                shouldCapture = false
+            }
         }
     }
 
-    fun capture(bitmap: Bitmap) {
-        capturedBitmap = bitmap
-        isCaptured = true
+    fun requestCapture() {
+        shouldCapture = true
     }
 
     fun reset() {
         isCaptured = false
+        shouldCapture = false
         recognizedText = ""
         detectedLines.clear()
         capturedBitmap = null

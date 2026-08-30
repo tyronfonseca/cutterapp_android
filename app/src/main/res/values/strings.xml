@@ -52,7 +52,7 @@
     <string name="go_back_btn">Go Back</string>
     <string name="menu">Menu</string>
     <string name="menu_delete_all_search_history">Delete all search history</string>
-    <string name="search_placeholder">Search by calling number, date or name…</string>
+    <string name="search_placeholder">Calling number, date or name…</string>
     <string name="text_recognition_title_alternative">Touch the squares to select the text</string>
     <string name="text_recognition_title">Scan Text</string>
     <string name="reset">Reset</string>
@@ -76,8 +76,9 @@
     <string name="tutorial_step1_text">Focus the text with the camera and press the scan button.</string>
     <string name="tutorial_step2_title">Select Result</string>
     <string name="tutorial_step2_text">Tap on the highlighted text boxes to select what you need.</string>
-    <string name="tutorial_step3_title">Verify</string>
-    <string name="tutorial_step3_text">You can modify the recognized text before using it.</string>
+    <string name="tutorial_step3_title">Review and edit the scanned text before proceeding</string>
+
     <string name="tutorial_finish_btn">Got it!</string>
+    <string name="tutorial_step3_text">The app treats the final word as the last name, remove any unnecessary spaces.</string>
 
 </resources>

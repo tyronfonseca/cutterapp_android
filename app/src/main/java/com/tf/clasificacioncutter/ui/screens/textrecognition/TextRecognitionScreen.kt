@@ -1,6 +1,8 @@
 package com.tf.clasificacioncutter.ui.screens.textrecognition
 
 import android.Manifest
+import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.graphics.Rect
 import android.util.Log
 import android.view.ViewGroup
@@ -50,6 +52,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.ui.components.DialogWithTextField
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
+import com.tf.clasificacioncutter.ui.theme.CutterText
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -95,15 +98,16 @@ fun TextRecognitionScreen(
                     if (viewModel.isCaptured) {
                         IconButton(onClick = { viewModel.reset() }) {
                             Icon(Icons.Default.Refresh,
-                                contentDescription = stringResource(R.string.reset))
+                                contentDescription = stringResource(R.string.reset)
+                            )
                         }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-                    actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = CutterPrimary,
+                    titleContentColor = CutterText,
+                    navigationIconContentColor = CutterText,
+                    actionIconContentColor = CutterText
                 )
             )
         },
@@ -120,14 +124,15 @@ fun TextRecognitionScreen(
                         modifier = Modifier.fillMaxSize(),
                         lifecycleOwner = lifecycleOwner,
                         cameraExecutor = cameraExecutor,
+                        viewModel = viewModel,
                         onPreviewViewCreated = { previewView = it }
-                    ) { text, lines, width, height ->
-                        viewModel.onTextRecognized(text, lines, width, height)
+                    ) { text, lines, width, height, bitmap ->
+                        viewModel.onTextRecognized(text, lines, width, height, bitmap)
                     }
 
                     FloatingActionButton(
                         onClick = {
-                            previewView?.bitmap?.let { viewModel.capture(it) }
+                            viewModel.requestCapture()
                         },
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -206,54 +211,64 @@ fun LensSelectionScreen(
     val strokeColor = MaterialTheme.colorScheme.primary
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .onGloballyPositioned { containerSize = it.size }
-            .pointerInput(lines) {
-                detectTapGestures { offset ->
-                    val scaleX = containerSize.width.toFloat() / imageSize.first
-                    val scaleY = containerSize.height.toFloat() / imageSize.second
-
-                    val tappedLine = lines.find { line ->
-                        val rect = line.boundingBox
-                        val scaledRect = Rect(
-                            (rect.left * scaleX).toInt(),
-                            (rect.top * scaleY).toInt(),
-                            (rect.right * scaleX).toInt(),
-                            (rect.bottom * scaleY).toInt()
-                        )
-                        scaledRect.contains(offset.x.toInt(), offset.y.toInt())
-                    }
-                    tappedLine?.let { editingText = it.text }
-                }
-            }
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        Image(
-            bitmap = bitmap.asImageBitmap(),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
+        Box(
+            modifier = Modifier
+                .aspectRatio(imageSize.first.toFloat() / imageSize.second.toFloat())
+                .fillMaxSize()
+                .onGloballyPositioned { containerSize = it.size }
+                .pointerInput(lines) {
+                    detectTapGestures { offset ->
+                        val scaleX = containerSize.width.toFloat() / imageSize.first
+                        val scaleY = containerSize.height.toFloat() / imageSize.second
 
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val scaleX = size.width / imageSize.first
-            val scaleY = size.height / imageSize.second
+                        val tappedLine = lines.find { line ->
+                            val rect = line.boundingBox
+                            val scaledRect = Rect(
+                                (rect.left * scaleX).toInt(),
+                                (rect.top * scaleY).toInt(),
+                                (rect.right * scaleX).toInt(),
+                                (rect.bottom * scaleY).toInt()
+                            )
+                            scaledRect.contains(offset.x.toInt(), offset.y.toInt())
+                        }
+                        tappedLine?.let { editingText = it.text }
+                    }
+                }
+        ) {
+            Image(
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
 
-            lines.forEach { line ->
-                val rect = line.boundingBox
-                drawRect(
-                    color = overlayColor,
-                    topLeft = Offset(rect.left * scaleX, rect.top * scaleY),
-                    size = Size((rect.right - rect.left) * scaleX,
-                        (rect.bottom - rect.top) * scaleY)
-                )
-                drawRect(
-                    color = strokeColor,
-                    topLeft = Offset(rect.left * scaleX, rect.top * scaleY),
-                    size = Size((rect.right - rect.left) * scaleX,
-                        (rect.bottom - rect.top) * scaleY),
-                    style = Stroke(width = 2.dp.toPx())
-                )
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                val scaleX = size.width / imageSize.first
+                val scaleY = size.height / imageSize.second
+
+                lines.forEach { line ->
+                    val rect = line.boundingBox
+                    drawRect(
+                        color = overlayColor,
+                        topLeft = Offset(rect.left * scaleX, rect.top * scaleY),
+                        size = Size(
+                            (rect.right - rect.left) * scaleX,
+                            (rect.bottom - rect.top) * scaleY
+                        )
+                    )
+                    drawRect(
+                        color = strokeColor,
+                        topLeft = Offset(rect.left * scaleX, rect.top * scaleY),
+                        size = Size(
+                            (rect.right - rect.left) * scaleX,
+                            (rect.bottom - rect.top) * scaleY
+                        ),
+                        style = Stroke(width = 2.dp.toPx())
+                    )
+                }
             }
         }
     }
@@ -272,8 +287,9 @@ fun CameraPreview(
     modifier: Modifier,
     lifecycleOwner: LifecycleOwner,
     cameraExecutor: ExecutorService,
+    viewModel: TextRecognitionViewModel,
     onPreviewViewCreated: (PreviewView) -> Unit,
-    onTextDetected: (String, List<DetectedTextInfo>, Int, Int) -> Unit
+    onTextDetected: (String, List<DetectedTextInfo>, Int, Int, Bitmap?) -> Unit
 ) {
     val recognizer = remember { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
 
@@ -285,6 +301,7 @@ fun CameraPreview(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
+                scaleType = PreviewView.ScaleType.FIT_CENTER
             }
             onPreviewViewCreated(previewView)
 
@@ -302,7 +319,7 @@ fun CameraPreview(
                         .build()
                         .also {
                             it.setAnalyzer(cameraExecutor) { imageProxy ->
-                                processImageProxy(recognizer, imageProxy, onTextDetected)
+                                processImageProxy(recognizer, imageProxy, viewModel, onTextDetected)
                             }
                         }
 
@@ -330,25 +347,37 @@ fun CameraPreview(
 private fun processImageProxy(
     recognizer: TextRecognizer,
     imageProxy: ImageProxy,
-    onTextDetected: (String, List<DetectedTextInfo>, Int, Int) -> Unit
+    viewModel: TextRecognitionViewModel,
+    onTextDetected: (String, List<DetectedTextInfo>, Int, Int, Bitmap?) -> Unit
 ) {
     val mediaImage = imageProxy.image
     if (mediaImage != null) {
         val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
         recognizer.process(image)
             .addOnSuccessListener { visionText ->
-                if (visionText.text.isNotBlank()) {
-                    val lines = visionText.textBlocks.flatMap { block ->
-                        block.lines.map { line ->
-                            DetectedTextInfo(line.text, line.boundingBox ?: Rect())
-                        }
+                val lines = visionText.textBlocks.flatMap { block ->
+                    block.lines.map { line ->
+                        DetectedTextInfo(line.text, line.boundingBox ?: Rect())
                     }
-                    val isRotated = imageProxy.imageInfo.rotationDegrees == 90 || imageProxy.imageInfo.rotationDegrees == 270
-                    val width = if (isRotated) imageProxy.height else imageProxy.width
-                    val height = if (isRotated) imageProxy.width else imageProxy.height
-
-                    onTextDetected(visionText.text, lines, width, height)
                 }
+                val rotation = imageProxy.imageInfo.rotationDegrees
+                val isRotated = rotation == 90 || rotation == 270
+                val width = if (isRotated) imageProxy.height else imageProxy.width
+                val height = if (isRotated) imageProxy.width else imageProxy.height
+
+                var bitmap: Bitmap? = null
+                if (viewModel.shouldCapture) {
+                    bitmap = imageProxy.toBitmap()
+                    if (rotation != 0) {
+                        val matrix = Matrix()
+                        matrix.postRotate(rotation.toFloat())
+                        bitmap = Bitmap.createBitmap(
+                            bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true
+                        )
+                    }
+                }
+
+                onTextDetected(visionText.text, lines, width, height, bitmap)
             }
             .addOnFailureListener { e ->
                 Log.e("TextRecognition", "Text recognition failed", e)

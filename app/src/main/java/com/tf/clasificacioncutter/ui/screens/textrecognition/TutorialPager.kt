@@ -1,5 +1,6 @@
 package com.tf.clasificacioncutter.ui.screens.textrecognition
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,8 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
@@ -29,6 +29,7 @@ import com.tf.clasificacioncutter.ui.theme.CutterTheme
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
+@SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun TutorialPager(
     steps: List<TutorialStep>,
@@ -39,10 +40,10 @@ fun TutorialPager(
     val pagerState = rememberPagerState(pageCount = { steps.size })
     val coroutineScope = rememberCoroutineScope()
     val scope = rememberCoroutineScope()
-    val windowInfo = LocalWindowInfo.current
-    val density = LocalDensity.current
-    val screenWidth = with(density) { windowInfo.containerSize.width.toDp() }
-    val isTablet = screenWidth > 600.dp
+    val configuration = LocalConfiguration.current
+    
+    val screenWidth = configuration.screenWidthDp.dp
+    val isTablet = configuration.smallestScreenWidthDp >= 600
     
     // Adaptive
     val pagerWidth = if (isTablet) 550.dp else screenWidth * 0.9f

@@ -32,7 +32,7 @@
     <string name="go_back_btn">Voltar</string>
     <string name="menu">Menu</string>
     <string name="menu_delete_all_search_history">Excluir todo o histórico de pesquisa</string>
-    <string name="search_placeholder">Pesquisar por número, data ou nome…</string>
+    <string name="search_placeholder">Número, data ou nome…</string>
     <string name="text_recognition_title_alternative">Toque nos quadrados para selecionar o texto</string>
     <string name="text_recognition_title">Digitalizar texto</string>
     <string name="reset">Redefinir</string>
@@ -53,10 +53,10 @@
     <!-- Tutorial de Reconhecimento de Texto -->
     <string name="tutorial_btn">Ajuda</string>
     <string name="tutorial_step1_title">Digitalizar Texto</string>
-    <string name="tutorial_step1_text">Foque o texto com a câmera e pressione o botão de digitalização.</string>
+    <string name="tutorial_step1_text">Foque o texto com a câmera e pressione o botão de digitalização. A iluminação, o contraste e os estilos de fonte podem afetar a precisão.</string>
     <string name="tutorial_step2_title">Selecionar Resultado</string>
     <string name="tutorial_step2_text">Toque nas caixas de texto realçadas para selecionar o que você precisa.</string>
-    <string name="tutorial_step3_title">Verificar</string>
-    <string name="tutorial_step3_text">Você pode modificar o texto reconhecido antes de usá-lo.</string>
+    <string name="tutorial_step3_title">Revise e edite o texto digitalizado antes de prosseguir</string>
+    <string name="tutorial_step3_text">O aplicativo considera a última palavra como o sobrenome, remova quaisquer espaços desnecessários.</string>
     <string name="tutorial_finish_btn">Entendi!</string>
 </resources>
