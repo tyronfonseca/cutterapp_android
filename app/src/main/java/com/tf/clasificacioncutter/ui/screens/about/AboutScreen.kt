@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
@@ -22,8 +23,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.fromHtml
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.ui.theme.CutterAccent
@@ -89,11 +96,21 @@ fun AboutSection(title: String, content: String) {
                 color = CutterText
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = content,
-                style = MaterialTheme.typography.bodyMedium,
-                color = CutterText
-            )
+            SelectionContainer {
+                Text(
+                    text = AnnotatedString.fromHtml(
+                        htmlString = content,
+                        linkStyles = TextLinkStyles(
+                            style = SpanStyle(
+                                color = Color(0xFF64B5F6),
+                                textDecoration = TextDecoration.Underline
+                            )
+                        )
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = CutterText
+                )
+            }
         }
     }
 }

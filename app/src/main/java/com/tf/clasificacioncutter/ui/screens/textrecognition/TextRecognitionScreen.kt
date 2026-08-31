@@ -51,6 +51,7 @@ import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.ui.components.DialogWithTextField
+import com.tf.clasificacioncutter.ui.theme.CutterAccentLight
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
 import com.tf.clasificacioncutter.ui.theme.CutterText
 import java.util.concurrent.ExecutorService
@@ -89,11 +90,13 @@ fun TextRecognitionScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { viewModel.onTutorialOpen() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.HelpOutline,
-                            contentDescription = stringResource(R.string.tutorial_btn)
-                        )
+                    if(cameraPermissionState.status.isGranted) {
+                        IconButton(onClick = { viewModel.onTutorialOpen() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                                contentDescription = stringResource(R.string.tutorial_btn)
+                            )
+                        }
                     }
                     if (viewModel.isCaptured) {
                         IconButton(onClick = { viewModel.reset() }) {
@@ -154,17 +157,17 @@ fun TextRecognitionScreen(
                 if (viewModel.showTutorial) {
                     val steps = listOf(
                         TutorialStep(
-                            imageRes = R.drawable.inicio_1,
+                            imageRes = R.drawable.tutorial1,
                             title = stringResource(R.string.tutorial_step1_title),
                             text = stringResource(R.string.tutorial_step1_text)
                         ),
                         TutorialStep(
-                            imageRes = R.drawable.inicio_1,
+                            imageRes = R.drawable.tutorial2,
                             title = stringResource(R.string.tutorial_step2_title),
                             text = stringResource(R.string.tutorial_step2_text)
                         ),
                         TutorialStep(
-                            imageRes = R.drawable.inicio_1,
+                            imageRes = R.drawable.tutorial3,
                             title = stringResource(R.string.tutorial_step3_title),
                             text = stringResource(R.string.tutorial_step3_text)
                         )
@@ -207,8 +210,8 @@ fun LensSelectionScreen(
     var containerSize by remember { mutableStateOf(IntSize.Zero) }
     var editingText by remember { mutableStateOf<String?>(null) }
 
-    val overlayColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-    val strokeColor = MaterialTheme.colorScheme.primary
+    val overlayColor = CutterAccentLight.copy(alpha = 0.3f)
+    val strokeColor = CutterPrimary
 
     Box(
         modifier = Modifier.fillMaxSize(),

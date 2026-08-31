@@ -54,8 +54,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             dbType = dbType,
             numCutterResult = numCutter,
             cutterUsed = cutterUsed,
-            isLoading = true,
-            isVisible = numCutter.isNotEmpty() || cutterUsed.isNotEmpty()
+            isLoading = true
         )
 
         // Asynchronous load outside the UI thread
@@ -162,6 +161,6 @@ data class MainState(
     val name: String = "",
     val lastName: String = "",
     val isLoading: Boolean = false,
-    val isVisible: Boolean = false,
+    val isVisible: Boolean = true,
     val errorMessage: String? = null,
 )

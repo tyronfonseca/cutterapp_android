@@ -14,7 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tf.clasificacioncutter.R
+import com.tf.clasificacioncutter.ui.theme.CutterAccentLight
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
+import com.tf.clasificacioncutter.ui.theme.CutterSurfaceMenu
+import com.tf.clasificacioncutter.ui.theme.CutterText
 import com.tf.clasificacioncutter.ui.theme.CutterTextSecondary
 import com.tf.clasificacioncutter.utils.CsvExporter
 import java.io.File
@@ -139,14 +142,17 @@ fun HistoryScreen(viewModel: HistoryViewModel, onBack: () -> Unit) {
                     }
                 ) {
                     Text(stringResource(R.string.delete_history_btn_delete),
-                        color = MaterialTheme.colorScheme.error)
+                        color = CutterAccentLight
+                    )
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteAllConfirm = false }) {
                     Text(stringResource(R.string.cancel), color = CutterTextSecondary)
                 }
-            }
+            },
+            containerColor = CutterSurfaceMenu,
+            textContentColor = CutterText
         )
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="agradecimiento">Design e desenvolvimento:\nTyron Fonseca – 2024\n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a>  Ícone e outros aspectos da interface do usuário:\nOmar Zamora G.\n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
+    <string name="agradecimiento"><![CDATA[Design e desenvolvimento:\nTyron Fonseca – 2026\n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a>  Ícone e outros aspectos da interface do usuário:\nOmar Zamora G.\n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a>]]></string>
     <string name="app_info_title">Informações do aplicativo</string>
     <string name="library_title">Bibliotecas utilizadas</string>
 
@@ -11,7 +11,7 @@
     <string name="empty_text_2">o Cutter usado aparecerá aqui.</string>
     <string name="etx_last_name">Sobrenome</string>
     <string name="etx_name">Nome</string>
-    <string name="faqs"><b>&#x25FC; Quais letras ou caracteres acentuados o aplicativo aceita? </b>\n\nAtualmente, o aplicativo aceita apenas caracteres do alfabeto espanhol / inglês e os seguintes acentos: Á É Í Ó Ú Ü. Em futuras atualizações, a capacidade será expandida.\n\n<b>&#x25FC; Como submeto uma sugestão ou relatar um problema com o aplicativo?</b>\n\nVocê pode enviar sugestões ou relatar um problema para o seguinte email: <a href="mailto:"> contactfonsecasoftware@gmail.com </a></string>
+    <string name="faqs"><![CDATA[<b>&#x25FC; Quais letras ou caracteres acentuados o aplicativo aceita? </b>\n\nAtualmente, o aplicativo aceita apenas caracteres do alfabeto espanhol / inglês e os seguintes acentos: Á É Í Ó Ú Ü. Em futuras atualizações, a capacidade será expandida.\n\n<b>&#x25FC; Como submeto uma sugestão ou relatar um problema com o aplicativo?</b>\n\nVocê pode enviar sugestões ou relatar um problema para o seguinte email: <a href="mailto:contactfonsecasoftware@gmail.com">contactfonsecasoftware@gmail.com</a>]]></string>
     <string name="title_activity_licenses">Sobre</string>
     <string name="titulo_faq"><b>Perguntas frequentes (F.A.Q)</b></string>
     <string name="abc_normal">Alfabeto Normal</string>

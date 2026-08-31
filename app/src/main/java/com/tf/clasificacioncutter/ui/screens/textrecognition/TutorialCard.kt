@@ -94,7 +94,6 @@ fun TutorialCard(
                     textAlign = TextAlign.Center,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
-                    lineHeight = 24.sp,
                     color = Color.Black,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
@@ -109,7 +108,7 @@ fun TutorialCardPreview() {
     CutterTheme {
         TutorialCard(
             step = TutorialStep(
-                imageRes = R.drawable.inicio_1,
+                imageRes = R.drawable.tutorial1,
                 title = "Escanear Texto",
                 text = "Enfoca el texto con la cámara y presiona el botón de escaneo para comenzar el proceso."
             )

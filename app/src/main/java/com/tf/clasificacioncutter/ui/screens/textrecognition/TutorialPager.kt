@@ -207,9 +207,9 @@ fun TutorialPager(
 @Composable
 fun TutorialPagerPreview() {
     val steps = listOf(
-        TutorialStep(R.drawable.inicio_1, "Paso 1:", text="Enfoca el texto con la cámara y presiona el botón de escaneo."),
-        TutorialStep(R.drawable.inicio_1, "Paso 2:", text="Toca los cuadros de texto resaltados para seleccionar lo que necesites."),
-        TutorialStep(R.drawable.inicio_1, "Paso 3:", text="Puedes modificar el texto reconocido antes de utilizarlo.")
+        TutorialStep(R.drawable.tutorial1, "Paso 1:", text="Enfoca el texto con la cámara y presiona el botón de escaneo."),
+        TutorialStep(R.drawable.tutorial2, "Paso 2:", text="Toca los cuadros de texto resaltados para seleccionar lo que necesites."),
+        TutorialStep(R.drawable.tutorial3, "Paso 3:", text="Puedes modificar el texto reconocido antes de utilizarlo.")
     )
     CutterTheme {
         TutorialPager(steps = steps, buttonText = "¡Entendido!")

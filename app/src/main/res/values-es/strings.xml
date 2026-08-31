@@ -19,9 +19,9 @@
     <string name="credit"><u>Acerca de</u></string>
     <string name="titulo_faq"><b>Preguntas frecuentes (F.A.Q)</b></string>
 
-    <string name="faqs"><b>&#x25FC; ¿Qué letras acentuadas o carácteres acepta la aplicación?</b>\n\nActualmente la aplicación solo acepta caracteres del alfabeto español/inglés y los siguientes acentos: Á É Í Ó Ú Ü. En futuras actualizaciones se irá expandiendo la capacidad.\n\n<b>&#x25FC; ¿Cómo envío una sugerencia o reporto un problema con la aplicación?</b>\n\nPuedes enviar sugerencias o reportar algún problema al siguiente correo: <a href="mailto:">contactfonsecasoftware@gmail.com</a></string>
+    <string name="faqs"><![CDATA[<b>&#x25FC; ¿Qué letras acentuadas o carácteres acepta la aplicación?</b><br/><br/>Actualmente la aplicación solo acepta caracteres del alfabeto español/inglés y los siguientes acentos: Á É Í Ó Ú Ü. En futuras actualizaciones se irá expandiendo la capacidad.<br/><br/><b>&#x25FC; ¿Cómo envío una sugerencia o reporto un problema con la aplicación?</b><br/><br/>Puedes enviar sugerencias o reportar algún problema al siguiente correo: <a href="mailto:contactfonsecasoftware@gmail.com">contactfonsecasoftware@gmail.com</a>]]></string>
     <string name="title_activity_licenses">Acerca de</string>
-    <string name="agradecimiento">Diseño y desarrollo:\nTyron Fonseca – 2024  \n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a>\n\nÍcono y otros aspectos de la UI:\nOmar Zamora G.  \n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
+    <string name="agradecimiento"><![CDATA[Diseño y desarrollo:<br/>Tyron Fonseca – 2026  <br/><a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a><br/><br/>Ícono y otros aspectos de la UI:<br/>Omar Zamora G.<br/><a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a>]]></string>
     <string name="app_info_title">Información de la aplicación</string>
     <string name="library_title">Bibliotecas utilizadas</string>
 
