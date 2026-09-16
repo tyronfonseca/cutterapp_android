@@ -38,13 +38,13 @@ import com.tf.clasificacioncutter.ui.theme.CutterText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutScreen(onBack: () -> Unit) {
+fun AboutScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.credit)) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = {}) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.go_back_btn))
                     }

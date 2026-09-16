@@ -12,7 +12,7 @@ class AboutActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CutterTheme {
-                AboutScreen(onBack = { finish() })
+                AboutScreen()
             }
         }
     }
