@@ -13,9 +13,9 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -36,6 +36,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -45,6 +46,11 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.gms.tasks.Tasks
+import com.google.mlkit.vision.barcode.BarcodeScanner
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
@@ -54,6 +60,7 @@ import com.tf.clasificacioncutter.ui.components.DialogWithTextField
 import com.tf.clasificacioncutter.ui.theme.CutterAccentLight
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
 import com.tf.clasificacioncutter.ui.theme.CutterText
+import com.tf.clasificacioncutter.utils.extensions.extractISBNs
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -212,6 +219,8 @@ fun LensSelectionScreen(
 
     val overlayColor = CutterAccentLight.copy(alpha = 0.3f)
     val strokeColor = CutterPrimary
+    val isbnOverlayColor = Color(0x404CAF50)
+    val isbnStrokeColor = Color(0xFF2E7D32)
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -237,7 +246,9 @@ fun LensSelectionScreen(
                             )
                             scaledRect.contains(offset.x.toInt(), offset.y.toInt())
                         }
-                        tappedLine?.let { editingText = it.text }
+                        tappedLine?.let { line ->
+                            editingText = line.extractedIsbn ?: line.text
+                        }
                     }
                 }
         ) {
@@ -254,8 +265,13 @@ fun LensSelectionScreen(
 
                 lines.forEach { line ->
                     val rect = line.boundingBox
+                    val isIsbn = line.isIsbn
+                    val currentOverlay = if (isIsbn) isbnOverlayColor else overlayColor
+                    val currentStroke = if (isIsbn) isbnStrokeColor else strokeColor
+                    val strokeWidth = if (isIsbn) 3.dp.toPx() else 2.dp.toPx()
+
                     drawRect(
-                        color = overlayColor,
+                        color = currentOverlay,
                         topLeft = Offset(rect.left * scaleX, rect.top * scaleY),
                         size = Size(
                             (rect.right - rect.left) * scaleX,
@@ -263,14 +279,55 @@ fun LensSelectionScreen(
                         )
                     )
                     drawRect(
-                        color = strokeColor,
+                        color = currentStroke,
                         topLeft = Offset(rect.left * scaleX, rect.top * scaleY),
                         size = Size(
                             (rect.right - rect.left) * scaleX,
                             (rect.bottom - rect.top) * scaleY
                         ),
-                        style = Stroke(width = 2.dp.toPx())
+                        style = Stroke(width = strokeWidth)
                     )
+                }
+            }
+        }
+
+        viewModel.detectedIsbn?.let { isbn ->
+            Card(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "ISBN / Barcode:",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                        )
+                        Text(
+                            text = isbn,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                    Button(
+                        onClick = { onUseText(isbn) },
+                        colors = ButtonDefaults.buttonColors(containerColor = CutterPrimary)
+                    ) {
+                        Text(stringResource(R.string.use_this))
+                    }
                 }
             }
         }
@@ -294,7 +351,20 @@ fun CameraPreview(
     onPreviewViewCreated: (PreviewView) -> Unit,
     onTextDetected: (String, List<DetectedTextInfo>, Int, Int, Bitmap?) -> Unit
 ) {
-    val recognizer = remember { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
+    val textRecognizer = remember { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
+    val barcodeScanner = remember {
+        val options = BarcodeScannerOptions.Builder()
+            .setBarcodeFormats(
+                Barcode.FORMAT_EAN_13,
+                Barcode.FORMAT_EAN_8,
+                Barcode.FORMAT_UPC_A,
+                Barcode.FORMAT_UPC_E,
+                Barcode.FORMAT_CODE_128,
+                Barcode.FORMAT_ALL_FORMATS
+            )
+            .build()
+        BarcodeScanning.getClient(options)
+    }
 
     AndroidView(
         modifier = modifier,
@@ -322,7 +392,7 @@ fun CameraPreview(
                         .build()
                         .also {
                             it.setAnalyzer(cameraExecutor) { imageProxy ->
-                                processImageProxy(recognizer, imageProxy, viewModel, onTextDetected)
+                                processImageProxy(textRecognizer, barcodeScanner, imageProxy, viewModel, onTextDetected)
                             }
                         }
 
@@ -346,49 +416,105 @@ fun CameraPreview(
     )
 }
 
+private var lastAnalyzedTimestamp = 0L
+
 @androidx.annotation.OptIn(ExperimentalGetImage::class)
 private fun processImageProxy(
-    recognizer: TextRecognizer,
+    textRecognizer: TextRecognizer,
+    barcodeScanner: BarcodeScanner,
     imageProxy: ImageProxy,
     viewModel: TextRecognitionViewModel,
     onTextDetected: (String, List<DetectedTextInfo>, Int, Int, Bitmap?) -> Unit
 ) {
-    val mediaImage = imageProxy.image
-    if (mediaImage != null) {
-        val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-        recognizer.process(image)
-            .addOnSuccessListener { visionText ->
-                val lines = visionText.textBlocks.flatMap { block ->
-                    block.lines.map { line ->
-                        DetectedTextInfo(line.text, line.boundingBox ?: Rect())
-                    }
-                }
-                val rotation = imageProxy.imageInfo.rotationDegrees
-                val isRotated = rotation == 90 || rotation == 270
-                val width = if (isRotated) imageProxy.height else imageProxy.width
-                val height = if (isRotated) imageProxy.width else imageProxy.height
+    if (viewModel.isCaptured) {
+        imageProxy.close()
+        return
+    }
 
-                var bitmap: Bitmap? = null
-                if (viewModel.shouldCapture) {
-                    bitmap = imageProxy.toBitmap()
-                    if (rotation != 0) {
-                        val matrix = Matrix()
-                        matrix.postRotate(rotation.toFloat())
-                        bitmap = Bitmap.createBitmap(
-                            bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true
+    val currentTime = System.currentTimeMillis()
+    if (!viewModel.shouldCapture && currentTime - lastAnalyzedTimestamp < 300L) {
+        imageProxy.close()
+        return
+    }
+    lastAnalyzedTimestamp = currentTime
+
+    val mediaImage = imageProxy.image
+    if (mediaImage == null) {
+        imageProxy.close()
+        return
+    }
+
+    val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+    val barcodeTask = barcodeScanner.process(image)
+    val textTask = textRecognizer.process(image)
+
+    Tasks.whenAllComplete(barcodeTask, textTask)
+        .addOnSuccessListener {
+            val barcodes = if (barcodeTask.isSuccessful) barcodeTask.result else emptyList()
+            val visionText = if (textTask.isSuccessful) textTask.result else null
+
+            val allLines = mutableListOf<DetectedTextInfo>()
+
+            // 1. Process Barcodes (e.g. EAN-13 barcodes)
+            barcodes.forEach { barcode ->
+                val rawValue = barcode.rawValue
+                if (!rawValue.isNullOrBlank()) {
+                    val digits = rawValue.filter { it.isDigit() || it.uppercaseChar() == 'X' }
+                    val isbns = rawValue.extractISBNs()
+                    val isbn = isbns.firstOrNull() ?: if (digits.length == 10 || digits.length == 13) digits else null
+                    if (isbn != null) {
+                        allLines.add(
+                            DetectedTextInfo(
+                                text = "ISBN: $isbn",
+                                boundingBox = barcode.boundingBox ?: Rect(),
+                                isIsbn = true,
+                                extractedIsbn = isbn
+                            )
                         )
                     }
                 }
+            }
 
-                onTextDetected(visionText.text, lines, width, height, bitmap)
+            // 2. Process Text Lines from OCR
+            visionText?.textBlocks?.forEach { block ->
+                block.lines.forEach { line ->
+                    val isbns = line.text.extractISBNs()
+                    val isbn = isbns.firstOrNull()
+                    allLines.add(
+                        DetectedTextInfo(
+                            text = line.text,
+                            boundingBox = line.boundingBox ?: Rect(),
+                            isIsbn = isbn != null,
+                            extractedIsbn = isbn
+                        )
+                    )
+                }
             }
-            .addOnFailureListener { e ->
-                Log.e("TextRecognition", "Text recognition failed", e)
+
+            val fullText = visionText?.text ?: ""
+            val rotation = imageProxy.imageInfo.rotationDegrees
+            val isRotated = rotation == 90 || rotation == 270
+            val width = if (isRotated) imageProxy.height else imageProxy.width
+            val height = if (isRotated) imageProxy.width else imageProxy.height
+
+            var bitmap: Bitmap? = null
+            if (viewModel.shouldCapture) {
+                bitmap = imageProxy.toBitmap()
+                if (rotation != 0) {
+                    val matrix = Matrix()
+                    matrix.postRotate(rotation.toFloat())
+                    bitmap = Bitmap.createBitmap(
+                        bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true
+                    )
+                }
             }
-            .addOnCompleteListener {
-                imageProxy.close()
-            }
-    } else {
-        imageProxy.close()
-    }
+
+            onTextDetected(fullText, allLines, width, height, bitmap)
+        }
+        .addOnFailureListener { e ->
+            Log.e("TextRecognition", "Processing failed", e)
+        }
+        .addOnCompleteListener {
+            imageProxy.close()
+        }
 }

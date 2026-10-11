@@ -50,7 +50,7 @@ fun CutterButton(
 private fun CutterButtonPreview() {
     Surface(color = Color(0xFF121212)) {
         CutterButton(
-            text = "Buscar",
+            text = "Search",
             onClick = {}
         )
     }

@@ -51,7 +51,7 @@ class AppSettings (context: Context) : IAppSettings {
         get() = _textBeforeNum
         set(value) {
             _textBeforeNum = value
-            prefs.edit().putInt(Keys.TEXT_BEFORE_NUM, value.value).apply()
+            prefs.edit { putInt(Keys.TEXT_BEFORE_NUM, value.value) }
         }
     private var _textBeforeNum by mutableStateOf(
         TextBeforeAfterNum.fromInt(

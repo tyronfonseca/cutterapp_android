@@ -1,12 +1,10 @@
 package com.tf.clasificacioncutter.data
 
+import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class BottomNavItem(
-    // Text below icon
-    val label: String,
-    // Icon
+    @StringRes val labelRes: Int,
     val icon: ImageVector,
-    // Route to the specific screen
-    val route:String,
+    val route: String,
 )

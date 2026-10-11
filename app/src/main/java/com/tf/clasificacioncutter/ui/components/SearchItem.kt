@@ -1,9 +1,7 @@
 package com.tf.clasificacioncutter.ui.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,9 +17,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -33,18 +31,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.tf.clasificacioncutter.data.model.CutterData
-import com.tf.clasificacioncutter.data.model.fullCallNumber
+import com.tf.clasificacioncutter.R
+import com.tf.clasificacioncutter.data.model.cutterdata.CutterData
+import com.tf.clasificacioncutter.data.model.cutterdata.fullCallNumber
 import com.tf.clasificacioncutter.data.settings.AppSettings
+import com.tf.clasificacioncutter.data.settings.IAppSettings
 import com.tf.clasificacioncutter.ui.theme.CutterTheme
+
+private val BadgeShape = CircleShape
 
 @Composable
 fun SearchItemView(
     item: CutterData,
-    settings: AppSettings,
+    settings: IAppSettings,
     modifier: Modifier = Modifier,
     showAction: Boolean = true
 ) {
+    val authorLabel = stringResource(R.string.author)
+    val bookLabel = stringResource(R.string.book)
+    val reviewLabel = stringResource(R.string.searchitem_requires_review)
+    val reviewHint = stringResource(R.string.searchitem_requires_review_hint)
+
+    val callNumber = item.fullCallNumber(settings)
+
+    val badgeTextColor = MaterialTheme.colorScheme.tertiary
+    val badgeBgColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.12f)
+    val warningIconColor = Color(0xFFE65100)
+    val warningIconBgColor = Color(0xFFFFF59D).copy(alpha = 0.12f)
+
     Row(
         modifier = modifier
             .padding(16.dp)
@@ -52,7 +66,6 @@ fun SearchItemView(
             .semantics(mergeDescendants = true) {},
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // Left Column: Search value and optional book name
         Column(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(2.dp)
@@ -66,7 +79,6 @@ fun SearchItemView(
                 modifier = Modifier
                     .testTag("search_view_item_title")
                     .semantics {
-                        val authorLabel = "Author"
                         contentDescription = "$authorLabel: ${item.searchValue}"
                     }
             )
@@ -79,29 +91,24 @@ fun SearchItemView(
                     modifier = Modifier
                         .testTag("search_view_item_subtitle")
                         .semantics {
-                            val bookLabel = "Book" //stringResource(R.string.book)
                             contentDescription = "$bookLabel: ${item.bookName}"
                         }
                 )
             }
         }
 
-        // Right Row: Badges
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Cutter Value Badge
-            val callNumber = item.fullCallNumber(settings)
             Text(
                 text = callNumber,
                 style = MaterialTheme.typography.bodySmall,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF0056D2),
+                color = badgeTextColor,
                 modifier = Modifier
-                    .clip(CircleShape)
-                    .background(Color(0xFF0056D2).copy(alpha = 0.12f))
+                    .background(badgeBgColor, BadgeShape)
                     .padding(horizontal = 10.dp, vertical = 4.dp)
                     .testTag("searchitem_cutter_value")
                     .semantics {
@@ -109,19 +116,14 @@ fun SearchItemView(
                     }
             )
 
-            // Warning Icon Badge (if review needed)
             if (item.needsReview) {
-                val reviewLabel = "Requires review" //stringResource(R.string.searchitem_requires_review)
-                val reviewHint = "Hint" //stringResource(R.string.searchitem_requires_review_hint)
-
                 Icon(
                     imageVector = Icons.Default.Warning,
                     contentDescription = null,
-                    tint = Color(0xFFE65100),
+                    tint = warningIconColor,
                     modifier = Modifier
                         .size(24.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFFFF59D).copy(alpha = 0.12f))
+                        .background(warningIconBgColor, BadgeShape)
                         .padding(horizontal = 4.dp, vertical = 4.dp)
                         .testTag("searchitem_cutter_warning")
                         .semantics {
@@ -131,7 +133,6 @@ fun SearchItemView(
             }
         }
 
-        // Arrow right
         if (showAction) {
             Icon(
                 imageVector = Icons.Default.ChevronRight,

@@ -10,10 +10,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
+import com.tf.clasificacioncutter.utils.extensions.extractISBNs
 
 data class DetectedTextInfo(
     val text: String,
     val boundingBox: Rect,
+    val isIsbn: Boolean = false,
+    val extractedIsbn: String? = null,
 )
 
 class TextRecognitionViewModel(application: Application) : AndroidViewModel(application) {
@@ -24,6 +27,9 @@ class TextRecognitionViewModel(application: Application) : AndroidViewModel(appl
         private set
 
     var detectedLines = mutableStateListOf<DetectedTextInfo>()
+        private set
+
+    var detectedIsbn by mutableStateOf<String?>(null)
         private set
 
     var isCaptured by mutableStateOf(false)
@@ -64,6 +70,10 @@ class TextRecognitionViewModel(application: Application) : AndroidViewModel(appl
             detectedLines.addAll(lines)
             imageSize = Pair(width, height)
 
+            val isbnFromLines = lines.firstOrNull { it.isIsbn }?.extractedIsbn
+            val isbnFromText = text.extractISBNs().firstOrNull()
+            detectedIsbn = isbnFromLines ?: isbnFromText
+
             if (shouldCapture && bitmap != null) {
                 capturedBitmap = bitmap
                 isCaptured = true
@@ -81,6 +91,7 @@ class TextRecognitionViewModel(application: Application) : AndroidViewModel(appl
         shouldCapture = false
         recognizedText = ""
         detectedLines.clear()
+        detectedIsbn = null
         capturedBitmap = null
     }
 }

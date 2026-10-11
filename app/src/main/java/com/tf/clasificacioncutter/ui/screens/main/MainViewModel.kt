@@ -2,165 +2,177 @@ package com.tf.clasificacioncutter.ui.screens.main
 
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.data.AppDatabase
-import com.tf.clasificacioncutter.data.CutterSearch
+import com.tf.clasificacioncutter.data.model.CutterSearchOptions
+import com.tf.clasificacioncutter.data.model.cutterdata.CutterData
+import com.tf.clasificacioncutter.data.model.cuttertable.CutterTableEntity
+import com.tf.clasificacioncutter.data.repository.CutterTableRepository
+import com.tf.clasificacioncutter.data.settings.AppSettings
 import com.tf.clasificacioncutter.utils.CutterGetter
+import com.tf.clasificacioncutter.utils.csv.CSVHelper
+import com.tf.clasificacioncutter.utils.csv.CSVStorageManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.time.Duration.Companion.milliseconds
+import java.util.UUID
+
+data class MainUiState(
+    val currentTableSelected: CutterTableEntity? = null,
+    val currentCutterData: List<CutterData> = emptyList(),
+    val isLoading: Boolean = false,
+)
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val tag = "MainViewModel"
+    private val context: Context get() = getApplication<Application>().applicationContext
+    private val _uiState = MutableStateFlow(MainUiState())
+    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
-    private val cutterGetter = CutterGetter()
-    private val db = AppDatabase.getDatabase(application)
-    private val cutterSearchDao = db.cutterSearchDao()
+    private val db = AppDatabase.getDatabase(context)
+    private val repository = CutterTableRepository(db.cutterTableDao())
 
-    companion object {
-        private const val PREFS_NAME = "sharedPref"
-        private const val KEY_NUM = "numeroCutter"
-        private const val KEY_CUTTER_VAL = "cutterUsado"
-        private const val DB_NAME = "DB"
-    }
-
-    private val sharedPref: SharedPreferences =
-        application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-
-    // Local in-memory cache outside UiState to avoid memory leaks/copies
-    private var cutterCacheList: ArrayList<Array<String>> = arrayListOf()
-
-    var uiState by mutableStateOf(MainState())
-        private set
+    // User settings instance
+    val settings = AppSettings(context)
 
     init {
         loadInitialData()
     }
 
     private fun loadInitialData() {
-        val dbType = sharedPref.getInt(DB_NAME, 0)
-        val numCutter = sharedPref.getString(KEY_NUM, "").orEmpty()
-        val cutterUsed = sharedPref.getString(KEY_CUTTER_VAL, "").orEmpty()
+        loadActiveTable()
+    }
 
-        uiState = uiState.copy(
-            dbType = dbType,
-            numCutterResult = numCutter,
-            cutterUsed = cutterUsed,
-            isLoading = true
-        )
-
-        // Asynchronous load outside the UI thread
+    fun loadActiveTable() {
         viewModelScope.launch(Dispatchers.IO) {
-            val list = cutterGetter.getCutterList(getApplication())
-            cutterCacheList = list
+            _uiState.update { it.copy(isLoading = true) }
 
-            withContext(Dispatchers.Main) {
-                uiState = uiState.copy(isLoading = false)
+            val activeEntity = repository.ensureDefaultTablesExist(context)
+            val filename = activeEntity?.filename
+
+            if ((activeEntity == null) || filename.isNullOrEmpty()) {
+                _uiState.update {
+                    it.copy(
+                        currentCutterData = emptyList(),
+                        currentTableSelected = null,
+                        isLoading = false
+                    )
+                }
+                return@launch
+            }
+
+            val rawData: List<CutterData>
+
+            // Try external/custom directory file
+            val customFile = CSVStorageManager.getFile(context, filename)
+            rawData = if (customFile != null && customFile.exists()) {
+                CSVHelper.getCSVData(file = customFile, hasHeaders = activeEntity.hasHeaders)
+            } else {
+                // Fall back to raw resources using the filename string
+                val rawResourceId = if (filename == "pha.csv") {
+                    R.raw.pha
+                } else {
+                    R.raw.cutter_normal
+                }
+                CSVHelper.getCSVData(context = context, resource = rawResourceId)
+            }
+
+            _uiState.update {
+                it.copy(
+                    currentCutterData = rawData,
+                    currentTableSelected = activeEntity,
+                    isLoading = false
+                )
             }
         }
     }
 
-    fun onLastNameChange(value: String) {
-        uiState = uiState.copy(lastName = value, errorMessage = null)
-    }
-
-    fun onNameChange(value: String) {
-        uiState = uiState.copy(name = value, errorMessage = null)
-    }
-
-    fun searchReset(){
-        uiState = uiState.copy(lastName = "", name = "", errorMessage = null)
-    }
-
-    fun search() {
-        val lastName = uiState.lastName.trim()
-        val name = uiState.name.trim()
-
-        uiState = uiState.copy(isVisible = false)
-
-        if (lastName.length < 2) {
-            uiState = uiState.copy(
-                errorMessage = getApplication<Application>().getString(R.string.msg_error_last_name),
-                isVisible = true
-            )
-            return
+    fun selectActiveTable(entity: CutterTableEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.setActiveTable(entity)
+            loadActiveTable()
         }
+    }
 
-        if (cutterCacheList.isEmpty()) {
-            uiState = uiState.copy(
-                errorMessage = getApplication<Application>().getString(R.string.msg_error),
-                isVisible = true
-            )
-            return
-        }
+    fun deleteTable(table: CutterTableEntity) {
+        if (table.cannotDelete) return
+        viewModelScope.launch(Dispatchers.IO) {
+            if (table.filename.isNotEmpty() && table.filename != "cutter_normal.csv" && table.filename != "pha.csv") {
+                CSVStorageManager.deleteFile(context, table.filename)
+            }
+            db.cutterTableDao().delete(table)
 
-        viewModelScope.launch(Dispatchers.Default) {
-            val result = cutterGetter.search(name, lastName,cutterCacheList)
-
-            if (result.size >= 2) {
-                val letter = result[0].take(1)
-
-                val cutter = letter + result[1]
-                val cutterUsedText = "${result[0]}: ${result[1]}"
-
-                // Ensure exit animation of previous result is visible
-                delay(200.milliseconds)
-
-                withContext(Dispatchers.Main) {
-                    saveResult(cutter, cutterUsedText)
+            if (table.isSelected || _uiState.value.currentTableSelected?.id == table.id) {
+                val defaultTable = db.cutterTableDao().getAllTablesSync().firstOrNull { it.cannotDelete }
+                if (defaultTable != null) {
+                    selectActiveTable(defaultTable)
+                } else {
+                    loadActiveTable()
                 }
             }
         }
     }
 
-    private fun saveResult(cutter: String, cutterUsedText: String) {
-        val originalSearch = "${uiState.lastName}, ${uiState.name}".trim().removeSuffix(",").trim()
-        sharedPref.edit {
-            putString(KEY_NUM, cutter)
-            putString(KEY_CUTTER_VAL, cutterUsedText)
-        }
-
-        uiState = uiState.copy(
-            numCutterResult = cutter,
-            cutterUsed = cutterUsedText,
-            errorMessage = null,
-            isVisible = true
+    fun search(
+        name: String,
+        lastName: String,
+        options: CutterSearchOptions
+    ): CutterData? {
+        return CutterGetter.search(
+            queryName = name,
+            queryLastName = lastName,
+            data = _uiState.value.currentCutterData,
+            options = options
         )
-
-        viewModelScope.launch(Dispatchers.IO) {
-            cutterSearchDao.insert(
-                CutterSearch(
-                    originalSearch = originalSearch,
-                    result = cutter,
-                    cutterUsedText = cutterUsedText
-                )
-            )
-        }
     }
 
-    fun clearError() {
-        uiState = uiState.copy(errorMessage = null)
+    suspend fun saveImportedCSV(
+        fileUri: Uri,
+        name: String,
+        description: String,
+        setSelected: Boolean,
+        hasHeaders: Boolean
+    ): Boolean = withContext(Dispatchers.IO) {
+        // Generate unique filename on save
+        val sanitizeName = name.replace(" ", "_").lowercase()
+        val uniqueFilename = "${sanitizeName}_${UUID.randomUUID().toString().take(8)}.csv"
+
+        try {
+            val inputStream = context.contentResolver.openInputStream(fileUri) ?: return@withContext false
+
+            // Copy file to App internal files directory
+            val savedFile = CSVStorageManager.copyToApplicationDirectory(
+                context = context,
+                sourceStream = inputStream,
+                targetFilename = uniqueFilename
+            ) ?: return@withContext false
+            Log.d(tag, "Successfully copied CSV file to ${savedFile.absolutePath}")
+
+            // Save metadata in Repository
+            val displayName = name.trim().ifEmpty { "No name" }
+            val savedEntity = repository.saveCustomTableMetadata(
+                name = displayName,
+                description = description,
+                uniqueFilename = uniqueFilename,
+                hasHeaders = hasHeaders
+            )
+
+            if (setSelected) {
+                selectActiveTable(savedEntity)
+            }
+            true
+        } catch (e: Exception) {
+            CSVStorageManager.deleteFile(context, uniqueFilename)
+            Log.e(tag, "Error saving custom CSV: ${e.localizedMessage}", e)
+            false
+        }
     }
 }
-
-/**
- * Immutable UI state.
- */
-data class MainState(
-    val dbType: Int = 0,
-    val numCutterResult: String = "",
-    val cutterUsed: String = "",
-    val name: String = "",
-    val lastName: String = "",
-    val isLoading: Boolean = false,
-    val isVisible: Boolean = true,
-    val errorMessage: String? = null,
-)

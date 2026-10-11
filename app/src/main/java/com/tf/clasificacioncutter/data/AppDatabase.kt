@@ -5,11 +5,27 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.tf.clasificacioncutter.data.model.cutterdata.CutterDataDao
+import com.tf.clasificacioncutter.data.model.cutterdata.CutterDataEntity
+import com.tf.clasificacioncutter.data.model.cuttertable.CutterTableDao
+import com.tf.clasificacioncutter.data.model.cuttertable.CutterTableEntity
+import com.tf.clasificacioncutter.data.model.openlibrary.IsbnCacheDao
+import com.tf.clasificacioncutter.data.model.openlibrary.IsbnCacheEntity
 
-@Database(entities = [CutterSearch::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        CutterDataEntity::class,
+        CutterTableEntity::class,
+        IsbnCacheEntity::class
+    ], 
+    version = 3, 
+    exportSchema = false
+)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun cutterSearchDao(): CutterSearchDao
+    abstract fun cutterDataDao(): CutterDataDao
+    abstract fun cutterTableDao(): CutterTableDao
+    abstract fun isbnCacheDao(): IsbnCacheDao
 
     companion object {
         @Volatile
@@ -20,8 +36,9 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "cutter_database"
-                ).build()
+                    "cutter_app_database"
+                ).fallbackToDestructiveMigration(false)
+                .build()
                 INSTANCE = instance
                 instance
             }

@@ -19,21 +19,17 @@ fun String.removeAccents(): String {
  * Extracts raw numeric ISBN-10 or ISBN-13 strings from text.
  */
 fun String.extractISBNs(): List<String> {
-    // Capture group 1 matches the digit sequence with hyphens/spaces
-    val pattern = """(?i)\b(?:ISBN(?:-1[03])?:?\s*)?((?:97[89][-\s]?)?(?:\d[-\s]?){9}[\dX])\b""".toRegex()
+    val pattern = """(?i)(?:ISBN(?:-1[03])?:?\s*)?\b((?:97[89][-\s]?)?(?:\d[-\s]?){9}[\dX])\b""".toRegex()
 
-    // Remove spaces that can come from scanning the ISBN barcode
-    val copy = this.replace(" ", "")
-
-    return pattern.findAll(copy).mapNotNull { matchResult ->
-        // Extract Capture Group 1 (the number portion)
+    return pattern.findAll(this).mapNotNull { matchResult ->
         val rawMatch = matchResult.groups[1]?.value ?: return@mapNotNull null
-
-        // Strip hyphens and spaces to leave ONLY numbers (and 'X')
         val numberOnly = rawMatch.filter { it.isDigit() || it.uppercaseChar() == 'X' }
-
-        numberOnly.ifEmpty { null }
-    }.toList()
+        if (numberOnly.length == 10 || numberOnly.length == 13) {
+            numberOnly
+        } else {
+            null
+        }
+    }.distinct().toList()
 }
 
 /**
