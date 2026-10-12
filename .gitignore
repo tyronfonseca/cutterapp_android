@@ -7,3 +7,7 @@
 /build
 /captures
 .externalNativeBuild
+/release
+/.idea/compiler.xml
+/.idea/misc.xml
+/app/release

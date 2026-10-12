@@ -1,50 +1,68 @@
 package com.tf.clasificacioncutter
 
-import android.content.Context
-import android.util.Log
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
-import com.tf.clasificacioncutter.Utils.CutterGetter
-
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import com.tf.clasificacioncutter.data.model.CutterSearchOptions
+import com.tf.clasificacioncutter.data.model.TextBeforeAfterNum
+import com.tf.clasificacioncutter.data.settings.IAppSettings
+import com.tf.clasificacioncutter.utils.CutterGetter
+import com.tf.clasificacioncutter.utils.csv.CSVHelper
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import org.junit.Assert.*
-
 /**
- * Instrumented test, which will execute on an Android device.
+ * Instrumented test, which will execute on an Android device or emulator.
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+
+    private val mockSettings = object : IAppSettings {
+        override var dontSeparateName: Boolean = false
+        override var ignoreArticles: Boolean = true
+        override var textBeforeNum: TextBeforeAfterNum = TextBeforeAfterNum.AUTHOR_SURNAME
+        override var charsBeforeNum: Int = 1
+        override var textAfterNum: TextBeforeAfterNum = TextBeforeAfterNum.AUTHOR_SURNAME
+        override var charsAfterNum: Int = 0
+        override var includeExtrasInExport: Boolean = true
+        override var useFormatMac: Boolean = true
+    }
+
+    private val options = CutterSearchOptions(
+        settings = mockSettings,
+        dontSeparateName = false,
+        ignoreArticles = true,
+        useFormatMac = true
+    )
+
     @Test
     fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.tf.clasificacioncutter", appContext.packageName)
     }
 
     @Test
-    fun getFile_works(){
-        val context: Context = InstrumentationRegistry.getTargetContext()
-        val lista = CutterGetter().getCutterList(context.applicationContext,1)
-        Log.d("SIZE",lista.size.toString())
-//        for (item in lista){
-//            Log.d("ITEM", item[0]+" "+item[1])
-//        }
+    fun getCSVData_isNotNullAndNotEmpty() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val list = CSVHelper.getCSVData(appContext, R.raw.cutter_normal)
 
+        assertNotNull("The cutter list should not be null", list)
+        assertFalse("The cutter list should not be empty", list.isEmpty())
     }
+
     @Test
-    fun getCutter_works(){
-        val context: Context = InstrumentationRegistry.getTargetContext()
-        val lista = CutterGetter().getCutterList(context.applicationContext, 1)
-        val name = "ROGER"
-        val lastName = "BACH"
+    fun search_withRealData_returnsValidResult() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val list = CSVHelper.getCSVData(appContext, R.raw.cutter_normal)
 
+        val result = CutterGetter.search("Juan", "Perez", list, options)
 
-        val result = CutterGetter().search(name,lastName,2,lista)
-
-        Log.e("RESULADO:",result[0]+" "+result[1])
+        assertNotNull(result)
+        assertFalse("The code should not be empty", result!!.code.isEmpty())
+        assertFalse("The name should not be empty", result.name.isEmpty())
     }
 }

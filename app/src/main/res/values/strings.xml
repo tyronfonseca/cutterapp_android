@@ -3,40 +3,188 @@
     <string name="app_name" translatable="false">Cutter App</string>
 
     <!-- Alertas o mensajes -->
-    <string name="msg_error_last_name">The last name must have at least two letters.</string>
-    <string name="db_version_select">Select the alphabet to use</string>
-    <string name="abc_normal">Normal Alphabet</string>
-    <string name="abc_ucr">UCR (Alphabet with the letters CH and LL)</string>
-    <string name="select_normal">Normal version selected.</string>
-    <string name="select_ucr">UCR version selected.</string>
-
-    <!-- Inferfaz gráfica -->
-    <string name="empty_text">Hello,</string>
-    <string name="empty_text_2">the number used will appear here.</string>
-    <string name="etx_name">Name</string>
-    <string name="etx_last_name">Last Name</string>
-    <string name="bt_search">SEARCH</string>
-    <string name="descripcion_imagen" translatable="false">Logo de la aplicación</string>
-
-    <!-- Restricciones -->
-    <string name="char_allowed" translatable="false">qwertzuiopasdfghjklyxcvbnmñQWERTYUIOPASDFGHJKLZXCVBNMÑáéíóúüÁÉÍÓÚÜ-</string>
-
-    <!---Creditos y licencias-->
-    <string name="credit"><u>About</u></string>
-    <string name="titulo_faq"><b>Frequently asked questions (F.A.Q)</b></string>
-    <string name="faqs"><b>&#x25FC; What does UCR mean?</b>\n\nUCR stands for the University of Costa Rica. This application has the option of using two alphabets, the current one that everyone uses and the old one which has the letters CH and LL. This last alphabet is the one used in the UCR library system.\n\n<b>&#x25FC; What accented letters or characters does the application accept?</b>\n\nCurrently the application only accepts Spanish / English alphabet characters and the following accents: Á É Í Ó Ó Ü. In future updates the capacity will be expanded.\n\n<b>&#x25FC; How do I submit a suggestion or report a problem with the application?</b>\n\nYou can send suggestions or report a problem to the following email: <a href="mailto:">contactfonsecasoftware@gmail.com</a>\n\n\nThis application has no affiliation with the UCR. This application uses the following third-party libraries:</string>
+    <string name="descripcion_imagen" translatable="false">Logo app</string>
     <string name="title_activity_licenses">About</string>
-    <string name="agradecimiento">Design and development: Tyron Fonseca – 2024\n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a> \n\nIcon and other UI aspects: Omar Zamora G. \n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
 
     <!--Kotlin-->
-    <string name="kotlin" translatable="false"><a href="https://github.com/JetBrains/kotlin">Kotlin</a></string>
-    <string name="kotlin_license" translatable="false">"Copyright 2000-2020 JetBrains s.r.o. and Kotlin Programming Language contributors.\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at \n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License."</string>
+
+
 
     <!--OpenCSV-->
-    <string name="opencsv" translatable="false"><a href="http://opencsv.sourceforge.net/">OpenCSV 5.9</a></string>
-    <string name="opencsv_license" translatable="false">"Copyright 2020 Glen Smith and Scott Conway\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at \n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License."</string>
-    <string name="msg_error">Write the Last Name and Name.</string>
-    <string name="change_version">Change</string>
-    <string name="close">Close</string>
 
+
+    <string name="close">Close</string>
+    <string name="btn_text_recognition_desc">Text Recognition</string>
+    <string name="delete_history_title">Delete history</string>
+    <string name="delete_history_text">Are you sure you want to delete ALL your cutter search history? This action cannot be undone.</string>
+    <string name="delete_history_btn_delete">Delete All</string>
+    <string name="cancel">Cancel</string>
+    <string name="go_back_btn">Go Back</string>
+    <string name="menu">Menu</string>
+    <string name="menu_delete_all_search_history">Delete all search history</string>
+    <string name="search_placeholder">Enter author name or scan text</string>
+    <string name="text_recognition_title_alternative">Touch the squares to select the text</string>
+    <string name="text_recognition_title">Scan Text</string>
+    <string name="reset">Reset</string>
+    <string name="scan_btn">Scan text on image</string>
+    <string name="grant_camera_access">Grant camera access permission</string>
+    <string name="text_selected_title">Modify the text if needed</string>
+    <string name="use_this">Use this</string>
+    <string name="delete">Delete</string>
+    <string name="clean">Clear</string>
+
+    <!-- Tutorial Text Recognition -->
+    <string name="tutorial_btn">Help</string>
+    <string name="tutorial_step1_title">Scan Text</string>
+    <string name="tutorial_step1_text">Focus the text with the camera and press the scan button.</string>
+    <string name="tutorial_step2_title">Select Result</string>
+    <string name="tutorial_step2_text">Tap on the highlighted text boxes to select what you need.</string>
+    <string name="tutorial_step3_title">Review and edit the scanned text before proceeding</string>
+
+    <string name="tutorial_finish_btn">Got it!</string>
+    <string name="tutorial_step3_text">The app treats the final word as the last name, remove any unnecessary spaces.</string>
+
+    <string name="about">About</string>
+    <string name="about_functionality_description">The app helps you quickly generate standardized Cutter numbers for your library\'s call numbers. Simply search for an author\'s name or book title, and Cutter App will instantly match it to the correct entry.</string>
+    <string name="about_how_change_table">Go to the %1$s tab, tap the top menu (•••), and choose %2$s to select which table the app should use for matches.</string>
+    <string name="about_question_active_table">How do I change the active Cutter table?</string>
+    <string name="about_question_articles">Which articles (grammar) can be ignored by the app?</string>
+    <string name="about_question_articles_ans_1"><![CDATA[You can configure call numbers to ignore grammatical articles. For example, <b>"The King in Yellow"</b> is treated as <b>"King in Yellow"</b>. The following articles can be automatically ignored:]]></string>
+    <string name="about_question_barcode">Can I look up books by scanning a barcode?</string>
+    <string name="about_question_barcode_ans_1">Yes! You can point your device’s camera at any book\'s barcode (EAN-13 or EAN-8) to scan it directly. The app automatically retrieves details like the title, author, and Dewey Decimal Classification numbers to build the Cutter number for you.</string>
+    <string name="about_question_barcode_ans_2">Metadata is provided by OpenLibrary, an open community database, so some records may occasionally be incomplete or inaccurate.</string>
+    <string name="about_question_barcode_ans_3">Metadata is provided by OpenLibrary (openlibrary.org). See the Credits section below.</string>
+    <string name="about_question_change_table">Can I browse and search full Cutter tables directly?</string>
+    <string name="about_question_change_table_answer">Yes. Beyond generating numbers automatically, you can open the Cutter Table view to browse all entries arranged in alphabetical sections.</string>
+    <string name="about_question_customize">Can I customize how my cutter numbers look?</string>
+    <string name="about_question_customize_ans_1">You can tailor your call numbers to match your library’s style:</string>
+    <string name="about_question_customize_ans_2"><![CDATA[• <b>Custom Prefixes &amp; Suffixes:</b> Choose whether letters before or after the number come from the author\'s surname or the book title.]]></string>
+    <string name="about_question_customize_ans_3"><![CDATA[• <b>Letter Count:</b> Decide how many characters to include at the beginning or end.]]></string>
+    <string name="about_question_customize_ans_4"><![CDATA[• <b>Smart Grammar Controls:</b> Turn on settings to automatically ignore articles like \'The\', \'An\', or \'El\', or convert prefixes like \'Mc\' to \'Mac\'.]]></string>
+    <string name="about_question_export">Can I save my work and export it later?</string>
+    <string name="about_question_export_ans_1">Yes, all your generated Cutter numbers are automatically saved. When you\'re finished processing your books, you can export your entire list into a CSV spreadsheet to load into your cataloging software.</string>
+    <string name="about_question_functionality">What does Cutter App do?</string>
+    <string name="about_question_github">View on GitHub</string>
+    <string name="about_question_import_table">Can I import my own custom Cutter table?</string>
+    <string name="about_question_import_table_ans_1"><![CDATA[Yes. You can import custom Cutter tables by uploading a <b>CSV</b> (Comma-Separated Values) file.]]></string>
+    <string name="about_question_import_table_ans_2">The CSV file must follow this simple two-column format:</string>
+    <string name="about_question_import_table_ans_3"><![CDATA[<code>"Name","Code"</code>]]></string>
+    <string name="about_question_import_table_ans_4"><![CDATA[For example: <code>"King","52"</code>]]></string>
+    <string name="about_question_support">Suggestions &amp; Support</string>
+    <string name="about_question_switch_table">Which Cutter tables are available in the app?</string>
+    <string name="about_question_switch_table_answer_1">By default, Cutter App includes:</string>
+    <string name="about_question_switch_table_answer_2"><![CDATA[• <b>Cutter-Sanborn:</b> Swanson-Swift 1969 revision.]]></string>
+    <string name="about_question_switch_table_answer_3"><![CDATA[• <b>PHA Table:</b> Heloisa De Almeida Prado 1983 third edition.]]></string>
+    <string name="about_question_switch_table_answer_4"><![CDATA[• <b>Old Spanish Alphabet Cutter:</b> Traditional Spanish alphabet table including CH and LL letters.]]></string>
+    <string name="about_question_switch_table_answer_5">You can switch between them at any time in the app settings or %s tab.</string>
+    <string name="add_cutter_table_csv_headers">CSV file has headers</string>
+    <string name="add_cutter_table_description">Description (Optional)</string>
+    <string name="add_cutter_table_error_import">Import Error</string>
+    <string name="add_cutter_table_error_import_description">Failed to parse or save the selected CSV file. Please check the file formatting.</string>
+    <string name="add_cutter_table_footer"><![CDATA[The csv file needs to follow the format "<name>","<number>" for example:"Zac","15". If the file has headers please set ON the option above.]]></string>
+    <string name="add_cutter_table_load_table">Load Custom Cutter Table</string>
+    <string name="add_cutter_table_name">Table Name</string>
+    <string name="add_cutter_table_preview">CSV Preview (First 5 Rows)</string>
+    <string name="add_cutter_table_select_csv">Select CSV file</string>
+    <string name="add_cutter_table_set_current">Set as current table</string>
+    <string name="add_cutter_table_successful">New table added successfully</string>
+    <string name="add_cutter_table_title">Add Cutter Table</string>
+    <string name="app_description">Cutter App is a friendly, time-saving tool designed for librarians, catalogers, and book lovers to easily generate and manage Cutter call numbers. Instead of manually flipping through tables, the app quickly turns author names and book titles into accurate catalog numbers, helping you keep your library organized with minimal effort.</string>
+    <string name="author">Author</string>
+    <string name="book">Book</string>
+    <string name="code">Code</string>
+    <string name="contact">Contact</string>
+    <string name="cutter_app" translatable="false">Cutter App</string>
+    <string name="cutter_app_description">Cutter App is free and open source. You can inspect the source code, report issues, or contribute to its development.</string>
+    <string name="cutter_table">Cutter Table</string>
+    <string name="cuttertable_add_new_table">Add new table</string>
+    <string name="cuttertable_nav_title">Cutter Table:</string>
+    <string name="cuttertable_no_data">No Cutter Data</string>
+    <string name="cuttertable_search_prompt">Search…</string>
+    <string name="cuttertable_set_current_table">Set current table</string>
+    <string name="description_pha">Prado, Heloisa De Almeira (PHA) table. Third Edition (1983) </string>
+    <string name="description_sanborn">Cutter-Sanborn classification table. Swanson-Swift Revision (1969)</string>
+    <string name="edit_add_or_modify_book">Add or modify the book</string>
+    <string name="edit_author_has_no_surname">Author has no surname</string>
+    <string name="edit_cutter_number_used">Cutter Number Used</string>
+    <string name="edit_data_warning">Data taken from OpenLibrary.org; it may be inaccurate.</string>
+    <string name="edit_delete_item_message">Are you sure you want to delete this entry? This action cannot be undone.</string>
+    <string name="edit_delete_item_title">Delete Item?</string>
+    <string name="edit_edit_cutter">Edit cutter</string>
+    <string name="edit_name_optional">Name (optional)</string>
+    <string name="edit_no_cutter_code">No Cutter Code</string>
+    <string name="edit_possible_ddc">Possible DDC</string>
+    <string name="edit_review_required">Review Required</string>
+    <string name="edit_review_required_message">Verify author name, surname, book title, or DDC (if applicable). Close this message to dismiss.</string>
+    <string name="edit_toggle_footer">If the author is an institution, organization or your system uses the name instead of the surname to get the cutter number set this to ON. If you want this option set to ON by default go to the Settings screen inside the app.</string>
+    <string name="edit_verify_author_name">Verify that the name of the author is correct.</string>
+    <string name="english">English</string>
+    <string name="export_to_csv">Export to CSV</string>
+    <string name="faq_header">Frequently Asked Questions</string>
+    <string name="filter_all">All</string>
+    <string name="filter_author">Author (A-Z)</string>
+    <string name="filter_needs_review">Needs review</string>
+    <string name="filter_newest_first">Newest</string>
+    <string name="filter_oldest_first">Oldest</string>
+    <string name="filter_reviewed">Reviewed</string>
+    <string name="isbn">ISBN</string>
+    <string name="logo_description">App\'s logo</string>
+    <string name="more_actions">More Actions</string>
+    <string name="name">Name</string>
+    <string name="no_results">No results</string>
+    <string name="open_source">Open Source</string>
+    <string name="save">Save</string>
+    <string name="scan">Scan</string>
+    <string name="search">Search</string>
+    <string name="search_btn">Search</string>
+    <string name="search_delete_confirmation">Are you sure you want to delete these items?</string>
+    <string name="search_export_alert_btn">Export Anyway</string>
+    <string name="search_export_alert_title">Items Need Review</string>
+    <string name="search_export_confirmation">%1$d item%2$s %3$s been marked as needing review. Export anyway?</string>
+    <string name="search_no_entries">No entries yet</string>
+    <string name="search_no_entries_description">Add an entry by scanning or entering an author name or ISBN</string>
+    <string name="search_query">Search Query</string>
+    <string name="searchitem_requires_review">Requires review</string>
+    <string name="searchitem_requires_review_hint">The author name needs manual verification.</string>
+    <string name="select_cutter_table_available">Available Tables</string>
+    <string name="select_items">Select Items</string>
+    <string name="selected_label">Selected</string>
+    <string name="settings">Settings</string>
+    <string name="settings_cutterTable_activeTable">Active Table</string>
+    <string name="settings_cutterTable_add">Add cutter table</string>
+    <string name="settings_cutterTable_defaultName">Default</string>
+    <string name="settings_cutterTable_footer">You can add a custom cutter table. After adding the new table, you can set it as the current table used by the app.</string>
+    <string name="settings_export_header">Save to CSV</string>
+    <string name="settings_export_includeExtras">Include ISBN and DDC</string>
+    <string name="settings_number_footer">Configure what information and character length to append before and after the cutter number.</string>
+    <string name="settings_number_header">Number Formatting</string>
+    <string name="settings_number_prefix">Cutter Prefix</string>
+    <string name="settings_number_suffix">Cutter Suffix</string>
+    <string name="settings_preview_footer">This is a live preview demonstrating your current call number configuration.</string>
+    <string name="settings_preview_header">Cutter generation</string>
+    <string name="settings_searchBehavior_header">Search Behavior</string>
+    <string name="settings_searchBehavior_ignoreArticles">Ignore grammar articles</string>
+    <string name="settings_searchBehavior_noSurname">Author has no surname</string>
+    <string name="settings_searchBehavior_spellAsMac">Spell Mc and M\' as Mac</string>
+    <string name="spanish">Spanish</string>
+    <string name="surname">Surname</string>
+    <string name="title">Title</string>
+    <string name="title_pha">PHA Table</string>
+    <string name="title_sanborn">Sanborn 3-Digit Table</string>
+    <string name="settings_hint_no_surname">Treats the complete name as a single entity instead of splitting author name and surname.</string>
+    <string name="settings_hint_ignore_articles">Automatically ignores grammar articles during number generation.</string>
+    <string name="settings_hint_spell_mac">Converts Mc and M\' prefixes into Mac format.</string>
+    <string name="settings_hint_include_extras">Attaches supplementary metadata (ISBN, DDC) to the exported CSV file.</string>
+    <string name="export_success_toast">Exported successfully</string>
+    <string name="export_error_toast">Export failed</string>
+    <string name="title_cutter_old">Old Spanish Alphabet Cutter</string>
+    <string name="description_cutter_old">Cutter classification table including old Spanish alphabet letters (CH and LL).</string>
+    <string name="cuttertable_selected">Table \"%s\" selected</string>
+    <string name="credits_openlibrary"><![CDATA[Book metadata (titles, authors, and DDC) is provided by <a href="https://openlibrary.org">OpenLibrary (openlibrary.org)</a>, an open community database.]]></string>
+    <string name="licenses_title">Licenses &amp; Credits</string>
+    <string name="view_licenses_btn">View Licenses &amp; Credits</string>
+    <string name="gson_license" translatable="false"><![CDATA[Google Gson 2.14 Copyright 2008 Google Inc.<br/>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a><br/><br/>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.]]></string>
+    <string name="portuguese">Portuguese</string>
+    <string name="error_network">Network error. Try again later.</string>
+    <string name="search_format_hint">Formats: \"Name Surname\", \"Surname, Name\", \"Surname\" or ISBN</string>
 </resources>

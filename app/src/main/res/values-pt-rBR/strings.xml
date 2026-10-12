@@ -1,33 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="agradecimiento">Design e desenvolvimento:\nTyron Fonseca – 2024\n<a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a>  Ícone e outros aspectos da interface do usuário:\nOmar Zamora G.\n<a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a></string>
-    <string name="bt_search">BUSCAR</string>
-    <string name="credit"><u>Sobre</u></string>
-    <string name="db_version_select">Selecione o alfabeto para usar</string>
-    <string name="empty_text">Olá,</string>
-    <string name="empty_text_2">o Cutter usado aparecerá aqui.</string>
-    <string name="etx_last_name">Sobrenome</string>
-    <string name="etx_name">Nome</string>
-    <string name="faqs"><b>&#x25FC; O que significa UCR? </b>\n\nUCR significa Universidade da Costa Rica. Esta aplicação tem a opção de usar dois alfabetos, o atual que todos usam e o antigo, com as letras CH e LL. Este último alfabeto é o usado no sistema de bibliotecas da UCR.
-
-\n\n<b>&#x25FC; Quais letras ou caracteres acentuados o aplicativo aceita? </b>
-
-\n\nAtualmente, o aplicativo aceita apenas caracteres do alfabeto espanhol / inglês e os seguintes acentos: Á É Í Ó Ó Ü. Em futuras atualizações, a capacidade será expandida.
-
-\n\n<b>&#x25FC; Como submeto uma sugestão ou relatar um problema com o aplicativo?</b>
-
-\n\nVocê pode enviar sugestões ou relatar um problema para o seguinte email: <a href="mailto:"> contactfonsecasoftware@gmail.com </a>
-
-\n\n\nEsta aplicação não tem afiliação com o UCR. Este aplicativo usa as seguintes bibliotecas de terceiros:
-</string>
     <string name="title_activity_licenses">Sobre</string>
-    <string name="titulo_faq"><b>Perguntas frequentes (F.A.Q)</b></string>
-    <string name="abc_ucr">UCR (Alfabeto com as letras CH e LL)</string>
-    <string name="abc_normal">Alfabeto Normal</string>
-    <string name="select_normal">Versão Normal selecionada.</string>
-    <string name="select_ucr">Versão UCR selecionada.</string>
-    <string name="msg_error">Preencha os dois espaços em branco.</string>
-    <string name="msg_error_last_name">O sobrenome deve ter pelo menos duas letras.</string>
-    <string name="change_version">Alterar</string>
+
     <string name="close">Fechar</string>
+    <string name="btn_text_recognition_desc">Reconhecimento de texto</string>
+    <string name="delete_history_title">Excluir histórico</string>
+    <string name="delete_history_text">Tem certeza de que deseja excluir TODO o seu histórico de pesquisa? Esta ação não pode ser desfeita.</string>
+    <string name="delete_history_btn_delete">Excluir tudo</string>
+    <string name="cancel">Cancelar</string>
+    <string name="go_back_btn">Voltar</string>
+    <string name="menu">Menu</string>
+    <string name="menu_delete_all_search_history">Excluir todo o histórico de pesquisa</string>
+    <string name="search_placeholder">Digite o nome do autor ou escaneie o texto</string>
+    <string name="text_recognition_title_alternative">Toque nos quadrados para selecionar o texto</string>
+    <string name="text_recognition_title">Digitalizar texto</string>
+    <string name="reset">Redefinir</string>
+    <string name="scan_btn">Digitalizar texto na imagem</string>
+    <string name="grant_camera_access">Conceder permissão de acesso à câmera</string>
+    <string name="text_selected_title">Modifique o texto se necessário</string>
+    <string name="use_this">Usar isso</string>
+    <string name="delete">Excluir</string>
+    <string name="clean">Limpar</string>
+
+    <!-- Tutorial de Reconhecimento de Texto -->
+    <string name="tutorial_btn">Ajuda</string>
+    <string name="tutorial_step1_title">Digitalizar Texto</string>
+    <string name="tutorial_step1_text">Foque o texto com a câmera e pressione o botão de digitalização. A iluminação, o contraste e os estilos de fonte podem afetar a precisão.</string>
+    <string name="tutorial_step2_title">Selecionar Resultado</string>
+    <string name="tutorial_step2_text">Toque nas caixas de texto realçadas para selecionar o que você precisa.</string>
+    <string name="tutorial_step3_title">Revise e edite o texto digitalizado antes de prosseguir</string>
+    <string name="tutorial_step3_text">O aplicativo considera a última palavra como o sobrenome, remova quaisquer espaços desnecessários.</string>
+    <string name="tutorial_finish_btn">Entendi!</string>
+
+    <string name="about">Sobre</string>
+    <string name="about_functionality_description">O aplicativo ajuda você a gerar rapidamente números Cutter padronizados para os números de chamada da sua biblioteca. Basta pesquisar o nome de um autor ou o título de um livro, e o Cutter App o corresponderá instantaneamente à entrada correta.</string>
+    <string name="about_how_change_table">Vá para a aba %1$s, toque no menu superior (•••) e escolha %2$s para selecionar qual tabela o aplicativo deve usar para as correspondências.</string>
+    <string name="about_question_active_table">Como altero a tabela Cutter ativa?</string>
+    <string name="about_question_articles">Quais artigos gramaticais podem ser ignorados pelo aplicativo?</string>
+    <string name="about_question_articles_ans_1"><![CDATA[Você pode configurar os números de chamada para ignorar artigos gramaticais. Por exemplo, <b>"The King in Yellow"</b> é tratado como <b>"King in Yellow"</b>. Os seguintes artigos podem ser ignorados automaticamente:]]></string>
+    <string name="about_question_barcode">Posso pesquisar livros escaneando um código de barras?</string>
+    <string name="about_question_barcode_ans_1">Sim! Você pode apontar a câmera do seu dispositivo para o código de barras de qualquer livro (EAN-13 ou EAN-8) para escaneá-lo diretamente. O aplicativo recupera automaticamente detalhes como título, autor e números da Classificação Decimal de Dewey para construir o número Cutter para você.</string>
+    <string name="about_question_barcode_ans_2">Os metadados são fornecidos pela OpenLibrary, um banco de dados comunitário aberto, portanto alguns registros podem ocasionalmente estar incompletos ou imprecisos.</string>
+    <string name="about_question_barcode_ans_3">Os metadados são fornecidos pela OpenLibrary (openlibrary.org). Consulte a seção de créditos abaixo.</string>
+    <string name="about_question_change_table">Posso navegar e pesquisar em tabelas Cutter completas diretamente?</string>
+    <string name="about_question_change_table_answer">Sim. Além de gerar números automaticamente, você pode abrir a visualização Tabela Cutter para navegar por todas as entradas organizadas em seções alfabéticas.</string>
+    <string name="about_question_customize">Posso personalizar como meus números Cutter são exibidos?</string>
+    <string name="about_question_customize_ans_1">Você pode adaptar seus números de chamada ao estilo da sua biblioteca:</string>
+    <string name="about_question_customize_ans_2"><![CDATA[• <b>Prefixos e sufixos personalizados:</b> Escolha se as letras antes ou depois do número vêm do sobrenome do autor ou do título do livro.]]></string>
+    <string name="about_question_customize_ans_3"><![CDATA[• <b>Contagem de letras:</b> Decida quantos caracteres incluir no início ou no fim.]]></string>
+    <string name="about_question_customize_ans_4"><![CDATA[• <b>Controles gramaticais inteligentes:</b> Ative configurações para ignorar automaticamente artigos como \'The\', \'An\' ou \'El\', ou converter prefixos como \'Mc\' para \'Mac\'.]]></string>
+    <string name="about_question_export">Posso salvar meu trabalho e exportá-lo mais tarde?</string>
+    <string name="about_question_export_ans_1">Sim, todos os seus números Cutter gerados são salvos automaticamente. Quando você terminar de processar seus livros, poderá exportar sua lista completa para uma planilha CSV para carregá-la no seu software de catalogação.</string>
+    <string name="about_question_functionality">O que o Cutter App faz?</string>
+    <string name="about_question_github">Ver no GitHub</string>
+    <string name="about_question_import_table">Posso importar minha própria tabela Cutter personalizada?</string>
+    <string name="about_question_import_table_ans_1"><![CDATA[Sim. Você pode importar tabelas Cutter personalizadas enviando um arquivo <b>CSV</b> (Valores Separados por Vírgula).]]></string>
+    <string name="about_question_import_table_ans_2">O arquivo CSV deve seguir este formato simples de duas colunas:</string>
+    <string name="about_question_import_table_ans_3"><![CDATA[<code>"Name","Code"</code>]]></string>
+    <string name="about_question_import_table_ans_4"><![CDATA[Por exemplo: <code>"King","52"</code>]]></string>
+    <string name="about_question_support">Sugestões e suporte</string>
+    <string name="about_question_switch_table">Quais tabelas Cutter estão disponíveis no aplicativo?</string>
+    <string name="about_question_switch_table_answer_1">Por padrão, o Cutter App inclui:</string>
+    <string name="about_question_switch_table_answer_2"><![CDATA[• <b>Cutter-Sanborn:</b> Revisão Swanson-Swift de 1969.]]></string>
+    <string name="about_question_switch_table_answer_3"><![CDATA[• <b>Tabela PHA:</b> Heloisa De Almeida Prado 1983 terceira edição.]]></string>
+    <string name="about_question_switch_table_answer_4"><![CDATA[• <b>Cutter Alfabeto Espanhol Antigo:</b> Tabela de classificação com as letras tradicionais CH e LL.]]></string>
+    <string name="about_question_switch_table_answer_5">Você pode alternar entre elas a qualquer momento nas configurações do aplicativo ou na aba %s.</string>
+    <string name="add_cutter_table_csv_headers">O arquivo CSV possui cabeçalhos</string>
+    <string name="add_cutter_table_description">Descrição (opcional)</string>
+    <string name="add_cutter_table_error_import">Erro de importação</string>
+    <string name="add_cutter_table_error_import_description">Falha ao analisar ou salvar o arquivo CSV selecionado. Verifique a formatação do arquivo.</string>
+    <string name="add_cutter_table_footer"><![CDATA[O arquivo CSV precisa seguir o formato "<nome>","<número>", por exemplo: "Zac","15". Se o arquivo tiver cabeçalhos, ative a opção acima.]]></string>
+    <string name="add_cutter_table_load_table">Carregar tabela Cutter personalizada</string>
+    <string name="add_cutter_table_name">Nome da tabela</string>
+    <string name="add_cutter_table_preview">Pré-visualização do CSV (primeiras 5 linhas)</string>
+    <string name="add_cutter_table_select_csv">Selecionar arquivo CSV</string>
+    <string name="add_cutter_table_set_current">Definir como tabela atual</string>
+    <string name="add_cutter_table_successful">Nova tabela adicionada com sucesso</string>
+    <string name="add_cutter_table_title">Adicionar tabela Cutter</string>
+    <string name="app_description">O Cutter App é uma ferramenta amigável e prática, desenvolvida para bibliotecários, catalogadores e apaixonados por livros gerarem e gerenciarem números de chamada Cutter com facilidade. Em vez de consultar tabelas manualmente, o aplicativo transforma rapidamente nomes de autores e títulos de livros em números de catálogo precisos, ajudando você a manter sua biblioteca organizada com o mínimo de esforço.</string>
+    <string name="author">Autor</string>
+    <string name="book">Livro</string>
+    <string name="code">Código</string>
+    <string name="contact">Contato</string>
+
+
+    <string name="cutter_app_description">O aplicativo Cutter é gratuito e de código aberto. Você pode inspecionar o código-fonte, relatar problemas ou contribuir para o seu desenvolvimento.</string>
+    <string name="cutter_table">Tabela Cutter</string>
+    <string name="cuttertable_add_new_table">Adicionar nova tabela</string>
+    <string name="cuttertable_nav_title">Tabela Cutter:</string>
+    <string name="cuttertable_no_data">Sem dados Cutter</string>
+    <string name="cuttertable_search_prompt">Buscar…</string>
+    <string name="cuttertable_set_current_table">Definir tabela atual</string>
+    <string name="description_pha">Tabela Prado, Heloisa De Almeida (PHA). Terceira Edição (1983)</string>
+    <string name="description_sanborn">Tabela de classificação Cutter-Sanborn. Revisão Swanson-Swift (1969)</string>
+    <string name="edit_add_or_modify_book">Adicionar ou modificar o livro</string>
+    <string name="edit_author_has_no_surname">Autor não tem sobrenome</string>
+    <string name="edit_cutter_number_used">Número Cutter usado</string>
+    <string name="edit_data_warning">Dados obtidos do OpenLibrary.org; podem ser imprecisos.</string>
+    <string name="edit_delete_item_message">Tem certeza de que deseja excluir esta entrada? Esta ação não pode ser desfeita.</string>
+    <string name="edit_delete_item_title">Excluir item?</string>
+    <string name="edit_edit_cutter">Editar Cutter</string>
+    <string name="edit_name_optional">Nome (opcional)</string>
+    <string name="edit_no_cutter_code">Sem código Cutter</string>
+    <string name="edit_possible_ddc">Possível CDD</string>
+    <string name="edit_review_required">Revisão necessária</string>
+    <string name="edit_review_required_message">Verifique o nome do autor, sobrenome, título do livro ou CDD (se aplicável). Feche esta mensagem para dispensar.</string>
+    <string name="edit_toggle_footer">Se o autor for uma instituição, organização ou seu sistema usar o nome em vez do sobrenome para obter o número Cutter, ative esta opção. Se você quiser que esta opção fique ativada por padrão, vá para a tela de Configurações no aplicativo.</string>
+    <string name="edit_verify_author_name">Verifique se o nome do autor está correto.</string>
+    <string name="english">Inglês</string>
+    <string name="export_to_csv">Exportar para CSV</string>
+    <string name="faq_header">Perguntas frequentes (F.A.Q)</string>
+    <string name="filter_all">Todos</string>
+    <string name="filter_author">Autor (A-Z)</string>
+    <string name="filter_needs_review">Precisa de revisão</string>
+    <string name="filter_newest_first">Recentes</string>
+    <string name="filter_oldest_first">Antigos</string>
+    <string name="filter_reviewed">Revisado</string>
+    <string name="isbn">ISBN</string>
+    <string name="logo_description">Logotipo do aplicativo</string>
+    <string name="more_actions">Mais ações</string>
+    <string name="name">Nome</string>
+    <string name="no_results">Nenhum resultado encontrado</string>
+    <string name="open_source">Código aberto</string>
+    <string name="save">Salvar</string>
+    <string name="scan">Escanear</string>
+    <string name="search">Buscar</string>
+    <string name="search_btn">Buscar</string>
+    <string name="search_delete_confirmation">Tem certeza de que deseja excluir estes itens?</string>
+    <string name="search_export_alert_btn">Exportar mesmo assim</string>
+    <string name="search_export_alert_title">Itens precisam de revisão</string>
+    <string name="search_export_confirmation">%1$d item%2$s %3$s marcado(s) como necessitando de revisão. Exportar mesmo assim?</string>
+    <string name="search_no_entries">Nenhuma entrada ainda</string>
+    <string name="search_no_entries_description">Adicione uma entrada escaneando ou digitando o nome de um autor ou ISBN</string>
+    <string name="search_query">Termo de pesquisa</string>
+    <string name="searchitem_requires_review">Requer revisão</string>
+    <string name="searchitem_requires_review_hint">O nome do autor precisa de verificação manual.</string>
+    <string name="select_cutter_table_available">Tabelas disponíveis</string>
+    <string name="select_items">Selecionar itens</string>
+    <string name="selected_label">Selecionado</string>
+    <string name="settings">Configuração</string>
+    <string name="settings_cutterTable_activeTable">Tabela ativa</string>
+    <string name="settings_cutterTable_add">Adicionar tabela Cutter</string>
+    <string name="settings_cutterTable_defaultName">Padrão</string>
+    <string name="settings_cutterTable_footer">Você pode adicionar uma tabela Cutter personalizada. Depois de adicionar a nova tabela, você pode defini-la como a tabela atual usada pelo aplicativo.</string>
+    <string name="settings_export_header">Salvar em CSV</string>
+    <string name="settings_export_includeExtras">Incluir ISBN e DDC</string>
+    <string name="settings_number_footer">Configure quais informações e comprimento de caracteres serão anexados antes e depois do número Cutter.</string>
+    <string name="settings_number_header">Formatação numérica</string>
+    <string name="settings_number_prefix">Prefixo Cutter</string>
+    <string name="settings_number_suffix">Sufixo Cutter</string>
+    <string name="settings_preview_footer">Esta é uma pré-visualização em tempo real demonstrando sua configuração atual de número de chamada.</string>
+    <string name="settings_preview_header">Geração do Cutter</string>
+    <string name="settings_searchBehavior_header">Comportamento de pesquisa</string>
+    <string name="settings_searchBehavior_ignoreArticles">Ignorar artigos gramaticais</string>
+    <string name="settings_searchBehavior_noSurname">Autor não tem sobrenome</string>
+    <string name="settings_searchBehavior_spellAsMac">Escrever Mc e M\' como Mac</string>
+    <string name="spanish">Espanhol</string>
+    <string name="surname">Sobrenome</string>
+    <string name="title">Título</string>
+    <string name="title_pha">Tabela PHA</string>
+    <string name="title_sanborn">Tabela Sanborn de 3 dígitos</string>
+    <string name="settings_hint_no_surname">Trata o nome completo como uma única entidade em vez de separar nome e sobrenome.</string>
+    <string name="settings_hint_ignore_articles">Ignora automaticamente artigos gramaticais durante a geração do número.</string>
+    <string name="settings_hint_spell_mac">Converte os prefixos Mc e M\' para o formato Mac.</string>
+    <string name="settings_hint_include_extras">Anexa metadados complementários (ISBN, CDD) ao arquivo CSV exportado.</string>
+    <string name="export_success_toast">Exportado com sucesso</string>
+    <string name="export_error_toast">Falha na exportação</string>
+    <string name="title_cutter_old">Cutter Alfabeto Espanhol Antigo</string>
+    <string name="description_cutter_old">Tabela de classificação Cutter incluindo letras do alfabeto espanhol antiguo (CH e LL).</string>
+    <string name="cuttertable_selected">Tabela \"%s\" selecionada</string>
+    <string name="credits_openlibrary"><![CDATA[Os metadados de livros (títulos, autores e CDD) são fornecidos pela <a href="https://openlibrary.org">OpenLibrary (openlibrary.org)</a>, um banco de dados comunitário aberto.]]></string>
+    <string name="licenses_title">Licenças e créditos</string>
+    <string name="view_licenses_btn">Ver licenças e créditos</string>
+
+    <string name="portuguese">Português</string>
+    <string name="error_network">Erro de rede. Tente novamente mais tarde.</string>
+    <string name="search_format_hint">Formatos: \"Nome Sobrenome\", \"Sobrenome, Nome\", \"Sobrenome\" ou ISBN</string>
 </resources>

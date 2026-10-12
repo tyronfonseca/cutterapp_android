@@ -1,0 +1,65 @@
+package com.tf.clasificacioncutter.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+// Primary Launcher / Brand Colors (Royal Violet Purple & Cobalt Blue)
+val CutterPrimary = Color(0xFF6D0D9C)
+val CutterAccent = Color(0xFF0047BB)
+val CutterAccentLight = Color(0xFF4D8BF5)
+val CutterText = Color(0xFFFFFFFF)
+val CutterTextSecondary = Color(0xFFB9B9B9)
+val CutterSurfaceMenu = Color(0xFF3B0554)
+
+// Light Theme Palette (matching iOS Grouped Background & System Colors)
+val LightPrimary = Color(0xFF6D0D9C)
+val LightOnPrimary = Color(0xFFFFFFFF)
+val LightPrimaryContainer = Color(0xFFF3E5F5)
+val LightOnPrimaryContainer = Color(0xFF380053)
+
+val LightSecondary = Color(0xFF8E24AA)
+val LightOnSecondary = Color(0xFFFFFFFF)
+val LightSecondaryContainer = Color(0xFFF8E8FF)
+val LightOnSecondaryContainer = Color(0xFF3B0054)
+
+val LightTertiary = Color(0xFF0047BB)
+val LightOnTertiary = Color(0xFFFFFFFF)
+val LightTertiaryContainer = Color(0xFFDCE3FF)
+val LightOnTertiaryContainer = Color(0xFF001946)
+
+val LightBackground = Color(0xFFF2F2F7)
+val LightOnBackground = Color(0xFF1C1C1E)
+val LightSurface = Color(0xFFFFFFFF)
+val LightOnSurface = Color(0xFF1C1C1E)
+val LightSurfaceVariant = Color(0xFFFFFFFF)
+val LightOnSurfaceVariant = Color(0xFF3C3C43)
+val LightSurfaceContainer = Color(0xFFF2F2F7)
+val LightSurfaceContainerHigh = Color(0xFFFFFFFF)
+val LightOutline = Color(0xFF8E8E93)
+val LightOutlineVariant = Color(0xFFE5E5EA)
+
+// Dark Theme Palette (matching iOS Dark Grouped Surface & System Colors)
+val DarkPrimary = Color(0xFFD69BF5)
+val DarkOnPrimary = Color(0xFF4A006A)
+val DarkPrimaryContainer = Color(0xFF530076)
+val DarkOnPrimaryContainer = Color(0xFFF3E5F5)
+
+val DarkSecondary = Color(0xFFE2B4F8)
+val DarkOnSecondary = Color(0xFF430062)
+val DarkSecondaryContainer = Color(0xFF5E0088)
+val DarkOnSecondaryContainer = Color(0xFFF8E8FF)
+
+val DarkTertiary = Color(0xFF5B8EFF)
+val DarkOnTertiary = Color(0xFF002E78)
+val DarkTertiaryContainer = Color(0xFF0047BB)
+val DarkOnTertiaryContainer = Color(0xFFDCE3FF)
+
+val DarkBackground = Color(0xFF000000)
+val DarkOnBackground = Color(0xFFF2F2F7)
+val DarkSurface = Color(0xFF1C1C1E)
+val DarkOnSurface = Color(0xFFF2F2F7)
+val DarkSurfaceVariant = Color(0xFF1C1C1E)
+val DarkOnSurfaceVariant = Color(0xFFAEB0B5)
+val DarkSurfaceContainer = Color(0xFF1C1C1E)
+val DarkSurfaceContainerHigh = Color(0xFF2C2C2E)
+val DarkOutline = Color(0xFF8E8E93)
+val DarkOutlineVariant = Color(0xFF38383A)
