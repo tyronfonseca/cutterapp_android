@@ -174,4 +174,6 @@
     <string name="view_licenses_btn">Ver licenças e créditos</string>
 
     <string name="portuguese">Português</string>
+    <string name="error_network">Erro de rede. Tente novamente mais tarde.</string>
+    <string name="search_format_hint">Formatos: \"Nome Sobrenome\", \"Sobrenome, Nome\", \"Sobrenome\" ou ISBN</string>
 </resources>

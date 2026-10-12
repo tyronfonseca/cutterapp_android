@@ -3,6 +3,7 @@ package com.tf.clasificacioncutter.ui.screens.search
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -76,6 +77,9 @@ import com.tf.clasificacioncutter.ui.screens.main.LocalMainViewModel
 import com.tf.clasificacioncutter.ui.screens.textrecognition.TextRecognitionActivity
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
 import com.tf.clasificacioncutter.ui.theme.CutterTheme
+import com.tf.clasificacioncutter.utils.csv.CSVHelper
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,9 +94,31 @@ fun SearchScreen(
     )
 ) {
     val mainViewModel = LocalMainViewModel.current
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val errorToastMsg = stringResource(R.string.export_error_toast)
+
     var showExportReviewDialog by remember { mutableStateOf(false) }
     var showDeleteAllDialog by remember { mutableStateOf(false) }
     var showDeleteSelectedDialog by remember { mutableStateOf(false) }
+
+    val shareLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { _ ->
+        // Removed per requirement since share sheet dismissal result code is not reliably indicative of completion
+    }
+
+    val handleExport = {
+        coroutineScope.launch {
+            val file = viewModel.prepareExportFile(mainViewModel)
+            if (file != null) {
+                val intent = CSVHelper.getShareIntent(context, file, "Export CSV")
+                shareLauncher.launch(intent)
+            } else {
+                Toast.makeText(context, errorToastMsg, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     if (showExportReviewDialog) {
         val count = viewModel.uiState.searchHistory.count { it.needsReview }
@@ -112,7 +138,7 @@ fun SearchScreen(
             confirmButton = {
                 androidx.compose.material3.TextButton(onClick = {
                     showExportReviewDialog = false
-                    viewModel.exportToCSV(mainViewModel)
+                    handleExport()
                 }) {
                     Text(stringResource(R.string.search_export_alert_btn))
                 }
@@ -178,7 +204,7 @@ fun SearchScreen(
             if (needsReviewCount > 0) {
                 showExportReviewDialog = true
             } else {
-                viewModel.exportToCSV(mainViewModel)
+                handleExport()
             }
         },
         onToggleSelectionMode = viewModel::toggleSelectionMode,
@@ -321,6 +347,15 @@ fun SearchScreenContent(
                     keyboardActions = KeyboardActions(
                         onSearch = { onSearch() }
                     )
+                )
+
+                Text(
+                    text = stringResource(R.string.search_format_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 4.dp, vertical = 2.dp)
                 )
 
                 Row(

@@ -311,7 +311,7 @@ fun LensSelectionScreen(
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "ISBN / Barcode:",
+                            text = "ISBN:",
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                         )
@@ -324,7 +324,7 @@ fun LensSelectionScreen(
                     }
                     Button(
                         onClick = { onUseText(isbn) },
-                        colors = ButtonDefaults.buttonColors(containerColor = CutterPrimary)
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                     ) {
                         Text(stringResource(R.string.use_this))
                     }

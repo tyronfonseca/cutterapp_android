@@ -23,6 +23,7 @@ import com.tf.clasificacioncutter.ui.screens.main.MainViewModel
 import com.tf.clasificacioncutter.utils.CutterGetter
 import com.tf.clasificacioncutter.utils.csv.CSVHelper
 import com.tf.clasificacioncutter.utils.extensions.extractISBNs
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -206,7 +207,8 @@ class SearchViewModel(
                 authorName = query.first,
                 useFormatMac = options.useFormatMac,
                 ignoreArticles = options.ignoreArticles,
-                dontSeparateName = options.dontSeparateName
+                dontSeparateName = options.dontSeparateName,
+                timestamp = System.currentTimeMillis()
             )
             finalResult.authorSurname = query.second
             addHistoryItem(finalResult)
@@ -253,7 +255,8 @@ class SearchViewModel(
                             ddcSelected = ddcList.firstOrNull() ?: "",
                             useFormatMac = options.useFormatMac,
                             ignoreArticles = options.ignoreArticles,
-                            dontSeparateName = options.dontSeparateName
+                            dontSeparateName = options.dontSeparateName,
+                            timestamp = System.currentTimeMillis()
                         )
                         finalResult.authorSurname = query.second
                         addHistoryItem(finalResult)
@@ -265,7 +268,10 @@ class SearchViewModel(
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Network error fetching ISBN", e)
-                presentError("Network error: ${e.localizedMessage}")
+                val context = mainViewModel.getApplication<android.app.Application>().applicationContext
+                val errorMsg = context.getString(R.string.error_network, e.localizedMessage ?: "")
+                Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                presentError(errorMsg)
             } finally {
                 uiState = uiState.copy(isSearchingISBN = false)
             }
@@ -324,21 +330,11 @@ class SearchViewModel(
         return@withContext null
     }
 
-    fun exportToCSV(mainViewModel: MainViewModel) {
-        viewModelScope.launch {
-            val context = mainViewModel.getApplication<android.app.Application>().applicationContext
-            val isSuccess = CSVHelper.exportCutterDataToCSV(
-                context = context,
-                data = uiState.searchHistory,
-                settings = mainViewModel.settings
-            )
-
-            if (isSuccess) {
-                Toast.makeText(context, R.string.export_success_toast, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, R.string.export_error_toast, Toast.LENGTH_SHORT).show()
-                Log.e(TAG, "Failed to export search history to CSV")
-            }
-        }
+    suspend fun prepareExportFile(mainViewModel: MainViewModel): File? = withContext(Dispatchers.IO) {
+        CSVHelper.generateCSVFile(
+            context = mainViewModel.getApplication<android.app.Application>().applicationContext,
+            data = uiState.searchHistory,
+            settings = mainViewModel.settings
+        )
     }
 }

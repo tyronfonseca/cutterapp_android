@@ -100,14 +100,14 @@ object CSVHelper {
     }
 
     /**
-     * Exports a list of [CutterData] records into a formatted CSV and opens the Android Share Sheet.
+     * Generates a formatted CSV file from [CutterData] records and returns the File object.
      */
-    suspend fun exportCutterDataToCSV(
+    suspend fun generateCSVFile(
         context: Context,
         data: List<CutterData>,
         settings: AppSettings
-    ): Boolean = withContext(Dispatchers.IO) {
-        if (data.isEmpty()) return@withContext false
+    ): File? = withContext(Dispatchers.IO) {
+        if (data.isEmpty()) return@withContext null
 
         try {
             val exportDir = File(context.cacheDir, "exports").apply { if (!exists()) mkdirs() }
@@ -145,12 +145,30 @@ object CSVHelper {
                 }
             }
 
-            shareFile(context, csvFile, "Export CSV")
-            true
+            csvFile
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to export Cutter data to CSV", e)
-            false
+            Log.e(TAG, "Failed to generate Cutter data CSV file", e)
+            null
         }
+    }
+
+    /**
+     * Creates and returns the share chooser Intent for the specified file.
+     */
+    fun getShareIntent(context: Context, file: File, title: String): Intent {
+        val uri = FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.fileprovider",
+            file
+        )
+
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/csv"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+
+        return Intent.createChooser(shareIntent, title)
     }
 
     /**

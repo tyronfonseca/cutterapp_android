@@ -1,14 +1,12 @@
 package com.tf.clasificacioncutter.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
@@ -73,17 +71,6 @@ fun CutterTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            val containerColor = if (darkTheme) {
-                colorScheme.surfaceContainer.toArgb()
-            } else {
-                CutterPrimary.toArgb()
-            }
-            if (Build.VERSION.SDK_INT < 35) {
-                @Suppress("DEPRECATION")
-                window.statusBarColor = containerColor
-                @Suppress("DEPRECATION")
-                window.navigationBarColor = containerColor
-            }
             val controller = WindowCompat.getInsetsController(window, view)
             controller.isAppearanceLightStatusBars = false
             controller.isAppearanceLightNavigationBars = false

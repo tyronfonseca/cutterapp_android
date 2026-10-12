@@ -180,4 +180,6 @@
     <string name="view_licenses_btn">Ver licencias y créditos</string>
 
     <string name="portuguese">Portugués</string>
+    <string name="error_network">Error de conexión. Intente más tarde.</string>
+    <string name="search_format_hint">Formatos: \"Nombre Apellido\", \"Apellido, Nombre\", \"Apellido\" o ISBN</string>
 </resources>
