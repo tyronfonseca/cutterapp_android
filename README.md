@@ -1,38 +1,35 @@
-<b>PROJECT TITLE:</b> Cutter App
+# Cutter App
 
-<b>PURPOSE OF PROJECT:</b> Aplicación desarrollada especificamente para Bibliotecologos 
-y/o estudiantes de bibliotecologia. Se utiliza un algoritmo de orden 
-lexicografico para poder realizar la tarea.
+**Versión:** 2.0.0
 
-<b>VERSION: 1.0.3</b>
+Cutter App es una aplicación Android diseñada específicamente para bibliotecólogos, catalogadores y estudiantes de bibliotecología. Permite generar y gestionar números Cutter de forma rápida y precisa a partir de nombres de autores y títulos de libros, eliminando la necesidad de realizar búsquedas manuales en tablas impresas.
 
+---
 
-Este proyecto utiliza las siguientes librerias:
+## Características Principales
 
-<b>Kotlin (Lenguaje de Programación)</b>
-Copyright 2000–2018 JetBrains s.r.o.
+* **Interfaz Moderna con Jetpack Compose**: Interfaz gráfica construida con Material 3, con soporte nativo para modo claro y modo oscuro.
+* **Escáner de Texto OCR (ML Kit)**: Extracción automática de texto desde la cámara con selección interactiva de bloques de texto.
+* **Escáner de Código de Barras e ISBN**: Lectura de códigos EAN-13 y EAN-8 para obtener automáticamente metadatos de libros (título, autor y clasificación DDC) mediante OpenLibrary.
+* **Múltiples Tablas Cutter Integradas**:
+  * Cutter-Sanborn (Revisión de 3 dígitos de Swanson-Swift)
+  * Tabla PHA (Heloisa De Almeida Prado, 3.ª edición)
+  * Tabla Cutter del Alfabeto Español Antiguo (con ordenación para las letras CH, LL y Ñ)
+* **Importación de Tablas Personalizadas**: Soporte para cargar archivos CSV con tablas Cutter personalizadas, incluyendo vista previa y validación.
+* **Historial de Búsqueda y Exportación a CSV**:
+  * Persistencia de datos local mediante Room Database.
+  * Exportación de historiales a hojas de cálculo CSV para integración con sistemas de catalogación.
+  * Eliminación por lotes e historial con fechas de registro.
+* **Soporte Multilingüe**: Localizaciones completas en Español (ES), Inglés (EN) y Portugués (PT-BR).
+* **Configuración Avanzada de Cutter**: Ajustes para ignorar artículos gramaticales, normalizar prefijos (Mc/M' a Mac), manejar nombres de instituciones/organizaciones sin apellido y personalizar la longitud de prefijos y sufijos.
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
-this file except in compliance with the License. You may obtain a copy of the 
-License at http://www.apache.org/licenses/LICENSE-2.0
+---
 
-Unless required by applicable law or agreed to in writing, software distributed 
-under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
-CONDITIONS OF ANY KIND, either express or implied. See the License for the 
-specific language governing permissions and limitations under the License.
-    
+## Licencias de Terceros
 
-<b>OpenCSV 4.0 (Librería)</b>
-Copyright 2017 Glen Smith and Scott Conway
+* **Google ML Kit & Gson**: Copyright Google LLC. Licenciado bajo Apache License 2.0.
+* **OpenLibrary API**: Los datos de libros proporcionados al escanear códigos de barras provienen de [OpenLibrary](https://openlibrary.org).
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
-this file except in compliance with the License. You may obtain a copy of the 
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed 
-under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
-CONDITIONS OF ANY KIND, either express or implied. See the License for the 
-specific language governing permissions and limitations under the License.
 
 <a name="privacy-policy"></a>
 ## Privacy Policy
