@@ -2,40 +2,18 @@
     <!-- Nombre de la aplicación -->
 
     <!-- Alertas o mensajes -->
-    <string name="msg_error">Llene los dos espacios en blanco.</string>
-    <string name="msg_error_last_name">El apellido debe ser de al menos dos letras.</string>
-    <string name="db_version_select">Seleccione el alfabeto a utilizar</string>
-    <string name="abc_normal">Alfabeto normal</string>
 
 
     <!-- Inferfaz gráfica -->
-    <string name="empty_text">Hola,</string>
-    <string name="empty_text_2">aquí aparecerá el número Cutter utilizado.</string>
-    <string name="etx_name">Nombre</string>
-    <string name="etx_last_name">Apellido</string>
-    <string name="bt_search">BUSCAR</string>
 
-    <!---Creditos y licencias-->
-    <string name="credit"><u>Acerca de</u></string>
-    <string name="titulo_faq"><b>Preguntas frecuentes (F.A.Q)</b></string>
-
-    <string name="faqs"><![CDATA[<b>&#x25FC; ¿Qué letras acentuadas o carácteres acepta la aplicación?</b><br/><br/>Actualmente la aplicación solo acepta caracteres del alfabeto español/inglés y los siguientes acentos: Á É Í Ó Ú Ü. En futuras actualizaciones se irá expandiendo la capacidad.<br/><br/><b>&#x25FC; ¿Cómo envío una sugerencia o reporto un problema con la aplicación?</b><br/><br/>Puedes enviar sugerencias o reportar algún problema al siguiente correo: <a href="mailto:contactfonsecasoftware@gmail.com">contactfonsecasoftware@gmail.com</a>]]></string>
     <string name="title_activity_licenses">Acerca de</string>
-    <string name="agradecimiento"><![CDATA[Diseño y desarrollo:<br/>Tyron Fonseca – 2026  <br/><a href="https://github.com/tyronfonseca/cutterapp_android">https://github.com/tyronfonseca/cutterapp_android</a><br/><br/>Ícono y otros aspectos de la UI:<br/>Omar Zamora G.<br/><a href="https://www.instagram.com/crea.cr/">https://www.instagram.com/crea.cr/</a>]]></string>
-    <string name="app_info_title">Información de la aplicación</string>
-    <string name="library_title">Bibliotecas utilizadas</string>
 
-    <string name="change_version">Cambiar de versión</string>
     <string name="close">Cerrar</string>
-    <string name="btn_history_desc">Historial</string>
     <string name="btn_text_recognition_desc">Reconocimiento de texto</string>
-    <string name="empty_history">Tus consultas se mostrarán aquí</string>
-    <string name="no_results_found">No se encontraron resultados</string>
     <string name="delete_history_title">Eliminar historial</string>
     <string name="delete_history_text">¿Estás seguro de que quieres eliminar TODO tu historial de búsqueda? Esta acción no se puede deshacer.</string>
     <string name="delete_history_btn_delete">Eliminar todo</string>
     <string name="cancel">Cancelar</string>
-    <string name="search_history_title">Historial de búsqueda</string>
     <string name="go_back_btn">Volver</string>
     <string name="menu">Menú</string>
     <string name="menu_delete_all_search_history">Eliminar todo el historial de búsqueda</string>
@@ -48,14 +26,7 @@
     <string name="text_selected_title">Modifica el texto si es necesario</string>
     <string name="use_this">Usar esto</string>
     <string name="delete">Eliminar</string>
-    <string name="selected_items">Seleccionado(s)</string>
     <string name="clean">Limpiar</string>
-    <string name="menu_export_csv">Exportar a CSV</string>
-    <string name="export_success">Exportado a: %s</string>
-    <string name="export_error">Error al exportar: %s</string>
-    <string name="error_exporting_csv">Error al exportar el CSV.</string>
-    <string name="share_csv">Compartir CSV</string>
-    <string name="delete_specific_title">¿Estás seguro de que quieres eliminar los elementos seleccionados?</string>
 
     <!-- Tutorial Reconocimiento de Texto -->
     <string name="tutorial_btn">Ayuda</string>
@@ -67,9 +38,7 @@
     <string name="tutorial_step3_text">La aplicación considera la última palabra como el apellido, elimina cualquier espacio innecesario.</string>
     <string name="tutorial_finish_btn">¡Entendido!</string>
 
-    <string name="abc_old">Alfabeto antiguo</string>
     <string name="about">Acerca de</string>
-    <string name="about_btn">Acerca de</string>
     <string name="about_functionality_description">La aplicación le ayuda a generar rápidamente números Cutter estandarizados para las signaturas topográficas de su biblioteca. Simplemente busque el nombre de un autor o el título de un libro, y Cutter App lo coincidirá al instante con la entrada correcta.</string>
     <string name="about_how_change_table">Vaya a la pestaña %1$s, toque el menú superior (•••) y elija %2$s para seleccionar qué tabla debe usar la aplicación para las coincidencias.</string>
     <string name="about_question_active_table">¿Cómo cambio la tabla Cutter activa?</string>
@@ -78,7 +47,7 @@
     <string name="about_question_barcode">¿Puedo buscar libros escaneando un código de barras?</string>
     <string name="about_question_barcode_ans_1">¡Sí! Puede apuntar la cámara de su dispositivo al código de barras de cualquier libro (EAN-13 o EAN-8) para escanearlo directamente. La aplicación recupera automáticamente detalles como el título, el autor y los números del Sistema de Clasificación Decimal Dewey para generar el número Cutter.</string>
     <string name="about_question_barcode_ans_2">Los metadatos son proporcionados por OpenLibrary, una base de datos comunitaria abierta, por lo que algunos registros pueden ser ocasionalmente incompletos o inexactos.</string>
-    <string name="about_question_barcode_ans_3">Más información sobre OpenLibrary</string>
+    <string name="about_question_barcode_ans_3">Los metadatos son proporcionados por OpenLibrary (openlibrary.org). Consulte la sección de créditos a continuación.</string>
     <string name="about_question_change_table">¿Puedo navegar y buscar en tablas Cutter completas directamente?</string>
     <string name="about_question_change_table_answer">Sí. Además de generar números automáticamente, puede abrir la vista Tabla Cutter para navegar por todas las entradas organizadas en secciones alfabéticas.</string>
     <string name="about_question_customize">¿Puedo personalizar cómo se ven mis números Cutter?</string>
@@ -100,14 +69,8 @@
     <string name="about_question_switch_table_answer_1">De forma predeterminada, Cutter App incluye:</string>
     <string name="about_question_switch_table_answer_2"><![CDATA[• <b>Cutter-Sanborn:</b> Revisión Swanson-Swift de 1969.]]></string>
     <string name="about_question_switch_table_answer_3"><![CDATA[• <b>Tabla PHA:</b> Heloisa De Almeida Prado 1983 tercera edición.]]></string>
-    <string name="about_question_switch_table_answer_4">Puede cambiar entre ellas en cualquier momento en la configuración de la aplicación o en la pestaña %s.</string>
-    <string name="accesibility_about_hint">Abre la pestaña “Acerca de” para obtener más información sobre esta aplicación.</string>
-    <string name="accesibility_cutter_table_hint">Abre la pestaña “Tabla cutter” para buscar un número cutter.</string>
-    <string name="accesibility_main_hint">Desliza a la izquierda o a la derecha para cambiar de pestaña, o toca dos veces para activar una pestaña.</string>
-    <string name="accesibility_main_label">Pestañas principales</string>
-    <string name="accesibility_search_hint">Abre la pestaña “Buscar” para buscar un número cutter.</string>
-    <string name="accesibility_settings_hint">Abre la pestaña "Ajustes" para configurar la aplicación.</string>
-    <string name="add_cutter_table_added">Tabla Cutter "%s" agregada.</string>
+    <string name="about_question_switch_table_answer_4"><![CDATA[• <b>Cutter Alfabeto Español Antiguo:</b> Tabla de clasificación con las letras tradicionales CH y LL.]]></string>
+    <string name="about_question_switch_table_answer_5">Puede cambiar entre ellas en cualquier momento en la configuración de la aplicación o en la pestaña %s.</string>
     <string name="add_cutter_table_csv_headers">El archivo CSV tiene encabezados</string>
     <string name="add_cutter_table_description">Descripción (opcional)</string>
     <string name="add_cutter_table_error_import">Error de importación</string>
@@ -122,31 +85,20 @@
     <string name="add_cutter_table_title">Agregar tabla Cutter</string>
     <string name="app_description">Cutter App es una herramienta sencilla y ágil, diseñada para bibliotecarios, catalogadores y amantes de los libros que buscan generar y gestionar números de clasificación Cutter fácilmente. En lugar de buscar manualmente en tablas impresas, la aplicación convierte rápidamente los nombres de autores y los títulos de los libros en números de catálogo precisos, ayudándote a mantener tu biblioteca organizada con el mínimo esfuerzo.</string>
     <string name="author">Autor</string>
-    <string name="author_header">Diseño y desarrollo</string>
-    <string name="author_url">https://github.com/tyronfonseca/cutterapp_ios</string>
     <string name="book">Libro</string>
     <string name="code">Código</string>
     <string name="contact">Contacto</string>
-    <string name="contact_email">contactfonsecasoftware@gmail.com</string>
-    <string name="cutter_app">Cutter App</string>
+
+
     <string name="cutter_app_description">Cutter App es gratuita y de código abierto. Puedes inspeccionar el código fuente, reportar problemas o contribuir a su desarrollo.</string>
-    <string name="cutter_row_hint">Libro: %s. Toca dos veces para seleccionar</string>
-    <string name="cutter_row_hint_no_book">Toca dos veces para seleccionar</string>
     <string name="cutter_table">Tabla Cutter</string>
     <string name="cuttertable_add_new_table">Agregar nueva tabla</string>
-    <string name="cuttertable_list_hint">Números cutter usados por la aplicación</string>
-    <string name="cuttertable_list_label">Lista de números cutter</string>
     <string name="cuttertable_nav_title">Tabla Cutter:</string>
     <string name="cuttertable_no_data">Sin datos Cutter</string>
     <string name="cuttertable_search_prompt">Buscar…</string>
     <string name="cuttertable_set_current_table">Establecer tabla actual</string>
-    <string name="cuttertable_unable_to_load">No se pudieron cargar las entradas Cutter.</string>
-    <string name="delete_all">Eliminar todo</string>
     <string name="description_pha">Tabla Prado, Heloisa De Almeida (PHA). Tercera Edición (1983)</string>
     <string name="description_sanborn">Tabla de clasificación Cutter-Sanborn. Revisión Swanson-Swift (1969)</string>
-    <string name="deselect_all">Deseleccionar todo</string>
-    <string name="developer">Tyron Fonseca – 2026</string>
-    <string name="done">Listo</string>
     <string name="edit_add_or_modify_book">Agregar o modificar el libro</string>
     <string name="edit_author_has_no_surname">El autor no tiene apellido</string>
     <string name="edit_cutter_number_used">Número Cutter utilizado</string>
@@ -162,12 +114,7 @@
     <string name="edit_toggle_footer">Si el autor es una institución u organización, o si su sistema usa el nombre en lugar del apellido para obtener el número Cutter, active esta opción. Si desea que esta opción esté activada por defecto, vaya a la pantalla de Configuración en la aplicación.</string>
     <string name="edit_verify_author_name">Verifique que el nombre del autor sea correcto.</string>
     <string name="english">Inglés</string>
-    <string name="error_cutter_code_generation">Se encontró el libro \'%s\', pero no se pudo generar el código Cutter para el autor</string>
-    <string name="error_network">Error de red: %s</string>
-    <string name="error_no_book_found">No se encontró ningún libro para el ISBN: %s</string>
-    <string name="error_no_cutter_match">No se encontró coincidencia Cutter para \'%s\'</string>
     <string name="export_to_csv">Exportar a CSV</string>
-    <string name="failed_extract_text_error">No se pudo extraer el texto.</string>
     <string name="faq_header">Preguntas frecuentes (F.A.Q)</string>
     <string name="filter_all">Todos</string>
     <string name="filter_author">Autor (A-Z)</string>
@@ -175,86 +122,62 @@
     <string name="filter_newest_first">Recientes</string>
     <string name="filter_oldest_first">Antiguos</string>
     <string name="filter_reviewed">Revisado</string>
-    <string name="history_empty">No hay historial de búsqueda.</string>
-    <string name="history_empty_description">Tus búsquedas aparecerán aquí.</string>
     <string name="isbn">ISBN</string>
     <string name="logo_description">Logo de la aplicación</string>
     <string name="more_actions">Más acciones</string>
-    <string name="msg_error_empty_inputs">Llene los dos espacios en blanco</string>
     <string name="name">Nombre</string>
     <string name="no_results">Sin resultados</string>
-    <string name="ocrcamera_unavailable_message">El escaneo de datos no es compatible o el permiso de la cámara está restringido en este dispositivo.</string>
-    <string name="ocrcamera_unavailable_title">Cámara no disponible</string>
-    <string name="ok">Aceptar</string>
-    <string name="old_explained">El alfabeto español antiguo que incluye las letras CH y LL</string>
     <string name="open_source">Código Abierto</string>
-    <string name="placeholder_last_name">Apellido</string>
-    <string name="placeholder_name">Nombre</string>
-    <string name="portuguese">Portugués</string>
-    <string name="question_1">¿Qué letras acentuadas o carácteres acepta la aplicación?</string>
-    <string name="question_1_a">Actualmente la aplicación solo acepta caracteres del alfabeto español/inglés y los siguientes acentos: Á É Í Ó Ú Ü. En futuras actualizaciones se irá expandiendo la capacidad.</string>
-    <string name="question_2">¿Cómo envío una sugerencia o reporto un problema con la aplicación?</string>
-    <string name="question_2_a">Puede enviar sugerencias o reportar algún problema al siguiente correo</string>
-    <string name="results_scan">Resultados del escaneo</string>
-    <string name="results_scan_description">Los resultados del escaneo aparecerán acá. Selecciona el que desee usar. </string>
     <string name="save">Guardar</string>
-    <string name="save_close">Cerrar y guardar</string>
     <string name="scan">Escanear</string>
     <string name="search">Buscar</string>
     <string name="search_btn">Buscar</string>
     <string name="search_delete_confirmation">¿Está seguro de que desea eliminar elementos?</string>
-    <string name="search_delete_count">Eliminar (%d)</string>
-    <string name="search_error">Error de búsqueda</string>
-    <string name="search_examples">Pruebe: \'John Smith\', \'John\', \'Smith, John\' o ISBN</string>
     <string name="search_export_alert_btn">Exportar de todos modos</string>
     <string name="search_export_alert_title">Elementos que requieren revisión</string>
     <string name="search_export_confirmation">%1$d elemento%2$s %3$s sido marcado/s como pendiente/s de revisión. ¿Exportar de todos modos?</string>
-    <string name="search_filter_by">Filtrar por</string>
-    <string name="search_in_cutter">Buscar en Cutter</string>
     <string name="search_no_entries">Aún no hay entradas</string>
     <string name="search_no_entries_description">Agregue una entrada escaneando o ingresando el nombre de un autor o ISBN</string>
-    <string name="search_no_mathcing_items">No hay elementos coincidentes</string>
-    <string name="search_no_mathcing_items_description">Ninguna entrada coincide con el criterio de filtro seleccionado</string>
     <string name="search_query">Consulta de búsqueda</string>
-    <string name="search_sort_by">Ordenar por</string>
     <string name="searchitem_requires_review">Requiere revisión</string>
     <string name="searchitem_requires_review_hint">El nombre del autor necesita verificación manual.</string>
-    <string name="select_all">Seleccionar todo</string>
     <string name="select_cutter_table_available">Tablas disponibles</string>
-    <string name="select_cutter_table_no_available">No hay tablas disponibles.</string>
-    <string name="select_cutter_table_untitled">Tabla sin título</string>
     <string name="select_items">Seleccionar elementos</string>
-    <string name="select_text_to_search">Busca el texto seleccionado en la aplicación Cutter.</string>
     <string name="selected_label">Seleccionado</string>
     <string name="settings">Configuración</string>
-    <string name="settings_common_charsCount">%1$d letra%2$s</string>
     <string name="settings_cutterTable_activeTable">Tabla activa</string>
     <string name="settings_cutterTable_add">Agregar tabla Cutter</string>
     <string name="settings_cutterTable_defaultName">Predeterminado</string>
     <string name="settings_cutterTable_footer">Puede agregar una tabla Cutter personalizada. Después de agregar la nueva tabla, puede establecerla como la tabla actual utilizada por la aplicación.</string>
-    <string name="settings_export_footer">Si utiliza números ISBN durante la resolución del Cutter, los metadatos complementarios (Título, clasificación DDC) se adjuntarán al archivo CSV a través de OpenLibrary.org.</string>
     <string name="settings_export_header">Guardar en CSV</string>
-    <string name="settings_export_includeExtras">Incluir DDC y título</string>
+    <string name="settings_export_includeExtras">Incluir ISBN y DDC</string>
     <string name="settings_number_footer">Configure qué información y longitud de caracteres agregar antes y después del número Cutter.</string>
     <string name="settings_number_header">Formato de número</string>
     <string name="settings_number_prefix">Prefijo Cutter</string>
-    <string name="settings_number_prefix_length">Longitud del prefijo</string>
     <string name="settings_number_suffix">Sufijo Cutter</string>
-    <string name="settings_number_suffix_length">Longitud del sufijo</string>
     <string name="settings_preview_footer">Esta es una vista previa en vivo que muestra su configuración actual de la clave de autor.</string>
     <string name="settings_preview_header">Generación del Cutter</string>
-    <string name="settings_searchBehavior_footer">Actívelo si desea que la aplicación trate la cadena de texto completa como una sola entidad en lugar de separar el nombre y el apellido del autor.</string>
     <string name="settings_searchBehavior_header">Comportamiento de búsqueda</string>
     <string name="settings_searchBehavior_ignoreArticles">Ignorar artículos gramaticales</string>
     <string name="settings_searchBehavior_noSurname">El autor no tiene apellido</string>
     <string name="settings_searchBehavior_spellAsMac">Escribir Mc y M\' como Mac</string>
     <string name="spanish">Español</string>
     <string name="surname">Apellido</string>
-    <string name="text_to_search">Texto a buscar</string>
     <string name="title">Título</string>
     <string name="title_pha">Tabla PHA</string>
     <string name="title_sanborn">Tabla Sanborn de 3 dígitos</string>
-    <string name="ui_header">Ícono y otros aspectos de la interfaz gráfica</string>
-    <string name="ui_name">Omar Zamora G.</string>
-    <string name="ui_url">https://www.instagram.com/crea.cr</string>
+    <string name="settings_hint_no_surname">Trata el nombre completo como una única entidad en lugar de separar nombre y apellido.</string>
+    <string name="settings_hint_ignore_articles">Ignora automáticamente artículos gramaticales durante la generación del número.</string>
+    <string name="settings_hint_spell_mac">Convierte los prefijos Mc y M\' al formato Mac.</string>
+    <string name="settings_hint_include_extras">Adjunta metadatos complementarios (ISBN, DDC) al archivo CSV exportado.</string>
+    <string name="export_success_toast">Exportado con éxito</string>
+    <string name="export_error_toast">Error al exportar</string>
+    <string name="title_cutter_old">Cutter Alfabeto Español Antiguo</string>
+    <string name="description_cutter_old">Tabla de clasificación Cutter que incluye los letras del alfabeto español antiguo (CH y LL).</string>
+    <string name="cuttertable_selected">Tabla \"%s\" seleccionada</string>
+    <string name="credits_openlibrary"><![CDATA[Los metadatos de libros (títulos, autores y DDC) son proporcionados por <a href="https://openlibrary.org">OpenLibrary (openlibrary.org)</a>, una base de datos comunitaria abierta.]]></string>
+    <string name="licenses_title">Licencias y créditos</string>
+    <string name="view_licenses_btn">Ver licencias y créditos</string>
+
+    <string name="portuguese">Portugués</string>
 </resources>

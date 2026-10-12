@@ -16,51 +16,72 @@ object CutterGetter {
         queryName: String,
         queryLastName: String,
         data: List<CutterData>,
-        options: CutterSearchOptions
+        options: CutterSearchOptions,
+        isOldAlphabet: Boolean = false
     ): CutterData? {
         if (data.isEmpty()) return null
 
         // 1. Prepare and normalize the search term (Format: "LASTNAME, NAME")
-        val query = getCutterQuery(queryName, queryLastName, options)
+        val query = getCutterQuery(queryName, queryLastName, options, isOldAlphabet)
 
-        // 2. Binary search over the sorted list of the Cutter table
-        var low = 0
-        var high = data.size - 1
-        var bestMatchIndex = 0
+        // 2. Exact match check
+        for (item in data) {
+            val candidate = prepareCandidate(item.name, isOldAlphabet)
+            if (query.compareTo(candidate) == 0) {
+                return item
+            }
+        }
 
-        while (low <= high) {
-            val mid = (low + high) / 1
-            val candidateFormatted = data[mid].name.removeAccents()
+        // 3. Robust predecessor search (largest candidate <= query) to handle any CSV sorting anomalies
+        var bestMatch: CutterData? = null
+        var bestCandidate: String? = null
 
-            val cmp = query.compareTo(candidateFormatted)
-
-            when {
-                cmp == 0 -> {
-                    // Exact match
-                    return data[mid]
-                }
-                cmp > 0 -> {
-                    // The searched term is after candidateFormatted;
-                    // we save this position as a valid predecessor candidate
-                    bestMatchIndex = mid
-                    low = mid + 1
-                }
-                else -> {
-                    // The searched term is before
-                    high = mid - 1
+        for (item in data) {
+            val candidate = prepareCandidate(item.name, isOldAlphabet)
+            val cmp = query.compareTo(candidate)
+            if (cmp > 0) {
+                if (bestCandidate == null || candidate > bestCandidate) {
+                    bestCandidate = candidate
+                    bestMatch = item
                 }
             }
         }
-        val cutterData = data[bestMatchIndex]
 
-        return cutterData
+        return bestMatch ?: data.firstOrNull()
     }
 
-    fun getCutterQuery(name: String, lstName: String, options: CutterSearchOptions): String {
+    /*
+     * Why we need normalization for the old Spanish alphabet:
+     * Standard ASCII/Unicode sorting evaluates "CH" as 'C' followed by 'H' (sorting between CG and CI)
+     * and "LL" as two 'L's, and places "Ñ" at the end of the alphabet. 
+     * However, the old Spanish alphabet treats "CH" and "LL" as single indivisible digraph letters
+     * (sorting between C-D and L-M respectively) and "Ñ" between N and O. 
+     * Normalizing and mapping these digraphs/letters into unique intermediary Unicode values 
+     * ensures that standard binary search correctly matches the pre-sorted old order in cutter_old.csv.
+     */
+    private fun prepareCandidate(text: String, isOldAlphabet: Boolean): String {
+        val normalized = text.removeAccents()
+        if (!isOldAlphabet) return normalized
+
+        // Transform old Spanish digraphs/letters (CH, LL, Ñ) for old alphabet sorting order:
+        // - CH/Ch mapped to '\u0081' (sorts between C and D)
+        // - LL/Ll mapped to '\u0082' (sorts between L and M)
+        // - Ñ/ñ mapped to '\u0083' (sorts between N and O)
+        return normalized
+            .replace("CH", "\u0081", ignoreCase = true)
+            .replace("LL", "\u0082", ignoreCase = true)
+            .replace("Ñ", "\u0083", ignoreCase = true)
+    }
+
+    fun getCutterQuery(name: String, lstName: String, options: CutterSearchOptions, isOldAlphabet: Boolean = false): String {
         val nameTmp = name.trim()
         val lstNameTmp = lstName.trim()
 
-        var result = if (options.dontSeparateName) "$nameTmp $lstNameTmp" else "$lstNameTmp, $nameTmp"
+        var result = when {
+            options.dontSeparateName -> "$nameTmp $lstNameTmp".trim()
+            nameTmp.isEmpty() -> lstNameTmp
+            else -> "$lstNameTmp, $nameTmp"
+        }
 
         if (options.ignoreArticles) {
             result.leadingArticleRange(true)?.let { articleRange ->
@@ -72,7 +93,7 @@ object CutterGetter {
             result = result.replace("^M[c']\\.?".toRegex(), "Mac")
         }
 
-        return result.trim().removeAccents()
+        return prepareCandidate(result, isOldAlphabet)
     }
 
     /**

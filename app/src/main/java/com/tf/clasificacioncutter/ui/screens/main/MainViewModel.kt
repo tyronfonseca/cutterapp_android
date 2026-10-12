@@ -77,10 +77,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 CSVHelper.getCSVData(file = customFile, hasHeaders = activeEntity.hasHeaders)
             } else {
                 // Fall back to raw resources using the filename string
-                val rawResourceId = if (filename == "pha.csv") {
-                    R.raw.pha
-                } else {
-                    R.raw.cutter_normal
+                val rawResourceId = when (filename) {
+                    "pha.csv" -> R.raw.pha
+                    "cutter_old.csv" -> R.raw.cutter_old
+                    else -> R.raw.cutter_normal
                 }
                 CSVHelper.getCSVData(context = context, resource = rawResourceId)
             }
@@ -105,7 +105,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteTable(table: CutterTableEntity) {
         if (table.cannotDelete) return
         viewModelScope.launch(Dispatchers.IO) {
-            if (table.filename.isNotEmpty() && table.filename != "cutter_normal.csv" && table.filename != "pha.csv") {
+            if (table.filename.isNotEmpty() && table.filename != "cutter_normal.csv" && table.filename != "pha.csv" && table.filename != "cutter_old.csv") {
                 CSVStorageManager.deleteFile(context, table.filename)
             }
             db.cutterTableDao().delete(table)
@@ -126,11 +126,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         lastName: String,
         options: CutterSearchOptions
     ): CutterData? {
+        val activeFilename = _uiState.value.currentTableSelected?.filename ?: ""
+        val isOldAlphabet = activeFilename == "cutter_old.csv"
         return CutterGetter.search(
             queryName = name,
             queryLastName = lastName,
             data = _uiState.value.currentCutterData,
-            options = options
+            options = options,
+            isOldAlphabet = isOldAlphabet
         )
     }
 

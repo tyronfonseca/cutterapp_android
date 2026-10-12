@@ -8,30 +8,38 @@ import java.util.UUID
 
 class CutterTableRepository(private val dao: CutterTableDao) {
     suspend fun ensureDefaultTablesExist(context: Context): CutterTableEntity? {
-        val allTables = dao.getAllTablesSync()
-        if (allTables.isEmpty()) {
-            val sanborn = CutterTableEntity(
-                name = context.getString(R.string.title_sanborn),
-                description = context.getString(R.string.description_sanborn),
-                filename = "cutter_normal.csv",
-                hasHeaders = true,
-                isSelected = true,
-                cannotDelete = true
-            )
-            val pha = CutterTableEntity(
-                name = context.getString(R.string.title_pha),
-                description = context.getString(R.string.description_pha),
-                filename = "pha.csv",
-                hasHeaders = true,
-                isSelected = false,
-                cannotDelete = true
-            )
-            dao.insert(sanborn)
-            dao.insert(pha)
-            return sanborn
+        val defaultFiles = listOf(
+            Triple("cutter_normal.csv", context.getString(R.string.title_sanborn), context.getString(R.string.description_sanborn)),
+            Triple("pha.csv", context.getString(R.string.title_pha), context.getString(R.string.description_pha)),
+            Triple("cutter_old.csv", context.getString(R.string.title_cutter_old), context.getString(R.string.description_cutter_old))
+        )
+
+        val currentTables = dao.getAllTablesSync()
+        for ((filename, name, desc) in defaultFiles) {
+            if (currentTables.none { it.filename == filename }) {
+                val entity = CutterTableEntity(
+                    id = UUID.randomUUID(),
+                    name = name,
+                    description = desc,
+                    filename = filename,
+                    hasHeaders = true,
+                    isSelected = false,
+                    cannotDelete = true
+                )
+                dao.insert(entity)
+            }
         }
 
-        return dao.getActiveTable()
+        // Ensure at least one table is selected as active if none is selected
+        val updatedTables = dao.getAllTablesSync()
+        if (updatedTables.none { it.isSelected }) {
+            val first = updatedTables.firstOrNull()
+            if (first != null) {
+                dao.update(first.copy(isSelected = true))
+            }
+        }
+
+        return dao.getActiveTable() ?: dao.getAllTablesSync().firstOrNull()
     }
 
     suspend fun setActiveTable(table: CutterTableEntity) {

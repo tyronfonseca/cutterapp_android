@@ -73,7 +73,7 @@ object CSVHelper {
     /**
      * Parses a single CSV line into trimmed field strings, preserving quoted text.
      */
-    private fun parseCSVRow(line: String): List<String> {
+    internal fun parseCSVRow(line: String): List<String> {
         val fields = mutableListOf<String>()
         val currentField = StringBuilder()
         var insideQuotes = false
@@ -112,7 +112,7 @@ object CSVHelper {
         try {
             val exportDir = File(context.cacheDir, "exports").apply { if (!exists()) mkdirs() }
             val csvFile = File(exportDir, "CutterApp_${System.currentTimeMillis()}.csv")
-            val csvHeader = "Author,Name,Code,Number" + if (settings.includeExtrasInExport) ",ISBN,Book Name,DDC" else ""
+            val csvHeader = "Author,Name,Code,Number,Book Name" + if (settings.includeExtrasInExport) ",ISBN,DDC" else ""
 
             FileOutputStream(csvFile).use { outputStream ->
                 OutputStreamWriter(outputStream, StandardCharsets.UTF_8).use { writer ->
@@ -123,14 +123,14 @@ object CSVHelper {
                     for (item in data) {
                         val extras = listOf(
                             escapeCsvField(item.isbn),
-                            escapeCsvField(item.bookName),
                             escapeCsvField(item.ddcSelected)
                         )
                         var line = listOf(
                             escapeCsvField(item.searchValue),
                             escapeCsvField(item.name),
                             escapeCsvField(item.code),
-                            escapeCsvField(item.fullCallNumber(settings))
+                            escapeCsvField(item.fullCallNumber(settings)),
+                            escapeCsvField(item.bookName)
                         )
 
                         if (settings.includeExtrasInExport) {

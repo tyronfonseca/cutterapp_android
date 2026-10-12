@@ -1,6 +1,7 @@
 package com.tf.clasificacioncutter.ui.screens.settings.tables.add
 
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,10 +28,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,7 +48,15 @@ import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.ui.components.CutterTextField
 import com.tf.clasificacioncutter.ui.screens.main.LocalMainViewModel
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
+import com.tf.clasificacioncutter.utils.csv.CSVHelper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.nio.charset.StandardCharsets
+
+data class CsvPreviewRow(val name: String, val code: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,8 +71,53 @@ fun AddCutterTableScreen(navController: NavController) {
     var setSelected by remember { mutableStateOf(false) }
     var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
     
+    var previewRows by remember { mutableStateOf<List<CsvPreviewRow>>(emptyList()) }
+    var formatError by remember { mutableStateOf<String?>(null) }
+    var isLoadingPreview by remember { mutableStateOf(false) }
+
+    val errorMsg = stringResource(R.string.add_cutter_table_error_import_description)
+    
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         selectedFileUri = uri
+    }
+
+    LaunchedEffect(selectedFileUri, hasHeaders) {
+        if (selectedFileUri != null) {
+            isLoadingPreview = true
+            formatError = null
+            try {
+                val rows = withContext(Dispatchers.IO) {
+                    val inputStream = context.contentResolver.openInputStream(selectedFileUri!!)
+                        ?: throw Exception("Cannot open input stream")
+                    BufferedReader(InputStreamReader(inputStream, StandardCharsets.UTF_8)).useLines { lines ->
+                        val sequence = if (hasHeaders) lines.drop(1) else lines
+                        sequence.mapNotNull { row ->
+                            val fields = CSVHelper.parseCSVRow(row)
+                            if (fields.size < 2) return@mapNotNull null
+                            val n = fields[0]
+                            val c = fields[1]
+                            if (n.isEmpty() && c.isEmpty()) return@mapNotNull null
+                            CsvPreviewRow(name = n, code = c)
+                        }.take(5).toList()
+                    }
+                }
+                if (rows.isEmpty()) {
+                    formatError = errorMsg
+                    previewRows = emptyList()
+                } else {
+                    previewRows = rows
+                }
+            } catch (e: Exception) {
+                Log.e("AddCutterTableScreen", "Error parsing CSV preview: ${e.localizedMessage}", e)
+                formatError = errorMsg
+                previewRows = emptyList()
+            } finally {
+                isLoadingPreview = false
+            }
+        } else {
+            previewRows = emptyList()
+            formatError = null
+        }
     }
     
     Scaffold(
@@ -76,29 +130,6 @@ fun AddCutterTableScreen(navController: NavController) {
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.go_back_btn)
                         )
-                    }
-                },
-                actions = {
-                    if (selectedFileUri != null && name.isNotBlank()) {
-                        TextButton(onClick = {
-                            coroutineScope.launch {
-                                val success = viewModel.saveImportedCSV(
-                                    fileUri = selectedFileUri!!,
-                                    name = name,
-                                    description = description,
-                                    setSelected = setSelected,
-                                    hasHeaders = hasHeaders
-                                )
-                                if (success) {
-                                    Toast.makeText(context, R.string.add_cutter_table_successful, Toast.LENGTH_SHORT).show()
-                                    navController.popBackStack()
-                                } else {
-                                    Toast.makeText(context, R.string.add_cutter_table_error_import, Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        }) {
-                            Text(stringResource(R.string.save))
-                        }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -218,13 +249,101 @@ fun AddCutterTableScreen(navController: NavController) {
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             )
 
+            // MARK: - Preview Section & Save Button (Below Preview)
             if (selectedFileUri != null) {
+                Spacer(modifier = Modifier.padding(top = 8.dp))
                 Text(
-                    text = "URI: $selectedFileUri",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+                    text = stringResource(R.string.add_cutter_table_preview),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        if (isLoadingPreview) {
+                            Text(text = "Loading preview...", style = MaterialTheme.typography.bodyMedium)
+                        } else if (formatError != null) {
+                            Text(
+                                text = formatError!!,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        } else {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 8.dp)
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.name),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    modifier = Modifier.weight(1f),
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                                Text(
+                                    text = stringResource(R.string.code),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    modifier = Modifier.weight(1f),
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            HorizontalDivider()
+                            previewRows.forEach { row ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 6.dp)
+                                ) {
+                                    Text(
+                                        text = row.name,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                    Text(
+                                        text = row.code,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (formatError == null && !isLoadingPreview && previewRows.isNotEmpty()) {
+                    Spacer(modifier = Modifier.padding(top = 16.dp))
+                    Button(
+                        onClick = {
+                            coroutineScope.launch {
+                                val success = viewModel.saveImportedCSV(
+                                    fileUri = selectedFileUri!!,
+                                    name = name,
+                                    description = description,
+                                    setSelected = setSelected,
+                                    hasHeaders = hasHeaders
+                                )
+                                if (success) {
+                                    Toast.makeText(context, R.string.add_cutter_table_successful, Toast.LENGTH_SHORT).show()
+                                    navController.popBackStack()
+                                } else {
+                                    Toast.makeText(context, R.string.add_cutter_table_error_import, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        enabled = name.isNotBlank()
+                    ) {
+                        Text(stringResource(R.string.save))
+                    }
+                }
             }
         }
     }

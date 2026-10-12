@@ -30,6 +30,7 @@ import com.tf.clasificacioncutter.data.AppDatabase
 import com.tf.clasificacioncutter.data.model.cutterdata.CutterData
 import com.tf.clasificacioncutter.ui.components.BottomNavigationBar
 import com.tf.clasificacioncutter.ui.screens.about.AboutScreen
+import com.tf.clasificacioncutter.ui.screens.about.LicensesScreen
 import com.tf.clasificacioncutter.ui.screens.cuttertable.CutterTableScreen
 import com.tf.clasificacioncutter.ui.screens.search.SearchScreen
 import com.tf.clasificacioncutter.ui.screens.search.SearchViewModel
@@ -112,7 +113,10 @@ class MainActivity : ComponentActivity() {
                 SettingsScreen(navController)
             }
             composable("about") {
-                AboutScreen()
+                AboutScreen(navController)
+            }
+            composable("licenses") {
+                LicensesScreen(navController)
             }
             composable("select_table") {
                 SelectCutterTableScreen(navController)

@@ -15,8 +15,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -192,30 +192,26 @@ fun SettingsScreen(navController: NavController) {
                 Column {
                     SettingsSwitchRow(
                         title = stringResource(R.string.settings_searchBehavior_noSurname),
+                        hint = stringResource(R.string.settings_hint_no_surname),
                         checked = settings.dontSeparateName,
                         onCheckedChange = { settings.dontSeparateName = it }
                     )
                     HorizontalDivider(color = dividerColor, modifier = Modifier.padding(horizontal = 16.dp))
                     SettingsSwitchRow(
                         title = stringResource(R.string.settings_searchBehavior_ignoreArticles),
+                        hint = stringResource(R.string.settings_hint_ignore_articles),
                         checked = settings.ignoreArticles,
                         onCheckedChange = { settings.ignoreArticles = it }
                     )
                     HorizontalDivider(color = dividerColor, modifier = Modifier.padding(horizontal = 16.dp))
                     SettingsSwitchRow(
                         title = stringResource(R.string.settings_searchBehavior_spellAsMac),
+                        hint = stringResource(R.string.settings_hint_spell_mac),
                         checked = settings.useFormatMac,
                         onCheckedChange = { settings.useFormatMac = it }
                     )
                 }
             }
-
-            Text(
-                text = stringResource(R.string.settings_searchBehavior_footer),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
-            )
 
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp), color = dividerColor)
 
@@ -268,7 +264,7 @@ fun SettingsScreen(navController: NavController) {
                 colors = cardColors
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    // Prefix Selection
+                    // Prefix Section
                     Text(
                         text = stringResource(R.string.settings_number_prefix),
                         style = MaterialTheme.typography.labelMedium,
@@ -279,32 +275,25 @@ fun SettingsScreen(navController: NavController) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 4.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        FilterChip(
-                            selected = settings.textBeforeNum == TextBeforeAfterNum.AUTHOR_SURNAME,
-                            onClick = { settings.textBeforeNum = TextBeforeAfterNum.AUTHOR_SURNAME },
-                            label = { Text(stringResource(R.string.author)) }
-                        )
-                        FilterChip(
-                            selected = settings.textBeforeNum == TextBeforeAfterNum.TITLE,
-                            onClick = { settings.textBeforeNum = TextBeforeAfterNum.TITLE },
-                            label = { Text(stringResource(R.string.title)) }
-                        )
-                    }
-
-                    // Prefix Length Stepper
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(
-                            text = stringResource(R.string.settings_number_prefix_length),
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            FilterChip(
+                                selected = settings.textBeforeNum == TextBeforeAfterNum.AUTHOR_SURNAME,
+                                onClick = { settings.textBeforeNum = TextBeforeAfterNum.AUTHOR_SURNAME },
+                                label = { Text(stringResource(R.string.author)) }
+                            )
+                            FilterChip(
+                                selected = settings.textBeforeNum == TextBeforeAfterNum.TITLE,
+                                onClick = { settings.textBeforeNum = TextBeforeAfterNum.TITLE },
+                                label = { Text(stringResource(R.string.title)) }
+                            )
+                        }
+
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             IconButton(
                                 onClick = { if (settings.charsBeforeNum > 0) settings.charsBeforeNum-- },
@@ -316,7 +305,7 @@ fun SettingsScreen(navController: NavController) {
                                 text = "${settings.charsBeforeNum}",
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(horizontal = 8.dp)
+                                modifier = Modifier.padding(horizontal = 4.dp)
                             )
                             IconButton(
                                 onClick = { if (settings.charsBeforeNum < 7) settings.charsBeforeNum++ },
@@ -329,7 +318,7 @@ fun SettingsScreen(navController: NavController) {
 
                     HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = dividerColor)
 
-                    // Suffix Selection
+                    // Suffix Section
                     Text(
                         text = stringResource(R.string.settings_number_suffix),
                         style = MaterialTheme.typography.labelMedium,
@@ -340,32 +329,25 @@ fun SettingsScreen(navController: NavController) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 4.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        FilterChip(
-                            selected = settings.textAfterNum == TextBeforeAfterNum.AUTHOR_SURNAME,
-                            onClick = { settings.textAfterNum = TextBeforeAfterNum.AUTHOR_SURNAME },
-                            label = { Text(stringResource(R.string.author)) }
-                        )
-                        FilterChip(
-                            selected = settings.textAfterNum == TextBeforeAfterNum.TITLE,
-                            onClick = { settings.textAfterNum = TextBeforeAfterNum.TITLE },
-                            label = { Text(stringResource(R.string.title)) }
-                        )
-                    }
-
-                    // Suffix Length Stepper
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(
-                            text = stringResource(R.string.settings_number_suffix_length),
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            FilterChip(
+                                selected = settings.textAfterNum == TextBeforeAfterNum.AUTHOR_SURNAME,
+                                onClick = { settings.textAfterNum = TextBeforeAfterNum.AUTHOR_SURNAME },
+                                label = { Text(stringResource(R.string.author)) }
+                            )
+                            FilterChip(
+                                selected = settings.textAfterNum == TextBeforeAfterNum.TITLE,
+                                onClick = { settings.textAfterNum = TextBeforeAfterNum.TITLE },
+                                label = { Text(stringResource(R.string.title)) }
+                            )
+                        }
+
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             IconButton(
                                 onClick = { if (settings.charsAfterNum > 0) settings.charsAfterNum-- },
@@ -377,7 +359,7 @@ fun SettingsScreen(navController: NavController) {
                                 text = "${settings.charsAfterNum}",
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(horizontal = 8.dp)
+                                modifier = Modifier.padding(horizontal = 4.dp)
                             )
                             IconButton(
                                 onClick = { if (settings.charsAfterNum < 7) settings.charsAfterNum++ },
@@ -417,34 +399,42 @@ fun SettingsScreen(navController: NavController) {
             ) {
                 SettingsSwitchRow(
                     title = stringResource(R.string.settings_export_includeExtras),
+                    hint = stringResource(R.string.settings_hint_include_extras),
                     checked = settings.includeExtrasInExport,
                     onCheckedChange = { settings.includeExtrasInExport = it }
                 )
             }
-
-            Text(
-                text = stringResource(R.string.settings_export_footer),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
-            )
         }
     }
 }
 
 @Composable
-fun SettingsSwitchRow(title: String, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
+fun SettingsSwitchRow(
+    title: String,
+    hint: String? = null,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.weight(1f)
-        )
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            if (hint != null) {
+                Text(
+                    text = hint,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 2.dp)
+                )
+            }
+        }
         Spacer(modifier = Modifier.width(16.dp))
         Switch(
             checked = checked,

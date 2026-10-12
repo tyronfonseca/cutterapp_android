@@ -77,6 +77,8 @@ fun EditSearchItemScreen(
     )
     val dividerColor = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f)
 
+    var isUserInteraction by remember { mutableStateOf(false) }
+
     LaunchedEffect(
         currentItem.authorName,
         currentItem.authorSurname,
@@ -84,6 +86,11 @@ fun EditSearchItemScreen(
         currentItem.ignoreArticles,
         currentItem.useFormatMac
     ) {
+        if (!isUserInteraction) {
+            isUserInteraction = true
+            return@LaunchedEffect
+        }
+
         val options = CutterSearchOptions(
             settings = mainViewModel.settings,
             dontSeparateName = currentItem.dontSeparateName,
@@ -369,6 +376,7 @@ fun EditSearchItemScreen(
                     value = currentItem.isbn,
                     onValueChange = {},
                     readOnly = true,
+                    enabled = false,
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                     singleLine = true
                 )

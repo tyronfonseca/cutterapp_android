@@ -43,6 +43,12 @@ class StringExtUnitTest {
     }
 
     @Test
+    fun removeAccents_cedilla() {
+        assertEquals("GONCALVES", "Gonçalves".removeAccents())
+        assertEquals("FRANCA", "França".removeAccents())
+    }
+
+    @Test
     fun extractISBNs_validFormats() {
         val result1 = "ISBN 978-3-16-148410-0".extractISBNs()
         assertEquals(1, result1.size)

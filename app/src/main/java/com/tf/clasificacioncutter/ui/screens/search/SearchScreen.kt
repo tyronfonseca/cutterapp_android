@@ -90,17 +90,101 @@ fun SearchScreen(
     )
 ) {
     val mainViewModel = LocalMainViewModel.current
+    var showExportReviewDialog by remember { mutableStateOf(false) }
+    var showDeleteAllDialog by remember { mutableStateOf(false) }
+    var showDeleteSelectedDialog by remember { mutableStateOf(false) }
+
+    if (showExportReviewDialog) {
+        val count = viewModel.uiState.searchHistory.count { it.needsReview }
+        val lang = androidx.compose.ui.platform.LocalConfiguration.current.locales.get(0).language
+        val plural = if (count > 1) "s" else ""
+        val verb = when {
+            lang.startsWith("es") -> if (count > 1) "han" else "ha"
+            lang.startsWith("pt") -> if (count > 1) "foram" else "foi"
+            else -> if (count > 1) "have" else "has"
+        }
+        val confirmationMessage = stringResource(R.string.search_export_confirmation, count, plural, verb)
+
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { showExportReviewDialog = false },
+            title = { Text(stringResource(R.string.search_export_alert_title)) },
+            text = { Text(confirmationMessage) },
+            confirmButton = {
+                androidx.compose.material3.TextButton(onClick = {
+                    showExportReviewDialog = false
+                    viewModel.exportToCSV(mainViewModel)
+                }) {
+                    Text(stringResource(R.string.search_export_alert_btn))
+                }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(onClick = { showExportReviewDialog = false }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
+    if (showDeleteAllDialog) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { showDeleteAllDialog = false },
+            title = { Text(stringResource(R.string.delete_history_title)) },
+            text = { Text(stringResource(R.string.delete_history_text)) },
+            confirmButton = {
+                androidx.compose.material3.TextButton(onClick = {
+                    showDeleteAllDialog = false
+                    viewModel.deleteAll()
+                }) {
+                    Text(stringResource(R.string.delete_history_btn_delete), color = Color.Red)
+                }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(onClick = { showDeleteAllDialog = false }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
+    if (showDeleteSelectedDialog) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { showDeleteSelectedDialog = false },
+            title = { Text(stringResource(R.string.edit_delete_item_title)) },
+            text = { Text(stringResource(R.string.search_delete_confirmation)) },
+            confirmButton = {
+                androidx.compose.material3.TextButton(onClick = {
+                    showDeleteSelectedDialog = false
+                    viewModel.deleteSelected()
+                }) {
+                    Text(stringResource(R.string.delete), color = Color.Red)
+                }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(onClick = { showDeleteSelectedDialog = false }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
     SearchScreenContent(
         uiState = viewModel.uiState,
         onSearchTextChange = viewModel::onSearchTextChange,
         onFilterChange = viewModel::onFilterChange,
         onSortChange = viewModel::onSortChange,
         onSearch = { viewModel.search(mainViewModel) },
-        onExport = { viewModel.exportToCSV(mainViewModel) },
+        onExport = {
+            val needsReviewCount = viewModel.uiState.searchHistory.count { it.needsReview }
+            if (needsReviewCount > 0) {
+                showExportReviewDialog = true
+            } else {
+                viewModel.exportToCSV(mainViewModel)
+            }
+        },
         onToggleSelectionMode = viewModel::toggleSelectionMode,
         onToggleItemSelection = viewModel::toggleItemSelection,
-        onDeleteSelected = viewModel::deleteSelected,
-        onDeleteAll = viewModel::deleteAll,
+        onDeleteSelected = { showDeleteSelectedDialog = true },
+        onDeleteAll = { showDeleteAllDialog = true },
         settings = mainViewModel.settings,
         onItemClick = { item: CutterData ->
             navController.currentBackStackEntry?.savedStateHandle?.set("cutter_data", item)
@@ -302,6 +386,15 @@ fun SearchScreenContent(
                 )
             }
 
+            if (uiState.searchHistory.isNotEmpty() && !uiState.isSelectionMode) {
+                FilterSortSection(
+                    filter = uiState.filter,
+                    onFilterChange = onFilterChange,
+                    sort = uiState.sort,
+                    onSortChange = onSortChange
+                )
+            }
+
             if (uiState.isSearchingISBN || uiState.isLoadingHistory) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -322,16 +415,6 @@ fun SearchScreenContent(
                     }
                 }
             } else if (uiState.filteredHistory.isNotEmpty()) {
-
-                if (!uiState.isSelectionMode) {
-                    FilterSortSection(
-                        filter = uiState.filter,
-                        onFilterChange = onFilterChange,
-                        sort = uiState.sort,
-                        onSortChange = onSortChange
-                    )
-                }
-
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(8.dp)

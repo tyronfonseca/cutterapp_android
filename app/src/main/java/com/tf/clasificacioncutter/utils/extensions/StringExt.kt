@@ -5,14 +5,16 @@ import java.text.Normalizer
 // String Extensions
 
 /**
- * Removes any accent / diacritics. E.g., Ñ to N, é to e
+ * Removes any accent / diacritics. E.g., Ñ to N, é to e, ç to c
  */
 fun String.removeAccents(): String {
     val uppercaseString = this.uppercase()
     val normalized = Normalizer.normalize(uppercaseString, Normalizer.Form.NFD)
     // Matches diacritical mark characters (accents) and strips them out
     val regex = "\\p{InCombiningDiacriticalMarks}+".toRegex()
-    return regex.replace(normalized, "")
+    val stripped = regex.replace(normalized, "")
+    // Explicitly replace cedilla Ç with C for Portuguese/Spanish names containing ç (e.g. Gonçalves, França)
+    return stripped.replace('Ç', 'C')
 }
 
 /**

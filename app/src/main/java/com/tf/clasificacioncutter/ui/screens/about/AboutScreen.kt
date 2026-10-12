@@ -17,13 +17,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,12 +46,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.fromHtml
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.ui.theme.CutterPrimary
 import com.tf.clasificacioncutter.utils.extensions.rememberDrawablePainter
@@ -58,7 +57,7 @@ import androidx.core.net.toUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutScreen() {
+fun AboutScreen(navController: NavController? = null) {
     val context = LocalContext.current
     val cardBorder = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f))
     val cardColors = CardDefaults.cardColors(
@@ -159,8 +158,9 @@ fun AboutScreen() {
                 question = stringResource(R.string.about_question_switch_table),
                 answer = "${stringResource(R.string.about_question_switch_table_answer_1)}\n\n" +
                          "${stringResource(R.string.about_question_switch_table_answer_2)}\n" +
-                         "${stringResource(R.string.about_question_switch_table_answer_3)}\n\n" +
-                         stringResource(R.string.about_question_switch_table_answer_4, stringResource(R.string.cutter_table))
+                         "${stringResource(R.string.about_question_switch_table_answer_3)}\n" +
+                         "${stringResource(R.string.about_question_switch_table_answer_4)}\n\n" +
+                         stringResource(R.string.about_question_switch_table_answer_5, stringResource(R.string.cutter_table))
             )
 
             FaqItem(
@@ -241,11 +241,6 @@ fun AboutScreen() {
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Medium
                         )
-                        Text(
-                            text = "contactfonsecasoftware@gmail.com",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
                     }
                 }
             }
@@ -270,21 +265,6 @@ fun AboutScreen() {
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(bottom = 12.dp)
                     )
-
-                    SelectionContainer {
-                        Text(
-                            text = AnnotatedString.fromHtml(
-                                htmlString = stringResource(R.string.agradecimiento),
-                                linkStyles = TextLinkStyles(
-                                    style = SpanStyle(
-                                        color = MaterialTheme.colorScheme.primary,
-                                        textDecoration = TextDecoration.Underline
-                                    )
-                                )
-                            ),
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
 
                     HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
 
@@ -313,6 +293,17 @@ fun AboutScreen() {
                     }
                 }
             }
+
+            // MARK: - View Licenses Button
+            if (navController != null) {
+                Button(
+                    onClick = { navController.navigate("licenses") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = CutterPrimary)
+                ) {
+                    Text(stringResource(R.string.view_licenses_btn), color = Color.White)
+                }
+            }
         }
     }
 }
@@ -326,15 +317,15 @@ fun FaqItem(question: String, answer: String) {
     )
 
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { expanded = !expanded },
+        modifier = Modifier.fillMaxWidth(),
         border = cardBorder,
         colors = cardColors
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { expanded = !expanded },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -354,7 +345,7 @@ fun FaqItem(question: String, answer: String) {
                 Column {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = AnnotatedString.fromHtml(answer),
+                        text = AnnotatedString.fromHtml(answer.replace("\n", "<br/>")),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

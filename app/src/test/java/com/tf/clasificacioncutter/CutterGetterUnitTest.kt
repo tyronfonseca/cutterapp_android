@@ -111,4 +111,99 @@ class CutterGetterUnitTest {
         assertNotNull(result)
         assertEquals("Fons, X", result?.name)
     }
+
+    @Test
+    fun search_oldAlphabetChall() {
+        val oldData = listOf(
+            CutterData(name = "Chal", code = "436"),
+            CutterData(name = "Chalm", code = "437"),
+            CutterData(name = "Chall", code = "441"),
+            CutterData(name = "Cham", code = "442")
+        )
+        val result = CutterGetter.search("", "Chall", oldData, defaultOptions, isOldAlphabet = true)
+        assertNotNull(result)
+        assertEquals("Chall", result?.name)
+        assertEquals("441", result?.code)
+    }
+
+    @Test
+    fun search_oldAlphabetLlAndN() {
+        val oldData = listOf(
+            CutterData(name = "Llaveria", code = "790"),
+            CutterData(name = "Nunez", code = "850"),
+            CutterData(name = "Ond", code = "870")
+        )
+        val resultLl = CutterGetter.search("", "Llaveria", oldData, defaultOptions, isOldAlphabet = true)
+        assertNotNull(resultLl)
+        assertEquals("Llaveria", resultLl?.name)
+        assertEquals("790", resultLl?.code)
+
+        val resultN = CutterGetter.search("", "Nuñez", oldData, defaultOptions, isOldAlphabet = true)
+        assertNotNull(resultN)
+        assertEquals("Nunez", resultN?.name)
+        assertEquals("850", resultN?.code)
+    }
+
+    @Test
+    fun search_dontSeparateNameOption() {
+        val customOptions = CutterSearchOptions(
+            settings = mockSettings,
+            dontSeparateName = true,
+            ignoreArticles = false,
+            useFormatMac = false
+        )
+        val customData = listOf(
+            CutterData(name = "John Smith", code = "500")
+        )
+        val result = CutterGetter.search("John", "Smith", customData, customOptions)
+        assertNotNull(result)
+        assertEquals("John Smith", result?.name)
+    }
+
+    @Test
+    fun search_ignoreArticlesOption() {
+        val customOptions = CutterSearchOptions(
+            settings = mockSettings,
+            dontSeparateName = false,
+            ignoreArticles = true,
+            useFormatMac = false
+        )
+        val customData = listOf(
+            CutterData(name = "King", code = "100")
+        )
+        val result = CutterGetter.search("The", "King", customData, customOptions)
+        assertNotNull(result)
+        assertEquals("King", result?.name)
+    }
+
+    @Test
+    fun search_useFormatMacOption() {
+        val customOptions = CutterSearchOptions(
+            settings = mockSettings,
+            dontSeparateName = false,
+            ignoreArticles = false,
+            useFormatMac = true
+        )
+        val customData = listOf(
+            CutterData(name = "Mac Donald", code = "300")
+        )
+        val result = CutterGetter.search("", "Mc Donald", customData, customOptions)
+        assertNotNull(result)
+        assertEquals("Mac Donald", result?.name)
+    }
+
+    @Test
+    fun splitText_variousFormats() {
+        val (name1, surname1) = CutterGetter.splitText("Smith, John")
+        assertEquals("John", name1)
+        assertEquals("Smith", surname1)
+
+        val (name2, surname2) = CutterGetter.splitText("Garcia Marquez")
+        assertEquals("Garcia", name2)
+        assertEquals("Marquez", surname2)
+
+        val (name3, surname3) = CutterGetter.splitText("Perez")
+        assertEquals("", name3)
+        assertEquals("Perez", surname3)
+    }
 }

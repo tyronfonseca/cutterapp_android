@@ -1,5 +1,6 @@
 package com.tf.clasificacioncutter.ui.screens.settings.tables
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -50,6 +52,7 @@ import com.tf.clasificacioncutter.ui.theme.CutterPrimary
 fun SelectCutterTableScreen(navController: NavController) {
     val viewModel = LocalMainViewModel.current
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     
     val db = AppDatabase.getDatabase(navController.context)
     val tables by db.cutterTableDao().getAllTables().collectAsState(initial = emptyList())
@@ -99,11 +102,13 @@ fun SelectCutterTableScreen(navController: NavController) {
                 )
             }
             items(tables) { table ->
+                val tableSelectedMsg = stringResource(R.string.cuttertable_selected, table.name)
                 CutterTableRow(
                     table = table,
                     isSelected = uiState.currentTableSelected?.id == table.id,
                     onClick = {
                         viewModel.selectActiveTable(table)
+                        Toast.makeText(context, tableSelectedMsg, Toast.LENGTH_SHORT).show()
                         navController.popBackStack()
                     },
                     onDelete = if (!table.cannotDelete) {

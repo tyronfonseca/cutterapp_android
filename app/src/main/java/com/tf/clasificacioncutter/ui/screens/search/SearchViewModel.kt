@@ -1,6 +1,7 @@
 package com.tf.clasificacioncutter.ui.screens.search
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.tf.clasificacioncutter.R
 import com.tf.clasificacioncutter.data.model.CutterSearchOptions
 import com.tf.clasificacioncutter.data.model.cutterdata.CutterData
 import com.tf.clasificacioncutter.data.model.cutterdata.CutterDataDao
@@ -294,7 +296,7 @@ class SearchViewModel(
             val url = URL(urlString)
             urlConnection = url.openConnection() as HttpURLConnection
             urlConnection.requestMethod = "GET"
-            urlConnection.setRequestProperty("User-Agent", "CutterApp/1.0 (Android; contactfonsecasoftware@gmail.com)")
+            urlConnection.setRequestProperty("User-Agent", "CutterApp/2.0.0 (Android; contactfonsecasoftware@gmail.com)")
             urlConnection.setRequestProperty("Accept", "application/json")
             urlConnection.connectTimeout = 15000
             urlConnection.readTimeout = 15000
@@ -324,13 +326,17 @@ class SearchViewModel(
 
     fun exportToCSV(mainViewModel: MainViewModel) {
         viewModelScope.launch {
+            val context = mainViewModel.getApplication<android.app.Application>().applicationContext
             val isSuccess = CSVHelper.exportCutterDataToCSV(
-                context = mainViewModel.getApplication(),
+                context = context,
                 data = uiState.searchHistory,
                 settings = mainViewModel.settings
             )
 
-            if (!isSuccess) {
+            if (isSuccess) {
+                Toast.makeText(context, R.string.export_success_toast, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, R.string.export_error_toast, Toast.LENGTH_SHORT).show()
                 Log.e(TAG, "Failed to export search history to CSV")
             }
         }
